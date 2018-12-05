@@ -1,10 +1,14 @@
 {
-  "name": "laralite",
+  "name": "laravel-micro.js",
   "version": "1.0.0",
   "description": "A Laravel inspired framework for frontend applications.",
   "author": "Daniel Alvidrez",
   "license": "MIT",
   "module": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bayareawebpro/laravel-micro.js.git"
+  },
   "scripts": {
     "test": "jest --watch",
     "testAll": "jest",
@@ -17,21 +21,20 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "axios": "^0.18",
+    "laravel-mix": "^2.0",
+    "cross-env": "^5.1",
+    "jest": "^23.6.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.26.3",
     "browser-sync-webpack-plugin": "^2.0.1",
-    "cross-env": "^5.1",
-    "jest": "^23.6.0",
-    "laravel-mix": "^2.0",
     "vue": "^2.5.17",
-    "vue-router": "^3.0.2"
-  },
-  "dependencies": {
+    "vue-router": "^3.0.2",
+    "axios": "^0.18",
     "@fortawesome/fontawesome-free": "^5.5.0",
     "animate.css": "^3.7.0",
     "bootstrap": "^4.1.3"
-  }
+  },
+  "dependencies": {}
 }

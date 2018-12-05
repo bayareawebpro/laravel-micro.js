@@ -10,7 +10,7 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.setPublicPath('demo')
+mix.setPublicPath('docs')
 mix.babelConfig({
     'plugins': [
         'syntax-dynamic-import',
@@ -22,13 +22,19 @@ mix.options({
         uglifyOptions: {
             mangle: {
                 keep_fnames: true,
-                reserved: ['App','Config', 'Kernel', 'Request', 'Vue', 'Events', 'VueRoot', 'MyService']
+                reserved: [
+                    'App',
+                    'Config',
+                    'Kernel',
+                    'Request',
+                    'Vue',
+                    'Events',
+                    'VueRoot',
+                    'MyService'
+                ]
             },
             compress: {
-                drop_console: false,
-            },
-            options: {
-                nameCache: '.tmp/grunt-uglify-cache.json',
+                drop_console: mix.inProduction(),
             }
         }
     }
@@ -36,9 +42,9 @@ mix.options({
 mix.webpackConfig({
     resolve: {
         alias: {
-            'laralite': path.resolve(__dirname, 'src'),
-            '@components': path.resolve(__dirname, 'demo-src/js/Components'),
-            '@pages': path.resolve(__dirname, 'demo-src/js/Pages'),
+            'laravel-micro.js': path.resolve(__dirname, 'src'),
+            '@components': path.resolve(__dirname, 'docs-src/js/Components'),
+            '@pages': path.resolve(__dirname, 'docs-src/js/Pages'),
         }
     },
     output: {
@@ -49,8 +55,8 @@ mix.extract([
     'vue',
     'vue-router'
 ])
-mix.js('demo-src/js/bootstrap.js', 'demo/app.js')
-   .sass('demo-src/sass/app.scss', 'demo/app.css');
+mix.js('docs-src/js/bootstrap.js', 'app.js')
+   .sass('docs-src/sass/app.scss', 'app.css');
 
 if(!mix.inProduction()){
 }
