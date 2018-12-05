@@ -1,3 +1,6 @@
 .DS_Store
 .idea
 .idea/*.xml
+node_modules
+mix-manifest.json
+hot
