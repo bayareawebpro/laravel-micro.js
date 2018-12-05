@@ -1,4 +1,4 @@
-import {PlucksProperties} from "laralite"
+import {PlucksProperties} from "laravel-micro.js"
 export default class ServiceAbstract{
     constructor(){
         this._version = 'ServiceAbstract'

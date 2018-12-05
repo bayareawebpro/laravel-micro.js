@@ -1,5 +1,5 @@
 import Auth from "./Auth"
-import {ServiceProvider} from "laralite"
+import {ServiceProvider} from "laravel-micro.js"
 export default class AuthServiceProvider extends ServiceProvider {
 
     constructor(app) {

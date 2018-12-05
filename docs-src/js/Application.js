@@ -1,4 +1,4 @@
-import Laralite from "laralite"
+import Laralite from "laravel-micro.js"
 import Authenticate from "./Middleware/Authenticate"
 export default class Application extends Laralite{
 

@@ -27,7 +27,7 @@ export default{
             <nav id="nav-primary" class="navbar navbar-expand navbar-light bg-light shadow-sm pl-0 pr-0 border-bottom">
                 <div class="container-fluid container-wide pl-3 pr-3">
                     <a class="navbar-brand ml-1" @click="$events.$emit('offcanvas:left')" >
-                        LaraLite JS
+                        Laravel<span class="text-danger">Micro</span>.js
                     </a>
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item text-nowrap">

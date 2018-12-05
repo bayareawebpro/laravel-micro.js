@@ -1,4 +1,4 @@
-import {Handler} from "laralite"
+import {Handler} from "laravel-micro.js"
 import Application from "./Application"
 
 const app = new Application

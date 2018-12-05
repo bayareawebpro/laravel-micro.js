@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from "vue-router"
-import {ServiceProvider} from "laralite"
+import {ServiceProvider} from "laravel-micro.js"
 import EventBus from "./EventBus"
 import Routes from "./Routes"
 Vue.use(VueRouter)

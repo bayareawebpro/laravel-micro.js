@@ -1,4 +1,4 @@
-import {ServiceProvider} from "laralite"
+import {ServiceProvider} from "laravel-micro.js"
 import ServiceV1 from "./ServiceV1"
 import ServiceV2 from "./ServiceV2"
 export default class SwapableServiceProvider extends ServiceProvider {
