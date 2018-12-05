@@ -1,12 +1,13 @@
 export default class Auth {
     /**
-     * Auth Service
+     * Example Auth Service
+     * (This is only an example, there's no services setup for this.)
      **/
     constructor(app) {
         this.app = app
-        this.$cookies = this.app.make('$cookies')
-        this.$store = this.app.make('$store')
-        this.$config = this.app.make('$config').toConfig('auth')
+        this.cookies = this.app.make('Cookies')
+        this.store = this.app.make('Store')
+        this.config = this.app.make('Config').toConfig('auth')
     }
 
     /**
@@ -14,7 +15,7 @@ export default class Auth {
      * @return Object|null
      **/
     get user(){
-        return this.$store.get('auth.user', null)
+        return this.store.get('auth.user', null)
     }
 
     /**
@@ -30,7 +31,7 @@ export default class Auth {
      * @return boolean
      **/
     get cookie(){
-        return this.$cookies.get(this.$config.get('cookie_name'), false)
+        return this.cookies.get(this.config.get('cookie_name'), false)
     }
 
     /**
@@ -49,7 +50,7 @@ export default class Auth {
      * @return void
      **/
     setCookie(token){
-        this.$cookies.set(this.$config.get('cookie_name'), token)
+        this.cookies.set(this.config.get('cookie_name'), token)
     }
 
     /**
@@ -57,7 +58,7 @@ export default class Auth {
      * @return void
      **/
     logout(){
-        this.$cookies.forget(this.$config.get('cookie_name'))
-        this.app.rebound('$store')
+        this.cookies.forget(this.config.get('cookie_name'))
+        this.app.rebound('Store')
     }
 }
