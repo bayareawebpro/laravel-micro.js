@@ -28,7 +28,6 @@ mix.options({
 	uglify: {
 		sourceMap: true,
 		uglifyOptions: {
-			warnings: false,
 			mangle: {
 				keep_fnames: true,
 				reserved: [
@@ -54,13 +53,6 @@ mix.options({
 					'LazyService',
 				]
 			},
-			output: {
-				comments: false,
-				beautify: false,
-			},
-			toplevel: false,
-			nameCache: null,
-			ie8: false,
 		}
 	}
 })
