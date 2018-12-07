@@ -51,8 +51,7 @@ export default class AppServiceProvider extends ServiceProvider {
 `
 const providerRegister = `
 
-class App extends Container { }
-
+class App extends LaravelMicro { }
 const app = new App
 
 app.register(AppServiceProvider)
@@ -81,19 +80,20 @@ const binding = `
  * Here's a few examples of what you can do:
  */
  
-const container = new Container
+import LaravelMicro from "laravel-micro.js"
+const app = new LaravelMicro
 
-container.bind('object', {prop: true})
+app.bind('object', {prop: true})
 
-container.bind('array', ['test'])
+app.bind('array', ['test'])
 
-container.bind('boolean', true)
+app.bind('boolean', true)
 
-container.bind('number', 100)
+app.bind('number', 100)
 
-container.bind('MyClass', MyClass)
+app.bind('MyClass', MyClass)
 
-container.bind('randomPick',()=>{
+app.bind('randomPick',()=>{
 	return 'yes!'
 })
 
@@ -243,12 +243,12 @@ export default class Kernel{
 `
 const middleware = `
 export default class Authenticate {
-
-		/**
-     * @param app {Application}
-     * @param next
-     * @return void
-     */
+		
+    /**
+    * @param app {Application}
+    * @param next
+    * @return void
+    */
      
     constructor(App){
         this.app = App
@@ -414,12 +414,14 @@ export default class Application extends LaravelMicro {
 /**
 * Bootstrap the application
 */
+import {RequestServiceProvider, ErrorHandler} from "laravel-micro.js"
 import ErrorHandler from "./MyErrorHandler"
 import Application from "./Application"
 import Providers from "./ServiceProviders"
 
 const app = new Application
 app.errorHandler(Handler)
+app.register(RequestServiceProvider)
 
 Providers.forEach((ServiceProvider)=>{
     app.register(ServiceProvider)

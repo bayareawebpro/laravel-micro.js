@@ -25,9 +25,6 @@ the dependency injection & service provider functionality.  You'll need to
 configure Webpack / Laravel mix to avoid mangling function names and 
 add the aliases of the injections to the reserved words list.
 
-If your interesting in contributing to this repo, please send a push release.
-The test suite is fairly simple and requires Jest to run.
-
 ```
 // Laravel Micro Mix Config
 mix.options({
@@ -62,3 +59,9 @@ mix.webpackConfig({
 })
 
 ```
+
+
+### Contribute
+If your interesting in contributing to this repo, please send a push release.
+
+Test suite provided by Jest.
