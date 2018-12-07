@@ -1,4 +1,4 @@
-export default class Handler{
+export default class ErrorHandler{
     /**
      * Exception Handler Class
      * @param App {Application}

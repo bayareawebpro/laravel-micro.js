@@ -45,7 +45,7 @@ mix.options({
 	},
 })
 
-//Enable ES6 Babel Compile for LaravelMicro
+//Enable ES6 Babel Compile for Laravel Micro
 mix.webpackConfig({
 	module: {
 		rules: [{

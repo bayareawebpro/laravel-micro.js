@@ -1,9 +1,9 @@
-import {Handler} from "laravel-micro.js"
+import {ErrorHandler} from "laravel-micro.js"
 import Application from "./Application"
 import Providers from "./ServiceProviders"
 
 const app = new Application
-app.errorHandler(Handler)
+app.errorHandler(ErrorHandler)
 
 //// EARLIEST DEBUGGING POINT ////
 app.debug(true)

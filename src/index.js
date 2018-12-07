@@ -1,5 +1,5 @@
 import Exception from './Exceptions/Exception'
-import Handler from './Exceptions/Handler'
+import ErrorHandler from './Exceptions/ErrorHandler'
 import Pipeline from './Support/Pipeline'
 import Collection from './Support/Collection'
 import ServiceProvider from './Support/ServiceProvider'
@@ -25,7 +25,7 @@ export {
     PreventsReactivity,
     ReadsArguments,
     Exception,
-    Handler,
+	  ErrorHandler,
     Pipeline,
     ServiceProvider,
     AppServiceProvider,
