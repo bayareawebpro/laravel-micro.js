@@ -81,8 +81,13 @@ mix.extract([
 	'vue',
 	'vue-router'
 ])
-mix.js('docs-src/js/bootstrap.js', 'app.js')
-	.sass('docs-src/sass/app.scss', 'app.css');
+mix
+	.js('docs-src/js/bootstrap.js', 'app.js')
+	.sass('docs-src/sass/app.scss', 'app.css')
+
+
+mix.babel('src/exports.js', 'src/index.js')
+
 
 if (!mix.inProduction()) {
 	mix.sourceMaps()
