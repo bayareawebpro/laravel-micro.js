@@ -53,11 +53,11 @@ export default class VueServiceProvider extends ServiceProvider {
 				icon: 'fa-book',
 				label: 'Logs'
 			},
-			{
-				path: '/service-swap',
-				icon: 'fa-retweet',
-				label: 'Swap'
-			},
+			// {
+			// 	path: '/service-swap',
+			// 	icon: 'fa-retweet',
+			// 	label: 'Swap'
+			// },
 		])
 
 	}

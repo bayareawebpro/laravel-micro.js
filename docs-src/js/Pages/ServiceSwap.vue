@@ -31,9 +31,12 @@
 			Using the async binding method shown in the example on the homepage you can import bindings from remote servers.
 		</p>
 
-		<p class="text-muted">Current Version: {{ service.getVersion() }}</p>
-		{{ service.fieldLabel }}
-		<input :type="service.fieldType" class="form-control" v-model="service.content" @change="change">
+		<div v-if="service">
+			<p class="text-muted">Current Version: {{ service.getVersion() }}</p>
+			{{ service.fieldLabel }}
+			<input :type="service.fieldType" class="form-control" v-model="service.content" @change="change">
+		</div>
+
 		<hr>
 		<button class="btn btn-primary" @click="swapImplementation">
 			Swap Implementation
