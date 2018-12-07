@@ -1,3 +1,4 @@
+![](https://bayareawebpro.github.io/laravel-micro.js/banner.png)
 # laravel-micro.js
 A Laravel inspired IOC Container for javascript applications 
 that provides a dependency injection container and familiar
