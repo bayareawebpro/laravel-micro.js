@@ -1,9 +1,9 @@
-![](https://bayareawebpro.github.io/laravel-micro.js/banner.png)
+![](https://bayareawebpro.github.io/laravel-micro.js/top-banner.png)
 # laravel-micro.js
 A Laravel inspired IOC Container for javascript applications 
-that provides a dependency injection container and familiar
-framework design that encourages you to use object oriented 
-principals in your frontend application.
+that provides dependency injection and a familiar  design 
+that encourages you to use object oriented principals 
+in your frontend application.
 
 `LaravelMicro.js (~28.7 kB)`
 
