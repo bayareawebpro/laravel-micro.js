@@ -2,8 +2,8 @@ import ServiceProvider from "../../Support/ServiceProvider"
 import Kernel from './Kernel'
 export default class AppServiceProvider extends ServiceProvider {
 
-    constructor(App) {
-        super(App)
+    constructor(app) {
+        super(app)
         this.deferred = false
     }
 
@@ -13,19 +13,15 @@ export default class AppServiceProvider extends ServiceProvider {
      */
     register() {
         //Allow the App to share an instance of itself.
-        this.app.bind('App', () => this.app, true)
-        this.app.bind('Kernel', () => new Kernel(this.app), false)
+        this.app.bind('App', this.app, true)
+        this.app.bind('Kernel', Kernel, false)
     }
 
     /**
      * Boot any application services.
      * @return void
      */
-    boot() {
-        if(this.app.debugging){
-            this.app.share(...this.app.sharable).withOthers(window)
-        }
-    }
+    boot() {}
 
     /**
      * Declare the aliases for the provided services

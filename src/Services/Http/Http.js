@@ -1,14 +1,24 @@
-import axios from "axios"
+import HttpResource from "./HttpResource"
+
 export default class Http{
 
     /**
      * Http Constructor
-     * @param axiosConfig {Object}
+     * @param app {Application}
+     * @param driver {String}
      */
-    constructor(axiosConfig = {}){
-        this.http = axios.create(Object.assign({
-            timeout: 5000,
-        }, axiosConfig))
+    constructor(app, driver = 'axios'){
+        this.app = app
+        this.http = this.app.make(driver)
+    }
+
+    /**
+     * Resource Constructor
+     * @param resourceKey {String}
+     * @param primaryKey {String}
+     */
+    resource(resourceKey, primaryKey){
+        return this.request(new HttpResource(resourceKey, primaryKey))
     }
 
     /**

@@ -11,11 +11,11 @@ export default class SwapableServiceProvider extends ServiceProvider {
     register() {
         this.app.bind('Service_V1', ServiceV1, true)
         this.app.bind('Service_V2', ServiceV2, true)
-        this.app.bind('ServiceInstance', ServiceV1, true)
+        this.app.bind('ServiceInstance', (Service_V1) => Service_V1, true)
         this.app.bind('swapper', ()=>{
             return (ServiceInstance)=> {
+	              let implementation = 'Service_V1'
                 const alias = this.app.getName(ServiceInstance)
-                let implementation = 'Service_V1'
                 if(alias === implementation){
                     implementation = 'Service_V2'
                 }
@@ -32,9 +32,9 @@ export default class SwapableServiceProvider extends ServiceProvider {
 
     }
 
-    static get provides() {
+    get provides() {
         return [
-            'swapServiceInstance',
+            'swapper',
             'ServiceInstance',
             'Service_V1',
             'Service_V2',

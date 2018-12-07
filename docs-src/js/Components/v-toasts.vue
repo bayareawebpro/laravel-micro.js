@@ -6,7 +6,6 @@ export default {
                 title: 'title',
                 body: 'body',
                 timeout: 3000, // milliseconds
-                type: 'success'
             },
             toasts: [],
             isVisible: false,
@@ -40,9 +39,6 @@ export default {
             params.expire = setTimeout(() => {
                 this.toasts.splice(this.toasts.findIndex((toast)=>toast.id === params.id), 1)
             }, params.timeout)
-            if(!params.type){ //only add if object is missing key
-                params.type = 'success'
-            }
             this.toasts.unshift(params)
         },
         type(type) {
@@ -54,7 +50,7 @@ export default {
                 case 'info' :
                     return 'alert-info'
                 default :
-                    return 'alert-light'
+                    return 'alert-dark'
             }
         },
         icon(type) {
@@ -66,7 +62,7 @@ export default {
                 case 'info' :
                     return 'fa-info-circle'
                 default :
-                    return 'fa-info-circle'
+                    return 'fa-comment'
             }
         },
     },

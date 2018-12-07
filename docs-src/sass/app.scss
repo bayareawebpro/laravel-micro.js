@@ -1,6 +1,6 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
 // Variables
 @import 'variables';
@@ -9,3 +9,20 @@
 @import '~bootstrap/scss/bootstrap';
 @import './fontawesome';
 @import './animate.less';
+
+.text-primary{
+  color: var(--primary) !important;
+}
+.btn-primary{
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+* th, * td{
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+}
+
+main .container-fluid{
+  padding-top: 1em;
+  padding-bottom: 1em;
+}

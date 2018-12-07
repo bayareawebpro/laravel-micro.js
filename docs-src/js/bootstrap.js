@@ -1,22 +1,50 @@
 import {Handler} from "laravel-micro.js"
 import Application from "./Application"
+import Providers from "./ServiceProviders"
 
 const app = new Application
 app.errorHandler(Handler)
+
+//// EARLIEST DEBUGGING POINT ////
 app.debug(true)
+//// EARLIEST DEBUGGING POINT ////
 
 /** Register Service Providers **/
-import Providers from "./ServiceProviders"
-console.time('Application Provider Bindings Time')
+app.measure()
 Providers.forEach((ServiceProvider)=>{
     app.register(ServiceProvider)
 })
-console.timeEnd('Application Provider Bindings Time')
+app.measure(`Provider Registration Time`)
 
 
 /** Boot the Service Providers **/
+//// MEASURE MOUNT TIME ////
+app.measure()
 app.boot()
+app.measure(`Boot Time`)
+//// END MEASURE MOUNT TIME ////
+
 
 /** Start the Application **/
+//// MEASURE MOUNT TIME ////
+app.measure()
 app.start()
+app.measure(`Mount Time`)
+//// END MEASURE MOUNT TIME ////
+
+
+/** Bind some stuff! **/
+app.bind('DemoBoolValue', true)
+app.bind('DemoNumberValue', 1000)
+app.bind('DemoArrayValue', [{
+    test: 'Hello!'
+}])
+app.bind('DemoObjectValue', {
+    test: 'Hello!'
+})
+
+/** Share the shareable services with Window for inspection. **/
+if(app.debugging){
+    app.share(...app.sharable).withOthers(window)
+}
 

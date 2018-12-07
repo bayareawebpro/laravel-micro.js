@@ -32,13 +32,6 @@ export default class Console {
             window.console.table.apply(window.console, arguments)
     }
 
-    getDomListeners(selector){
-        if(!this.enabled) return
-            //$('a') === document.querySelector('a')
-            //$$('a') === document.querySelectorAll('a')
-            return getEventListeners($(selector))
-    }
-
     getDomProperties(selector){
         if(!this.enabled) return
             window.console.dir($(selector))
@@ -46,7 +39,7 @@ export default class Console {
 
     monitorEvents(element, events = ['click', 'keyup', 'focus']){
         if(!this.enabled) return
-            window.console.monitorEvents($(element), events);
+            window.console.monitorEvents(element, events);
     }
 
     startProfile(name){

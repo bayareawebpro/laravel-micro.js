@@ -1,5 +1,5 @@
-import ServiceProvider from "../ServiceProvider"
 import Cookies from "./Cookies"
+import ServiceProvider from "../../Support/ServiceProvider"
 export default class CookiesServiceProvider extends ServiceProvider {
 
     constructor(app) {
@@ -8,19 +8,28 @@ export default class CookiesServiceProvider extends ServiceProvider {
         this.deferred = true
     }
 
+
+    /**
+     * Register any application services.
+     * @return void
+     */
     register() {
-        this.app.bind('$cookies', () => new Cookies(this.app))
+        this.app.bind('Cookies', Cookies)
     }
 
+    /**
+     * Boot any application services.
+     * @return void
+     */
     boot() {
 
     }
 
-    get dependencies() {
-        return ['$config']
-    }
-
+    /**
+     * Declare the aliases for the provided services
+     * @return {Array}
+     */
     get provides() {
-        return ['$cookies']
+        return ['Cookies']
     }
 }

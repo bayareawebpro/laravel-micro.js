@@ -1,14 +1,12 @@
 import Http from "./Http"
-export default class HttpResource extends Http{
+export default class HttpResource{
 
     /**
      * Http Constructor
      * @param resourceKey {String}
      * @param primaryKey {String}
-     * @param axiosConfig {Object}
      */
-    constructor(resourceKey, primaryKey = 'id', axiosConfig = {}){
-        super(axiosConfig)
+    constructor(resourceKey, primaryKey = 'id'){
         this.primarykey = primaryKey
         this.resourceKey = resourceKey
     }
@@ -21,9 +19,7 @@ export default class HttpResource extends Http{
         if(['edit', 'update', 'destroy'].includes(type) && !this._setKey(data)){
             throw new Error(`HttpService data is missing primary key. Route ${type} cannot be resolved.`)
         }
-        const request = Object.assign(this._routes[type], ...data)
-        console.log(request)
-        return this.request(request)
+        return Object.assign(this._routes[type], ...data)
     }
 
     /**

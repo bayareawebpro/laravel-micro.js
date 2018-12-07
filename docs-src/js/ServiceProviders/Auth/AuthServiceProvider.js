@@ -8,16 +8,15 @@ export default class AuthServiceProvider extends ServiceProvider {
     }
 
     register() {
-        this.app.bind('Auth', Auth)
+
     }
 
     boot() {
 
     }
 
-    static get provides() {
+    get provides() {
         return [
-            'Auth'
         ]
     }
 }

@@ -1,24 +1,33 @@
-import ServiceProvider from "../ServiceProvider"
+import ServiceProvider from "../../Support/ServiceProvider"
 import Console from "./Console"
 export default class ConsoleServiceProvider extends ServiceProvider {
 
-    constructor(App) {
-        super(App)
-        this.shared = true
+    constructor(app) {
+        super(app)
         this.deferred = true
     }
 
+    /**
+     * Register any application services.
+     * @return void
+     */
     register() {
-       this.App.bind('$console', Console)
-        //Binding Classes or Callbacks or Objects
-       //this.App.bind('$console', (App) => new Console(App))
+       this.app.bind('Console', Console)
     }
 
+    /**
+     * Boot any application services.
+     * @return void
+     */
     boot() {
 
     }
 
-    static get provides() {
-        return ['$console']
+    /**
+     * Declare the aliases for the provided services
+     * @return {Array}
+     */
+    get provides() {
+        return ['Console']
     }
 }

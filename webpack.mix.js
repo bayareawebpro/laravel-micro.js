@@ -12,52 +12,70 @@ const mix = require('laravel-mix');
  */
 mix.setPublicPath('docs')
 mix.babelConfig({
-    'plugins': [
-        'syntax-dynamic-import',
-        'transform-object-rest-spread'
-    ]
+	'plugins': [
+		'syntax-dynamic-import',
+		'transform-object-rest-spread'
+	]
 })
 mix.options({
-    uglify: {
-        uglifyOptions: {
-            mangle: {
-                keep_fnames: true,
-                reserved: [
-                    'App',
-                    'Config',
-                    'Kernel',
-                    'Request',
-                    'Vue',
-                    'Events',
-                    'VueRoot',
-                    'MyService'
-                ]
-            },
-            compress: {
-                drop_console: mix.inProduction(),
-            }
-        }
-    }
+	uglify: {
+		sourceMap: true,
+		uglifyOptions: {
+			warnings: false,
+			mangle: {
+				keep_fnames: true,
+				reserved: [
+					'App',
+					'Kernel',
+					'Config',
+					'Request',
+
+					'ServiceV1',
+					'ServiceV2',
+
+					'Authenticate',
+					'RandomLoadingText',
+					'artisanMessage',
+
+					'Vue',
+					'Events',
+					'EventBus',
+					'VueRoot',
+					'Router',
+					'VueRouter',
+					'routerLinks',
+					'LazyService',
+				]
+			},
+			output: {
+				comments: false,
+				beautify: false,
+			},
+			toplevel: false,
+			nameCache: null,
+			ie8: false,
+		}
+	}
 })
 mix.webpackConfig({
-    resolve: {
-        alias: {
-            'laravel-micro.js': path.resolve(__dirname, 'src'),
-            '@components': path.resolve(__dirname, 'docs-src/js/Components'),
-            '@pages': path.resolve(__dirname, 'docs-src/js/Pages'),
-        }
-    },
-    output: {
-        chunkFilename: mix.inProduction() ? 'components/[name].[chunkhash].js' : 'components/[name].js',
-    }
+	resolve: {
+		alias: {
+			'laravel-micro.js': path.resolve(__dirname, 'src'),
+			'@components': path.resolve(__dirname, 'docs-src/js/Components'),
+			'@pages': path.resolve(__dirname, 'docs-src/js/Pages'),
+		}
+	},
+	output: {
+		chunkFilename: 'components/[name].js' //mix.inProduction() ? 'components/[name].[chunkhash].js' : 'components/[name].js',
+	}
 })
 mix.extract([
-    'vue',
-    'vue-router'
+	'vue',
+	'vue-router'
 ])
 mix.js('docs-src/js/bootstrap.js', 'app.js')
-   .sass('docs-src/sass/app.scss', 'app.css');
+	.sass('docs-src/sass/app.scss', 'app.css');
 
-if(!mix.inProduction()){
+if (!mix.inProduction()) {
+	mix.sourceMaps()
 }
-mix.sourceMaps()

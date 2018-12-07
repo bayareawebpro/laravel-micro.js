@@ -14,7 +14,9 @@ export default class EventBus {
     }
     $emit(...args){
         const eventName = args[0]
-        if(this.match(eventName, ':error')){}
+        if(this.match(eventName, ':error')){
+            //Do Something
+        }
         return this.bus.$emit.apply(this.bus, args)
     }
     $off(...args){

@@ -34,7 +34,9 @@
     "axios": "^0.18",
     "@fortawesome/fontawesome-free": "^5.5.0",
     "animate.css": "^3.7.0",
-    "bootstrap": "^4.1.3"
+    "bootstrap": "^4.1.3",
+    "prismjs": "^1.15.0"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }

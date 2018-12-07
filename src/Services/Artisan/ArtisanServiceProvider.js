@@ -1,10 +1,9 @@
-import ServiceProvider from "../../Framework/Support/ServiceProvider"
+import ServiceProvider from "../../Support/ServiceProvider"
 import Artisan from "./Artisan"
 export default class ArtisanServiceProvider extends ServiceProvider {
 
-    constructor(App) {
-        super(App)
-        this.shared = true
+    constructor(app) {
+        super(app)
         this.deferred = true
     }
 
@@ -13,7 +12,7 @@ export default class ArtisanServiceProvider extends ServiceProvider {
      * @return void
      */
     register() {
-        this.App.bind('$artisan', Artisan)
+        this.app.bind('Artisan', Artisan)
     }
 
     /**
@@ -28,7 +27,7 @@ export default class ArtisanServiceProvider extends ServiceProvider {
      * Declare the aliases for the provided services
      * @return {Array}
      */
-    static get provides() {
-        return ['$artisan']
+    get provides() {
+        return ['Artisan']
     }
 }

@@ -1,0 +1,6 @@
+Boilerplate Service Providers:
+
+These are a bunch of services that I'll work on as I need them.
+If you'd like to contribute a service please send a push release!
+
+Thank you!
