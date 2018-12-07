@@ -4,7 +4,7 @@ that provides a dependency injection container and familiar
 framework design that encourages you to use object oriented 
 principals in your frontend application.
 
-`Container.js (8.15 kB)`
+`LaravelMicro.js (~28.7 kB)`
 
 [![Generic badge](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![Generic badge](https://img.shields.io/badge/License-MIT-orange.svg)]()
@@ -13,13 +13,13 @@ principals in your frontend application.
 [View the Wiki for Examples and Documentation...](https://github.com/bayareawebpro/laravel-micro.js/wiki)
 
 
-## Installation
+### Alpha Release Installation
 
 `npm install git://github.com/bayareawebpro/laravel-micro.js`
 
 https://bayareawebpro.github.io/laravel-micro.js/#/
 
-## Issues
+### Issues
 • Uglify - Class Constructor names are parsed and read by the container for 
 the dependency injection & service provider functionality.  You'll need to 
 configure Webpack / Laravel mix to avoid mangling function names and 
