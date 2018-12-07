@@ -1,5 +1,4 @@
 <script>
-	import hljs from 'highlight.js'
 	import Prism from 'prismjs'
 	import examples from '../Examples.js'
 	export default {

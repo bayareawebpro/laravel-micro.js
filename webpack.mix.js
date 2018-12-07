@@ -1,5 +1,11 @@
 const mix = require('laravel-mix');
-
+const WebpackRequireFrom = require('webpack-require-from')
+const plugins = [
+	new WebpackRequireFrom({
+		 //path: '/vendor/cms/',
+		 variableName: "chunkURL"
+	})
+]
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -58,6 +64,7 @@ mix.options({
 	}
 })
 mix.webpackConfig({
+	plugins: plugins,
 	resolve: {
 		alias: {
 			'laravel-micro.js': path.resolve(__dirname, 'src'),
