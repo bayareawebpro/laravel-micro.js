@@ -86,7 +86,7 @@ mix
 	.sass('docs-src/sass/app.scss', 'app.css')
 
 
-mix.babel('src/exports.js', 'src/index.js')
+mix.js('src/exports.js', 'src/index.js')
 
 
 if (!mix.inProduction()) {

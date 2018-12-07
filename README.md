@@ -13,7 +13,7 @@ principals in your frontend application.
 
 ## Installation
 
-` npm install bayareawebpro/laravel-micro.js`
+`npm install git://github.com/bayareawebpro/laravel-micro.js`
 
 https://bayareawebpro.github.io/laravel-micro.js/#/
 
