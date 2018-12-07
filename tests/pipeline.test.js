@@ -1,6 +1,6 @@
 import Container from "../src/Container"
-import {PipeState, PipeA, PipeB, PipeC} from "./Mocks"
 import Pipeline from "../src/Support/Pipeline"
+import {PipeState, PipeA, PipeB, PipeC} from "./Mocks"
 
 test('Can Pipe object state through classes via a specified method.', () => {
 

@@ -4,6 +4,8 @@ that provides a dependency injection container and familiar
 framework design that encourages you to use object oriented 
 principals in your frontend application.
 
+`Container.js (8.15 kB)`
+
 [![Generic badge](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![Generic badge](https://img.shields.io/badge/License-MIT-orange.svg)]()
 [![Generic badge](https://img.shields.io/badge/Version-1.0.0-blue.svg)]()

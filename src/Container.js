@@ -178,12 +178,14 @@ export default class Container {
 	/**
 	 * (method) Register Service Provider
 	 * @param ServiceProvider {ServiceProvider}
+	 * @param name {null|String}
 	 * @return void
 	 */
-	register(ServiceProvider) {
+	register(ServiceProvider, name = null) {
 		try {
-			this.log(`Registering "${ServiceProvider.name}"...`)
-			this._providers[this.getName(ServiceProvider)] = new ServiceProvider(this)
+			const providerName = name || this.getName(ServiceProvider)
+			this._providers[providerName] = new ServiceProvider(this)
+			this.log(`Registered "${providerName}"...`)
 		} catch (e) {
 			this.handleError(e)
 		}
