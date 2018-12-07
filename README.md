@@ -20,7 +20,8 @@ in your frontend application.
 
 https://bayareawebpro.github.io/laravel-micro.js/#/
 
-### Issues
+### Laravel Mix Setup
+
 • Uglify - Class Constructor names are parsed and read by the container for 
 the dependency injection & service provider functionality.  You'll need to 
 configure Webpack / Laravel mix to avoid mangling function names and 
@@ -42,7 +43,12 @@ mix.options({
 		}
 	},
 })
+```
 
+• ES6 Class Extends - The library comes un-compiled so you can extend classes.  
+Use the babel config below to enable compiling.
+
+```
 //Enable ES6 Babel Compile for Laravel Micro
 mix.webpackConfig({
 	module: {
@@ -58,8 +64,8 @@ mix.webpackConfig({
 		}]
 	}
 })
-
 ```
+
 
 ### Contribute
 If your interesting in contributing to this repo, please send a push release.

@@ -21,10 +21,10 @@
 							width: this.$refs.home.clientWidth,
 							left: this.$refs.home.offsetLeft,
 						})
-					}else if(this.$route.path === '/service-swap'){
+					}else if(this.$route.path === '/about'){
 						this.move({
-							width: this.$refs.serviceSwap.clientWidth,
-							left: this.$refs.serviceSwap.offsetLeft,
+							width: this.$refs.about.clientWidth,
+							left: this.$refs.about.offsetLeft,
 						})
 					}else{
 						this.move({
@@ -74,32 +74,26 @@
 		<header class="position-relative">
 			<nav id="nav-primary" class="navbar navbar-expand navbar-light bg-light shadow-sm border-bottom">
 				<div class="container-fluid container-wide">
+					<a class="nav-link text-center d-inline-block" @click="$events.$emit('offcanvas:toggle', 'left')">
+						<i class="fa fa-bars text-dark"></i>
+					</a>
 					<span ref="home">
-						<router-link
-							exact
-							to="/"
-							class="navbar-brand ml-1">
-						Laravel<span class="text-primary">Micro</span>.js
-					</router-link>
+						<router-link exact to="/" class="navbar-brand">
+							Laravel<span class="text-primary">Micro</span>.js
+						</router-link>
 					</span>
-					<ul class="navbar-nav mr-auto d-none d-sm-inline-flex">
-						<li class="nav-item text-nowrap" ref="serviceSwap">
-							<a class="nav-link text-center" href="https://github.com/bayareawebpro/laravel-micro.js" target="_blank">GitHub</a>
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item text-nowrap" ref="about">
+							<router-link exact to="/about" class="nav-link">About</router-link>
 						</li>
-						<!--<li class="nav-item text-nowrap" ref="about">-->
-							<!--<router-link-->
-							<!--exact-->
-							<!--to="/about"-->
-							<!--class="nav-link">-->
-							<!--About-->
-							<!--</router-link>-->
-						<!--</li>-->
+						<li class="nav-item text-nowrap"> <!-- d-none d-sm-inline-flex -->
+							<a class="nav-link text-center mr-2" href="https://github.com/bayareawebpro/laravel-micro.js" target="_blank">
+								<i class="fab fa-github text-dark"></i>
+								GitHub</a>
+						</li>
 					</ul>
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item text-nowrap">
-							<a class="nav-link text-center d-inline-block d-sm-none" @click="$events.$emit('offcanvas:toggle', 'left')">
-								<i class="fa fa-bars text-dark"></i>
-							</a>
 							<!--<a class="nav-link text-center d-inline-block" @click="$events.$emit('offcanvas:toggle', 'right')">-->
 								<!--<i class="fa fa-bars text-dark"></i>-->
 							<!--</a>-->

@@ -6,6 +6,7 @@ export default {
 			path: '/', component: () => import(/* webpackChunkName: "layout" */ '@pages/Layout.vue'),
 			children: [
 				{path: '', component: () => import(/* webpackChunkName: "pages" */ '@pages/Homepage.vue')},
+				{path: '/about', component: () => import(/* webpackChunkName: "pages" */ '@pages/About.vue')},
 				{path: '/dashboard', component: () => import(/* webpackChunkName: "pages" */ '@pages/Dashboard.vue')},
 				{path: '/logs', component: () => import(/* webpackChunkName: "pages" */ '@pages/Logs.vue')},
 				{path: '/config', component: () => import(/* webpackChunkName: "pages" */ '@pages/Config.vue')},

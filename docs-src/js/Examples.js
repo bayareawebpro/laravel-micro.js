@@ -71,8 +71,122 @@ Providers.forEach((provider) => app.register(provider))
 app.bootProviders()
 
 `
+const swapA = `
+import {PlucksProperties} from "laravel-micro.js"
+export default class ServiceAbstract{
+    constructor(){
+        this._version = 'ServiceAbstract'
+        this._persistantFields = ['content']
+        this.content = ''
+    }
+    getVersion(){
+        return this._version
+    }
+    get state(){
+        return this._pluck(this, this._persistantFields)
+    }
+    set state(state){
+        Object.keys(state).forEach((key, index)=>{
+            if(this._persistantFields.includes(key)){
+                this[key] = state[key]
+            }
+        })
+    }
+}
+PlucksProperties(ServiceAbstract)
+`
+const swapB = `
+//file A
+import ServiceAbstract from "./ServiceAbstract"
+export default class Service_V1 extends ServiceAbstract{
+    constructor(){
+        super()
+        this._version = 'Service_V1'
+        this.fieldType = 'color'
+        this.fieldLabel = 'Choose a color:'
+    }
+}
+//file B
+import ServiceAbstract from "./ServiceAbstract"
+export default class Service_V2 extends ServiceAbstract{
+    constructor(){
+        super()
+        this._version = 'Service_V2'
+        this.fieldType = 'text'
+        this.fieldLabel = 'Tell us your favorite color:'
+    }
+}
+`
+const swapC = `
+import {ServiceProvider} from "laravel-micro.js"
+import ServiceV1 from "./ServiceV1"
+import ServiceV2 from "./ServiceV2"
+export default class SwapableServiceProvider extends ServiceProvider {
 
+  constructor(app) {
+     super(app)
+     this.deferred = true
+  }
 
+  register() {
+    this.app.bind('Service_V1', ServiceV1, true)
+    this.app.bind('Service_V2', ServiceV2, true)
+    this.app.bind('ServiceInstance', (Service_V1) => Service_V1, true)
+    
+    this.app.bind('swapper', ()=>{
+      return (ServiceInstance)=> {
+      
+        let implementation = 'Service_V1'
+        const alias = this.app.getName(ServiceInstance)
+        
+        if(alias === implementation){
+            implementation = 'Service_V2'
+        }
+        
+        this.app.destroy(alias)
+        
+        const newImplementation = this.app.make(implementation)
+        
+        newImplementation.state = ServiceInstance.state
+        
+        this.app.setInstance('ServiceInstance', newImplementation)
+        
+        return newImplementation
+      }
+    }, true)
+  }
+
+  boot() {
+
+  }
+
+  get provides() {
+      return [
+          'swapper',
+          'ServiceInstance',
+          'Service_V1',
+          'Service_V2',
+      ]
+  }
+}
+`
+const swapD = `
+export default {
+	data() {
+		return {
+			service: this.$app.make('ServiceInstance')
+		}
+	},
+	methods: {
+		swapImplementation() {
+			const swap = this.$app.make('swapper')
+			this.service = swap(this.service)
+		},
+		change(){
+			document.documentElement.style.setProperty('--primary', this.service.content)
+		}
+	},
+}`
 const binding = `
 
 /**
@@ -167,13 +281,13 @@ const pipeline = `
 import Container, {Pipeline} from "laravel-micro.js"
 
 const result = new Pipeline(new Container)
-    .send({ state: 0 })
-    .through([PipeA, PipeB, PipeC])
-    .via('handle')
-    .then((obj) => {
-        obj.state = (obj.state * 2)
-        return obj
-    })
+  .send({ state: 0 })
+  .through([PipeA, PipeB, PipeC])
+  .via('handle')
+  .then((obj) => {
+      obj.state = (obj.state * 2)
+      return obj
+  })
     
 expect(result.state).toBe(10)
 
@@ -432,6 +546,10 @@ app.start()
 `
 export default {
 	app,
+	swapA,
+	swapB,
+	swapC,
+	swapD,
 	async,
 	router,
 	make,
