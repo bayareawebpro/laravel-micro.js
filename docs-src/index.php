@@ -1,5 +1,5 @@
 <?php
-if(file_exists(__DIR__.'../docs/hot')){
+if(file_exists(realpath(__DIR__.'/../docs/hot'))){
 	$url = 'http://localhost:8080';
 }else{
 	$url = '../docs';
