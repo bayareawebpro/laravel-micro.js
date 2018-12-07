@@ -24,6 +24,7 @@ mix.babelConfig({
 	]
 })
 mix.options({
+	processCssUrls: false,
 	uglify: {
 		sourceMap: true,
 		uglifyOptions: {
