@@ -61,7 +61,6 @@ mix.webpackConfig({
 
 ```
 
-
 ### Contribute
 If your interesting in contributing to this repo, please send a push release.
 
