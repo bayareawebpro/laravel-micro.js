@@ -1,6 +1,6 @@
 export default function(className){
  return `
-    import ServiceProvider from "./Support/ServiceProvider"
+    import {ServiceProvider} from "laravel-micro.js"
     export default class ${className}Provider extends ServiceProvider{
     
         constructor(app) {
@@ -26,22 +26,12 @@ export default function(className){
         }
     
         /**
-         * Declare any dependencies that are required to be instantiated prior to boot.
-         * @return {Array}
-         */
-        get dependencies() {
-            return [
-                '$otherService'
-            ]
-        }
-    
-        /**
          * Declare the aliases for the provided services
          * @return {Array}
          */
         get provides() {
             return [
-                '$myService'
+                'alias'
             ]
         }
     }

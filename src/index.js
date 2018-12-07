@@ -1,8 +1,10 @@
 import Exception from './Exceptions/Exception'
 import Handler from './Exceptions/Handler'
 import Pipeline from './Support/Pipeline'
+import Collection from './Support/Collection'
 import ServiceProvider from './Support/ServiceProvider'
 import AppServiceProvider from './Services/App/AppServiceProvider'
+import Kernel from './Services/App/Kernel'
 import ConfigServiceProvider from './Services/Config/ConfigServiceProvider'
 import RequestServiceProvider from './Services/Request/RequestServiceProvider'
 import Container from './Container'
@@ -16,6 +18,8 @@ export {
     _Mixin,
     CanDebug,
 	  Container,
+	  Collection,
+	  Kernel,
     ListsPublicMethods,
     PlucksProperties,
     PreventsReactivity,

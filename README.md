@@ -29,40 +29,36 @@ If your interesting in contributing to this repo, please send a push release.
 The test suite is fairly simple and requires Jest to run.
 
 ```
+// Laravel Micro Mix Config
 mix.options({
+	processCssUrls: false,
 	uglify: {
 		uglifyOptions: {
 			mangle: {
-			    // Keep Constructor Names:
-			    // Required for service providers.
 				keep_fnames: true,
-				
-			    // Decare the aliases to be injected as reserved words.
-			    // Required for dependancy injection:
 				reserved: [
-					'App',
-					'Kernel',
-					'Config',
-					'Request',
-
-					'ServiceV1',
-					'ServiceV2',
-
-					'Authenticate',
-					'RandomLoadingText',
-					'artisanMessage',
-
-					'Vue',
-					'Events',
-					'EventBus',
-					'VueRoot',
-					'Router',
-					'VueRouter',
-					'routerLinks',
-					'LazyService',
+				    'App',
+				    'MyService',
 				]
 			},
 		}
+	},
+})
+
+//Enable ES6 Babel Compile for LaravelMicro
+mix.webpackConfig({
+	module: {
+		rules: [{
+			test: /\.js?$/,
+			include: [
+				path.resolve(__dirname, "node_modules/laravel-micro.js"), 
+			],
+			use: [{
+				loader: 'babel-loader',
+				options: mix.config.babel()
+			}]
+		}]
 	}
 })
+
 ```
