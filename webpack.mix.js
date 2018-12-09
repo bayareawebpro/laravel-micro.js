@@ -38,6 +38,8 @@ mix.options({
 
 					'ServiceV1',
 					'ServiceV2',
+					'Service_V1',
+					'Service_V2',
 
 					'Authenticate',
 					'RandomLoadingText',

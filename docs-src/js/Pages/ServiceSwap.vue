@@ -43,19 +43,19 @@
 		</button>
 		<hr>
 		<h4>Swapable Service Component</h4>
-		<v-code import="swapD" style="height: 330px; overflow: hidden"></v-code>
+		<v-code import="swapD" style="height: 330px;"></v-code>
 
 		<hr>
 		<h4>Swapable Service Abstract</h4>
 		<p></p>
-		<v-code import="swapA" style="height: 440px; overflow: hidden"></v-code>
+		<v-code import="swapA" style="height: 330px;"></v-code>
 
 		<hr>
 		<h4>Service Implementations</h4>
-		<v-code import="swapB" style="height: 400px; overflow: hidden"></v-code>
+		<v-code import="swapB" style="height: 330px;"></v-code>
 
 		<hr>
 		<h4>Swapable Service Provider</h4>
-		<v-code import="swapC" style="height: 960px; overflow: hidden"></v-code>
+		<v-code import="swapC" style="height: 330px;"></v-code>
 	</div>
 </template>
