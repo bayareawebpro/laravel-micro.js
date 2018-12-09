@@ -14,7 +14,7 @@
 				<ul class="list-unstyled">
 					<li>The loading sequences are for enjoyment only.</li>
 					<li>All of the data shown is accurate and provided by the LaravelMicro container.</li>
-					<li>To use these components in your project, simply copy them from the github repository.<br/>
+					<li>This demo is built with Vue.js. To use these components in your project, simply copy them from the github repository.<br/>
 						(Installing with NPM will only provide the core library files.)
 					</li>
 				</ul>

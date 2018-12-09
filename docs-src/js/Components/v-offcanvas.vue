@@ -136,7 +136,7 @@
 <style lang="sass">
 .v-offCanvas-menu
 	overflow: hidden
-	overflow-y: scroll
+	overflow-y: auto
 	li a
 		white-space: nowrap
 		span.item-text

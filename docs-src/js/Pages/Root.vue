@@ -73,15 +73,15 @@
 	<div class="d-flex flex-column" style="min-height: 100%">
 		<header class="position-relative">
 			<nav id="nav-primary" class="navbar navbar-expand navbar-light bg-light shadow-sm border-bottom">
-				<div class="container-fluid container-wide">
-					<a class="nav-link text-center d-inline-block" @click="$events.$emit('offcanvas:toggle', 'left')">
+				<div class="container-fluid container-wide ml-0 pl-0">
+					<a class="nav-link text-center d-inline-block m-0 p-0 mr-3" @click="$events.$emit('offcanvas:toggle', 'left')" style="width: 22px">
 						<i class="fa fa-bars text-dark"></i>
 					</a>
-					<span ref="home">
-						<router-link exact to="/" class="navbar-brand">
+					<div ref="home" class="navbar-brand mr-2">
+						<router-link exact to="/" class="navbar-brand m-0 p-0">
 							Laravel<span class="text-primary">Micro</span>.js
 						</router-link>
-					</span>
+					</div>
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item text-nowrap" ref="about">
 							<router-link exact to="/about" class="nav-link">About</router-link>
