@@ -202,11 +202,12 @@ class Collection {
     }
     /**
      * (Method) Add Or Update
+     * @param prop @type {String}
      * @param value @type {*}
      * @return {this}
      */
-    addOrUpdate(value) {
-        if(this.first(value)){
+    addOrUpdate(prop = 'id', value) {
+        if(this.firstWhere('id', value)){
             this.update(value)
         }else{
             this.prepend(value)
@@ -245,7 +246,7 @@ class Collection {
      * @return {this}
      */
     append(obj, dupes = false) {
-        if(!this.first(obj) || dupes){
+        if(!this.has(obj) || dupes){
             this._removeOverflow()
             this.state.data.push(obj)
         }
@@ -258,7 +259,7 @@ class Collection {
      * @return {this}
      */
     prepend(obj, dupes = false) {
-        if(!this.first(obj) || dupes){
+        if(!this.has(obj) || dupes){
             this._removeOverflow()
             this.state.data.unshift(obj)
         }
@@ -282,6 +283,29 @@ class Collection {
         return this.state.data.indexOf(obj) >= 0
     }
     /**
+     * (Method) Get First Item
+     * @return {*}
+     */
+    first(){
+        return this.hasItems ? this.items[0] : null
+    }
+    /**
+     * (Method) Get First Item
+     * @return {*}
+     */
+    last(){
+        return this.hasItems ? this.items[this.itemCount-1] : null
+    }
+    /**
+     * (Method) Find First Object Where Condition
+     * @param prop @type {Number|String}
+     * @param value @type {*}
+     * @return {*}
+     */
+    firstWhere(prop = 'id', value){
+        return this.where(prop, value)[0] || null
+    }
+    /**
      * (Method) Find Objects Where Condition
      * @param prop @type {Number|String}
      * @param value @type {*}
@@ -299,50 +323,25 @@ class Collection {
     whereNot(prop = 'id', value = null){
         return this.state.data.filter((entry)=>entry[prop] !== value)
     }
-
     /**
-     * (Method) Get First Item
-     * @return {*}
-     */
-    get first(){
-        return this.hasItems ? this.items[0] : null
-    }
-
-    /**
-     * (Method) Find First Object Where Condition
-     * @param prop @type {Number|String}
+     * (Method) Find Object by Property
+     * @param prop @type {String}
      * @param value @type {*}
      * @return {*}
      */
-    firstWhere(prop = 'id', value = null){
-        if(!value){
-            return this.first
-        }
-        return this.where(prop, value)[0] || null
-    }
-    /**
-     * (Method) Find Object by Property
-     * @param obj @type {Number|{}}
-     * @param prop @type {Number|String}
-     * @return {*}
-     */
-    last(obj = null, prop = 'id'){
-        if(obj){
-            let items = this.find(obj, prop)
-            let last = items[items.length-1]
-            return last ? last : null
-        }
-        let index = this.items.length-1
-        return this.items[index] ? this.items[index]  : null
+    lastWhere(prop = 'id', value){
+        const items = this.where(prop, value)
+        const last = items[items.length-1]
+        return last || null
     }
     /**
      * (Method) Update Object
-     * @param obj @type {{}}
      * @param prop @type {String}
+     * @param value @type {*}
      * @return {this}
      */
-    update(obj, prop = 'id') {
-        const entries = this.find(obj, prop)
+    update(prop = 'id', value) {
+        const entries = this.where(prop, value)
         if(entries){
             entries.forEach((entry)=>this.replace(entry, Object.assign({}, entry, obj)))
         }
@@ -350,12 +349,12 @@ class Collection {
     }
     /**
      * (Method) Append Object
-     * @param obj @type {{}}
      * @param prop @type {String}
+     * @param value @type {*}
      * @return {this}
      */
-    remove(obj, prop = 'id') {
-        const entries = this.find(obj, prop)
+    remove(prop = 'id', value) {
+        const entries = this.where(prop, value)
         if(entries){
             entries.forEach((entry)=>this.state.data.splice(this.state.data.indexOf(entry), 1))
         }
