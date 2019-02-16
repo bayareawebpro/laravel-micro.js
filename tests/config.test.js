@@ -1,5 +1,5 @@
 import Container from "../src/Container"
-import Handler from '../src/Exceptions/Handler'
+import ErrorHandler from '../src/Exceptions/ErrorHandler'
 import ConfigServiceProvider from "../src/Services/Config/ConfigServiceProvider"
 import Config from "../src/Services/Config/Config"
 import {AppServiceProvider} from "../src"
@@ -7,7 +7,7 @@ import {AppServiceProvider} from "../src"
 let container
 beforeEach(() => {
     container = new Container
-    container.errorHandler(Handler)
+    container.errorHandler(ErrorHandler)
     container.register(AppServiceProvider)
     container.register(ConfigServiceProvider)
     container.bootProviders()

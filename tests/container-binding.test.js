@@ -1,10 +1,10 @@
 import Container from "../src/Container"
-import Handler from '../src/Exceptions/Handler'
+import ErrorHandler from '../src/Exceptions/ErrorHandler'
 
 let container = new Container
 afterEach(() => {
     container = new Container
-    container.errorHandler(Handler)
+    container.errorHandler(ErrorHandler)
 });
 
 
