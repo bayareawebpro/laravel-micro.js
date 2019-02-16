@@ -304,7 +304,7 @@ class Collection {
      * (Method) Get First Item
      * @return {*}
      */
-    first(){
+    get first(){
         return this.hasItems ? this.items[0] : null
     }
 
