@@ -282,7 +282,7 @@ class Collection {
         return this.state.data.indexOf(obj) >= 0
     }
     /**
-     * (Method) Find Many Objects by Property
+     * (Method) Find Objects Where Condition
      * @param prop @type {Number|String}
      * @param value @type {*}
      * @return {*}
@@ -291,7 +291,7 @@ class Collection {
         return this.state.data.filter((entry)=>entry[prop] === value)
     }
     /**
-     * (Method) Find Many Objects by Property
+     * (Method) Find Objects WhereNot Condition
      * @param prop @type {Number|String}
      * @param value @type {*}
      * @return {*}
@@ -299,15 +299,24 @@ class Collection {
     whereNot(prop = 'id', value = null){
         return this.state.data.filter((entry)=>entry[prop] !== value)
     }
+
     /**
-     * (Method) Find Object by Property
-     * @param value @type {Number|{}}
-     * @param prop @type {Number|String}
+     * (Method) Get First Item
      * @return {*}
      */
-    first(value = null, prop = 'id'){
-        if(!value && this.hasItems){
-            return this.items[0]
+    first(){
+        return this.hasItems ? this.items[0] : null
+    }
+
+    /**
+     * (Method) Find First Object Where Condition
+     * @param prop @type {Number|String}
+     * @param value @type {*}
+     * @return {*}
+     */
+    firstWhere(prop = 'id', value = null){
+        if(!value){
+            return this.first
         }
         return this.where(prop, value)[0] || null
     }
