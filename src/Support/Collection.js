@@ -283,26 +283,33 @@ class Collection {
     }
     /**
      * (Method) Find Many Objects by Property
-     * @param obj @type {Number|{}}
      * @param prop @type {Number|String}
+     * @param value @type {*}
      * @return {*}
      */
-    find(obj, prop = 'id'){
-        return this.state.data.filter((entry)=>obj[prop] === entry[prop])
+    where(prop = 'id', value = null){
+        return this.state.data.filter((entry)=>entry[prop] === value)
+    }
+    /**
+     * (Method) Find Many Objects by Property
+     * @param prop @type {Number|String}
+     * @param value @type {*}
+     * @return {*}
+     */
+    whereNot(prop = 'id', value = null){
+        return this.state.data.filter((entry)=>entry[prop] !== value)
     }
     /**
      * (Method) Find Object by Property
-     * @param objOrId @type {Number|{}}
+     * @param value @type {Number|{}}
      * @param prop @type {Number|String}
      * @return {*}
      */
-    first(objOrId = null, prop = null){
-        if(!objOrId) return null
-        if(typeof objOrId !== 'object'){
-            objOrId = {id: objOrId}
+    first(value = null, prop = 'id'){
+        if(!value && this.hasItems){
+            return this.items[0]
         }
-        prop = prop || Object.keys(objOrId)[0]
-        return objOrId ? this.find(objOrId, prop)[0] : this.items[0] ? this.items[0]  : null
+        return this.where(prop, value)[0] || null
     }
     /**
      * (Method) Find Object by Property
