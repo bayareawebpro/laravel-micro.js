@@ -151,10 +151,10 @@ class Collection {
      * @return void
      */
     set perPage(value) {
-        this.setState({
-            per_page: this.get('per_page_options').includes(value) ? value : 1,
-            current_page: 0
-        })
+        this.setState(Object.assign(this.state, {
+            per_page: this.perPageOptions.includes(value) ? value : 1,
+            current_page: 1
+        }))
     }
     /**
      * (Getter) itemCount
