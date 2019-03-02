@@ -56,7 +56,8 @@ export default class Application extends LaravelMicro {
 
 			this.log('Middleware Completed!', finalRequest)
 
-			const next = finalRequest.get('next')
+
+			const next = finalRequest.next
 			if (this.isCallable(next)) next()
 
 			//Allow Navigation

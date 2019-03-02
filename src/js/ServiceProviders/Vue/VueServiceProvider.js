@@ -83,7 +83,7 @@ export default class VueServiceProvider extends ServiceProvider {
 			//Capture a new request instance and run it through the middleware pipeline.
 			Router.beforeEach((to, from, next) => {
 				Events.$emit('offcanvas:close:all')
-				this.app.run(this.app.make('Request').capture(to, from, next))
+				this.app.run({to, from, next})
 			})
 
 			//Stop any loading started by middleware..

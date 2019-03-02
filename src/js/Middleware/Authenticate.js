@@ -25,7 +25,7 @@ export default class Authenticate {
         setTimeout(() => {
 
             //We'll pretend to authorize the user, as we bind the request as the "user" object.
-            this.app.bind('currentUser', request.all())
+            this.app.bind('currentUser', request)
             events.$emit('app:loading', 'Authorization Successful!')
 
             //Then, after the user get's a chance to see the message update, we'll proceed and kill the loader.
