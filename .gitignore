@@ -2,3 +2,4 @@
 .idea
 .idea/*.xml
 node_modules
+coverage
