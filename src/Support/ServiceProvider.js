@@ -11,8 +11,8 @@ export default class ServiceProvider {
      * @return void
      */
     register() {
-        // this.App.bind(alias, () => concrete)
-        // this.App.bind(alias, concrete)
+        // this.app.bind(alias, () => concrete)
+        // this.app.bind(alias, concrete)
     }
 
     /**
@@ -20,7 +20,7 @@ export default class ServiceProvider {
      * @return void
      */
     boot() {
-        // const MyClass = this.App.make(alias)
+        // const MyClass = this.app.make(alias)
         // MyClass.method()
     }
 

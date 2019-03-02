@@ -9,15 +9,19 @@ export default class Kernel {
 		this.app = App
 		this._middleware = []
 		this._pipeline = new Pipeline(App)
+		this._method = 'handle'
 	}
+
+
 
 	/**
 	 * Register Middleware Stack
 	 * @param middleware {Array}
-	 * @return void
+	 * @return this
 	 */
 	setMiddleware(middleware) {
 		this._middleware = middleware
+		return this
 	}
 
 	/**
@@ -31,10 +35,21 @@ export default class Kernel {
 			return this._pipeline
 				.send(request)
 				.through(this._middleware)
-				.via('handle')
+				.via(this._method)
 				.then(then)
 		} catch (e) {
 			this.app.handleError(e)
 		}
+	}
+
+	/**
+	 * Terminate Middleware Stack
+	 * @param request {*}
+	 * @param then {function}
+	 * @return {*}
+	 */
+	terminate(request = null, then = (response) => response){
+		this._method = 'terminate'
+		return this.handle(request, then)
 	}
 }
