@@ -18,14 +18,13 @@ export default class RandomLoadingText {
         const pluckOne = () => services.shift()[0]
         const timePer = 100
         const intervalTime = services.length * timePer
-        const artisanTime = 400
+        const artisanTime = 200
         const makeInterval = () => {
             interval = setInterval(() => events.$emit('app:loading', `artisan make:${pluckOne()}`), timePer)
         }
 
         if(!this.app.isResolved('servicesLoaded')){
             makeInterval()
-
             this.app.setInstance('servicesLoaded', true)
         }else{
             events.$emit('app:loading', this.app.make('artisanMessage'))
@@ -39,7 +38,7 @@ export default class RandomLoadingText {
             setTimeout(()=>{
                 next(request)
 
-            }, 300)
+            }, 200)
         }, interval ? intervalTime : artisanTime)
     }
 }
