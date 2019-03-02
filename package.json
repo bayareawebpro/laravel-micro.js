@@ -1,20 +1,10 @@
 {
-  "name": "laravel-micro.js",
+  "name": "laravel-micro-demo",
   "version": "1.0.0",
   "description": "A Laravel inspired framework for frontend applications.",
   "author": "Daniel Alvidrez",
   "license": "MIT",
-  "module": "src/index.js",
-  "files": [
-    "src"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/bayareawebpro/laravel-micro.js.git"
-  },
   "scripts": {
-    "test": "jest --watch",
-    "testAll": "jest",
     "dev": "npm run development",
     "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "npm run development -- --watch",
@@ -40,5 +30,7 @@
     "vue-router": "^3.0.2",
     "webpack-require-from": "^1.4.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "laravel-micro.js": "git://github.com/bayareawebpro/laravel-micro.js.git"
+  }
 }

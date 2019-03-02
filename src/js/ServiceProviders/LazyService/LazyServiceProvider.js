@@ -20,7 +20,7 @@ export default class LazyServiceProvider extends ServiceProvider {
 		this.app.bind('lazyService', () => {
 
 			//First we import the script.
-			return import('./LazyService.js').then((service) => {
+			return import(/* webpackChunkName: "lazy-loaded-service" */ './LazyService.js').then((service) => {
 
 					//Then we bind the default export.
 					this.app.bind('lazyService', service.default)

@@ -2,7 +2,6 @@ const mix = require('laravel-mix');
 const WebpackRequireFrom = require('webpack-require-from')
 const plugins = [
 	new WebpackRequireFrom({
-		 //path: '/vendor/cms/',
 		 variableName: "chunkURL"
 	})
 ]
@@ -16,7 +15,7 @@ const plugins = [
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.setPublicPath('docs')
+mix.setPublicPath('build')
 mix.babelConfig({
 	'plugins': [
 		'syntax-dynamic-import',
@@ -60,15 +59,26 @@ mix.options({
 })
 mix.webpackConfig({
 	plugins: plugins,
+	module: {
+		rules: [{
+			test: /\.js?$/,
+			include: [
+				path.resolve(__dirname, "node_modules/laravel-micro.js"),
+			],
+			use: [{
+				loader: 'babel-loader',
+				options: mix.config.babel()
+			}]
+		}]
+	},
 	resolve: {
 		alias: {
-			'laravel-micro.js': path.resolve(__dirname, 'src'),
-			'@components': path.resolve(__dirname, 'docs-src/js/Components'),
-			'@pages': path.resolve(__dirname, 'docs-src/js/Pages'),
+			'@components': path.resolve(__dirname, 'src/js/Components'),
+			'@pages': path.resolve(__dirname, 'src/js/Pages'),
 		}
 	},
 	output: {
-		chunkFilename: 'components/[name].js' //mix.inProduction() ? 'components/[name].[chunkhash].js' : 'components/[name].js',
+		chunkFilename: 'components/[name].js'
 	}
 })
 mix.extract([
@@ -76,9 +86,8 @@ mix.extract([
 	'vue-router'
 ])
 mix
-	.js('docs-src/js/bootstrap.js', 'app.js')
-	.sass('docs-src/sass/app.scss', 'app.css')
-
+	.js('src/js/bootstrap.js', 'app.js')
+	.sass('src/sass/app.scss', 'app.css')
 
 if (!mix.inProduction()) {
 	mix.sourceMaps()
