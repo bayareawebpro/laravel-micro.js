@@ -1,76 +1,86 @@
 export default class Config {
 	/**
 	 * Config Service
-     * @url https://github.com/jonschlinkert/set-value
-	 **/
-	constructor(app, options = {}) {
-		this.app = app
-		this._options = Object.assign(options, {
+	 */
+	constructor(App, options = {}) {
+		this._app = App
+		this._options = Object.assign({
 			env: process.env.NODE_ENV,
-		})
+		}, options)
 	}
 
 	/**
-	 * Get Value from Config Object
-	 * @param keys {String}
+	 * Get Value
+	 * @param syntax {String}
 	 * @param fallback {*}
 	 * @return {*}
 	 **/
-	get(keys, fallback = null){
-        return keys.split('.').reduce((res, key) => {
-            try{
-                return res[key]
-			}catch (e) {
-                return fallback
-            }
+	get(syntax, fallback = null) {
+		if(!syntax.includes('.')){
+			return this._options[syntax] || fallback
+		}
+		return syntax.split('.').reduce((res, key) => {
+			try {
+				return res[key]
+			} catch (e) {
+				return fallback
+			}
 		}, this._options)
 	}
 
 	/**
-     * Get Value on Config Object
+	 * Set Value
 	 * @return mixed
 	 **/
-	set(keys, value){
+	set(keys, value) {
 		let ref = this._options
 		const path = keys.split('.')
 		const last = path.length - 1
-        path.forEach((key, index)=>{
-        	if(typeof ref[key] === 'undefined'){
-                ref[key] = {}
+		path.forEach((key, index) => {
+			if (typeof ref[key] === 'undefined') {
+				ref[key] = {}
 			}
-            if(index === last) {
-                ref[key] = value
-            }
-            ref = ref[key]
+			if (index === last) {
+				ref[key] = value
+			}
+			ref = ref[key]
 		})
 		return ref
 	}
 
-    /**
-     * Get All
-     * @return mixed
-     **/
-	all(){
-	    return this._options
-    }
-
 	/**
-	 * Set Class Method Names
-	 * @return {*}
+	 * Get All
+	 * @return mixed
 	 **/
-	toConfig(key){
-	    const config = this.get(key)
-        if(!config || typeof(config) !== 'object'){
-            throw new Error(`Config ${key} is not an Object or undefined. Cast toConfig failed.`)
-        }
-        return new Config(this.get(key))
+	all() {
+		return this._options
 	}
 
 	/**
-	 * Is ENV Dev
+	 * Get Value to New Config Instance
+	 * @return {*}
+	 **/
+	toConfig(key) {
+		const config = this.get(key)
+		if (!config || typeof (config) !== 'object') {
+			throw this._app.makeException('Config', `${key} is not an Object or undefined. Cannot cast to new Config.`)
+		}
+		return new Config(this.get(key))
+	}
+
+	/**
+	 * Is ENV Testing
 	 * @return Boolean
 	 **/
-	get isDev(){
+	get isTesting() {
+		return (this._options.env === 'testing')
+	}
+
+	/**
+	 * Is ENV Development
+	 * @return Boolean
+	 **/
+	get isDevelopment() {
 		return (this._options.env === 'development')
 	}
 
@@ -78,8 +88,7 @@ export default class Config {
 	 * Is ENV Production
 	 * @return Boolean
 	 **/
-	get isProduction(){
-		return this._options.env === 'production' || !['development', 'local'].includes(this._options.env)
+	get isProduction() {
+		return (this._options.env === 'production')
 	}
-
 }

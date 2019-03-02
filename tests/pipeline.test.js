@@ -1,17 +1,24 @@
+/* global beforeEach,afterEach,test,expect */
+
 import Container from "../src/Container"
-import Pipeline from "../src/Support/Pipeline"
 import {PipeState, PipeA, PipeB, PipeC} from "./Mocks"
+import Kernel from "../src/Services/App/Kernel"
+import AppServiceProvider from "../src/Services/App/AppServiceProvider"
 
 test('Can Pipe object state through classes via a specified method.', () => {
 
-    const container = new Container
-    const result = new Pipeline(container)
-        .send(PipeState)
-        .through([PipeA, PipeB, PipeC])
-        .via('handle')
-        .then((obj) => {
-            obj.state = (obj.state * 2)
-            return obj
-        })
-    expect(result.state).toBe(10)
+	const container = new Container
+	container.register(AppServiceProvider)
+	container.bootProviders()
+
+	const kernel = container.make('Kernel')
+
+	kernel.setMiddleware([PipeA, PipeB, PipeC])
+
+	const result = kernel.handle(PipeState, (obj) => {
+		obj.state = (obj.state * 2)
+		return obj
+	})
+
+	expect(result.state).toBe(10)
 })

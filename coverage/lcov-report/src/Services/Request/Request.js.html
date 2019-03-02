@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/Services/Request/Request.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/Services/Request</a> Request.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/29</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/29</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/29</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export default class Request {
+    /**
+     * Request Service
+     * @url https://javascriptplayground.com/url-search-params/
+     */
+<span class="fstat-no" title="function not covered" >    co</span>nstructor() {
+<span class="cstat-no" title="statement not covered" >        this._attributes = {}</span>
+    }
+&nbsp;
+    /**
+     * Capture New Request
+     * @param to {*}
+     * @param from {*}
+     * @param next {*}
+     * @return {Request}
+     */
+<span class="fstat-no" title="function not covered" >    ca</span>pture(to = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> from = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> next = <span class="branch-0 cbranch-no" title="branch not covered" >null)</span>{
+        let attributes = <span class="cstat-no" title="statement not covered" >{</span>
+            to: to,
+            from: from,
+            next: next,
+            href: window.location.href || null,
+            host: window.location.host || null,
+            hash: window.location.hash || null,
+            port: window.location.port || null,
+            origin: window.location.origin || null,
+            hostname: window.location.hostname || null,
+            pathname: window.location.pathname || null,
+            protocol: window.location.protocol || null,
+            userAgent: window.navigator.userAgent || null,
+            queryString: window.location.search || null,
+        }
+<span class="cstat-no" title="statement not covered" >        attributes.searchParams = {}</span>
+        const params = <span class="cstat-no" title="statement not covered" >this.searchParams.entries()</span>
+<span class="cstat-no" title="statement not covered" >        for (let [key, value] of params) {</span>
+<span class="cstat-no" title="statement not covered" >            attributes.searchParams[key] = value</span>
+        }
+<span class="cstat-no" title="statement not covered" >        this._attributes = attributes</span>
+<span class="cstat-no" title="statement not covered" >        return this</span>
+    }
+&nbsp;
+    /**
+     * Get all the Attributes
+     * @return {Object}
+     */
+<span class="fstat-no" title="function not covered" >    al</span>l(){
+<span class="cstat-no" title="statement not covered" >        return Object.keys(this._attributes).length &gt; 0 ? this._attributes : null</span>
+    }
+&nbsp;
+    /**
+     * Get a Value from the Attributes
+     * @param  notation {String}
+     * @param  fallback {*}
+     * @return {*}
+     */
+<span class="fstat-no" title="function not covered" >    ge</span>t(notation, fallback = <span class="branch-0 cbranch-no" title="branch not covered" >null)</span>{
+<span class="cstat-no" title="statement not covered" >        return notation.split('.').reduce(<span class="fstat-no" title="function not covered" >(r</span>es, key) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            try{</span>
+<span class="cstat-no" title="statement not covered" >                return res[key]</span>
+            }catch (e) {
+<span class="cstat-no" title="statement not covered" >                return fallback</span>
+            }
+        }, this._attributes)
+    }
+&nbsp;
+    /**
+     * Get a new Instance of the URLSearchParams Class when touched.
+     * @return {URLSearchParams}
+     */
+<span class="fstat-no" title="function not covered" >    ge</span>t searchParams(){
+<span class="cstat-no" title="statement not covered" >        return this._searchParams || (this._searchParams = new URLSearchParams(window.location.search))</span>
+    }
+&nbsp;
+    /**
+     * Set a new Instance of the URLSearchParams Class &amp; Query String
+     * @param query {*}
+     */
+<span class="fstat-no" title="function not covered" >    se</span>t searchParams(query){
+<span class="cstat-no" title="statement not covered" >        this._attributes.queryString = query</span>
+<span class="cstat-no" title="statement not covered" >        this._searchParams = new URLSearchParams(query)</span>
+    }
+&nbsp;
+    /**
+     * History Methods
+     * @return {*}
+     */
+<span class="fstat-no" title="function not covered" >    ge</span>t history(){
+<span class="cstat-no" title="statement not covered" >        return {</span>
+            back(){
+<span class="cstat-no" title="statement not covered" >                window.history.back()</span>
+            },
+            forward(){
+<span class="cstat-no" title="statement not covered" >                window.history.forward()</span>
+            },
+            go(url){
+<span class="cstat-no" title="statement not covered" >                window.history.go(url)</span>
+            },
+        }
+    }
+&nbsp;
+    /**
+     * Utility Methods
+     * @return {*}
+     */
+<span class="fstat-no" title="function not covered" >    ge</span>t utilities(){
+<span class="cstat-no" title="statement not covered" >        return {</span>
+            decode(value){
+<span class="cstat-no" title="statement not covered" >                return window.decodeURI(value)</span>
+            },
+            encode(value){
+<span class="cstat-no" title="statement not covered" >                return window.encodeURI(value)</span>
+            },
+            encodeComponent(value){
+<span class="cstat-no" title="statement not covered" >                return window.encodeURIComponent(value)</span>
+            },
+            decodeComponent(value){
+<span class="cstat-no" title="statement not covered" >                return window.decodeURIComponent(value)</span>
+            }
+        }
+    }
+&nbsp;
+    /**
+     * Route Methods
+     * @return {*}
+     */
+<span class="fstat-no" title="function not covered" >    ge</span>t location(){
+<span class="cstat-no" title="statement not covered" >        return {</span>
+            redirect(location){
+<span class="cstat-no" title="statement not covered" >                window.location.assign(location)</span>
+            },
+            reload(force = <span class="branch-0 cbranch-no" title="branch not covered" >false)</span>{
+<span class="cstat-no" title="statement not covered" >                window.location.reload(force)</span>
+            },
+            replace(location){
+<span class="cstat-no" title="statement not covered" >                window.location.replace(location)</span>
+            },
+        }
+    }
+}
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Mar 02 2019 07:03:50 GMT-0800 (Pacific Standard Time)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

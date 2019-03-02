@@ -1,7 +1,4 @@
-import PlucksProperties from './Traits/PlucksProperties'
 import PreventsReactivity from './Traits/PreventsReactivity'
-import ReadsArguments from './Traits/ReadsArguments'
-import ListsPublicMethods from "./Traits/ListsPublicMethods"
 import Exception from "./Exceptions/Exception"
 
 export default class Container {
@@ -42,15 +39,19 @@ export default class Container {
 	get providers() {
 		return this._providers
 	}
+
 	get bindings() {
 		return this._bindings
 	}
+
 	get resolved() {
 		return this._resolved
 	}
+
 	get sharable() {
 		return this._sharable.filter((entry) => this.isBound(entry))
 	}
+
 	get sharedWith() {
 		return this._sharedWith
 	}
@@ -126,6 +127,7 @@ export default class Container {
 		if (this._errorHandler && this.isCallable(this._errorHandler.handle)) {
 			return this._errorHandler.handle(error)
 		}
+		throw error
 	}
 
 	/**
@@ -417,11 +419,11 @@ export default class Container {
 		if (this.isResolved(alias) && this.canShare(alias) && !rebound) {
 			return this.getInstance(alias)
 		}
-		if (rebound){
+		if (rebound) {
 			this.destroy(alias)
 		}
 		if (!this.isBound(alias)) {
-			return this.handleError(new Exception(`No Binding found for "${alias}".`))
+			return this.handleError(this.makeException('Binding Exception', `No Binding found for "${alias}".`))
 		}
 		const providerInstance = this._findProvider(alias)
 		if (providerInstance && providerInstance.isDeferred) {
@@ -443,7 +445,7 @@ export default class Container {
 	 */
 	_resolveIfNotResolved(alias) {
 		this.log(`Resolving Binding for "${alias}"...`)
-		if (!this.isBound(alias)){
+		if (!this.isBound(alias)) {
 			throw this.makeException(
 				'Binding Exception',
 				`Cannot resolve "${alias}", is no binding available or the Application has not been booted yet.`
@@ -520,6 +522,27 @@ export default class Container {
 			obj[alias] = null
 			delete obj[alias]
 		}
+	}
+
+	/**
+	 * Read Arguments
+	 * @param callable
+	 * @return {*}
+	 * @private
+	 */
+	_readArguments(callable) {
+		// First match everything inside the function argument parens.
+		let args = callable.toString().match(/function.*?\(([^)]*)\)/)
+		if (args && args[1]) {
+			// Split the arguments string into an array comma delimited.
+			// Ensure no inline comments are parsed and trim the whitespace.
+			// Ensure no undefined values are added.
+			return args[1]
+				.split(',')
+				.map((arg) => arg.trim())
+				.filter((arg) => arg)
+		}
+		return []
 	}
 
 	/**
@@ -618,6 +641,3 @@ export default class Container {
 }
 /** Container Traits **/
 PreventsReactivity(Container)
-PlucksProperties(Container)
-ReadsArguments(Container)
-ListsPublicMethods(Container)
