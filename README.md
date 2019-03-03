@@ -1,4 +1,4 @@
-![](https://bayareawebpro.github.io/laravel-micro.js/build/images/top-banner.png)
+This is a community project and not an official Laravel package.
 
 # laravel-micro.js
 
