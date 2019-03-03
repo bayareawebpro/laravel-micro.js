@@ -16,8 +16,8 @@ in your frontend application.
 [View the Demo App for a Live Preview](https://bayareawebpro.github.io/laravel-micro.js/#/)
 
 
-### Alpha Release Installation
-`npm install git://github.com/bayareawebpro/laravel-micro.js`
+### NPM Installation
+`npm i laravel-micro.js`
 
 ---
 
