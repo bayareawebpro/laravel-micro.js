@@ -81,6 +81,6 @@ mix.webpackConfig({
 ```
 
 ### Contribute
-If your interesting in contributing to this repo, please send a push release.
+If your interesting in contributing to this repo, please do..
 
 Test suite provided by Jest.
