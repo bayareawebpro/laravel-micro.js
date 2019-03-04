@@ -6,7 +6,6 @@
 
 LaravelMicro.js is an IOC Container, Service Locator Pattern and Middleware Pipeline for your Laravel UI. It provides true dependency injection and a familiar design that encourages you to use object oriented principles in your frontend application.
 
-
 [Documentation](https://github.com/bayareawebpro/laravel-micro.js/wiki)
 | [Demo App](https://bayareawebpro.github.io/laravel-micro.js/#/)
 
