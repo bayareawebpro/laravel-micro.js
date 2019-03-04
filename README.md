@@ -11,7 +11,6 @@ An IOC Container written in Javascript so you can "backend your frontend" Larave
 * Error Handling.
 * LazyLoad Compatibile.
 * Object Oriented.
-* Zero Dependencies.
 
 [![Generic badge](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![Generic badge](https://img.shields.io/badge/License-MIT-orange.svg)]()
