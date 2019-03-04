@@ -1,91 +1,47 @@
-Disclaimer: This is a community project and not an official Laravel package.
+![alt text](https://bayareawebpro.github.io/laravel-micro.js/build/images/banner.png "Logo Title Text 1")
 
-# laravel-micro.js
+# `npm i laravel-micro.js`
 
-An IOC Container written in Javascript so you can "backend your frontend" Laravel style.
+**A Laravel style frontend framework that works with your UI framework of choice.**
+
+
+[Documentation](https://github.com/bayareawebpro/laravel-micro.js/wiki)
+| [Demo App](https://bayareawebpro.github.io/laravel-micro.js/#/)
+
+[![Generic badge](https://img.shields.io/badge/Version-1.0.2-blue.svg)]()
+[![Generic badge](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)]()
+[![Generic badge](https://img.shields.io/badge/CodeCoverage-75-brightgreen.svg)]()
+[![Generic badge](https://img.shields.io/badge/License-MIT-green.svg)]()
+
+**Disclaimer:** This is a community project and not an official Laravel package.
+
+## Quick Start Laravel Preset
+The easiest way to get started is by using the Preset Package on a fresh Laravel Project.  
+
+You can remove the package after running `artisan make:micro`.
+
+[laravel-micro-preset](https://github.com/bayareawebpro/laravel-micro-preset)
+
 
 ## Features
-* True Dependency Injection.
-* Service Providers.
-* Middleware & Pipelines.
-* Error Handling.
-* LazyLoad Compatibile.
-* Object Oriented.
+Compatible with Reactive Frameworks like Vue.js and React.
 
-[![Generic badge](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-[![Generic badge](https://img.shields.io/badge/License-MIT-orange.svg)]()
-[![Generic badge](https://img.shields.io/badge/Version-1.0.0-blue.svg)]()
+* Config
+* Container
+* Binding
+* Collections
+* Dependency Injection
+* Error Handling
+* Kernel
+* Lazy Loading
+* Middleware
+* Pipelines
+* Router Integration
+* Service Providers
+* Sharing
+* Traits
 
-[View the Wiki for Examples and Documentation](https://github.com/bayareawebpro/laravel-micro.js/wiki)
-
-[View the Demo App for a Live Preview](https://bayareawebpro.github.io/laravel-micro.js/#/)
-
-
-### NPM Installation
-`npm i laravel-micro.js`
-
----
-
-#### Laravel Mix Setup - Uglify/Terser
-Class Constructor names are parsed and read by the container for the dependency injection & service provider
- functionality.  You'll need to configure Webpack / Laravel Mix to avoid mangling function names and add the aliases 
- of the injections to the reserved words list.  You can develop without specifying these options but once you compile 
- for production you'll need to add them. 
-
-```
-//Disable Terser/Uglify for constructors and the specified argument names.
-mix.options({
-    //Uglify
-    uglify: {
-        uglifyOptions: {
-            mangle: {
-                keep_fnames: true,
-                reserved: [
-                    'App',
-                    'Kernel',
-                    'MyService',
-                ]
-            },
-        }
-    },
-    //Terser / Laravel Mix 4.0
-    terser: {
-        terserOptions: {
-            mangle: {
-                keep_fnames: true,
-                reserved: [
-                    'App',
-                    'Kernel',
-                    'MyService',
-                ]
-            },
-        }
-    },
-})
-```
-
-#### ES6 Class Extends
-The codebase comes un-compiled so you can extend classes. Use the babel config below to enable compiling.
-
-```
-//Enable ES6 Babel Compile for LaravelMicro.js Sourcecode.
-mix.webpackConfig({
-    module: {
-        rules: [{
-            test: /\.js?$/,
-            include: [
-                path.resolve(__dirname, "node_modules/laravel-micro.js"), 
-            ],
-            use: [{
-                loader: 'babel-loader',
-                options: mix.config.babel()
-            }]
-        }]
-    }
-})
-```
-
-### Contribute
-If your interesting in contributing to this repo, please do..
+## Contribute
+If your interesting in contributing to this project, please do.
 
 Test suite provided by Jest.
