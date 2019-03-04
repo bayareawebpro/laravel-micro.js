@@ -65,7 +65,7 @@ export default class Config {
 		if (!config || typeof (config) !== 'object') {
 			throw this._app.makeException('Config', `${key} is not an Object or undefined. Cannot cast to new Config.`)
 		}
-		return new Config(this.get(key))
+		return new Config(this._app, config)
 	}
 
 	/**
