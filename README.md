@@ -36,7 +36,7 @@ Class Constructor names are parsed and read by the container for the dependency 
 ```
 //Disable Terser/Uglify for constructors and the specified argument names.
 mix.options({
-    //Laravel Mix 3.0
+    //Uglify
     uglify: {
         uglifyOptions: {
             mangle: {
@@ -49,7 +49,7 @@ mix.options({
             },
         }
     },
-    //Laravel Mix 4.0
+    //Terser / Laravel Mix 4.0
     terser: {
         terserOptions: {
             mangle: {
