@@ -2,7 +2,7 @@ Disclaimer: This is a community project and not an official Laravel package.
 
 # laravel-micro.js
 
-An IOC Container written in Javascript so you can backend your frontend Laravel Style.
+An IOC Container written in Javascript so you can backend your frontend Laravel style.
 
 ## Features
 * True Dependency Injection.
