@@ -2,10 +2,18 @@ This is a community project and not an official Laravel package.
 
 # laravel-micro.js
 
-A Laravel inspired IOC Container for javascript applications 
-that provides dependency injection and a familiar design 
-that encourages you to use object oriented principles 
-in your frontend application.
+An IOC Container written in Javascript so you can backend your frontend Laravel Style.
+
+## Features
+* True Dependency Injection.
+* Service Providers.
+* Middleware & Pipelines.
+* Error Handling.
+* LazyLoad Compatibile.
+* Object Oriented.
+
+## Fat Free
+* Zero Dependancies.
 
 [![Generic badge](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![Generic badge](https://img.shields.io/badge/License-MIT-orange.svg)]()
