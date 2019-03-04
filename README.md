@@ -1,4 +1,4 @@
-![alt text](https://bayareawebpro.github.io/laravel-micro.js/build/images/banner.png "Logo Title Text 1")
+![alt text](https://bayareawebpro.github.io/laravel-micro.js/build/images/banner.png "LaravelMicro.js")
 
 # `npm i laravel-micro.js`
 
