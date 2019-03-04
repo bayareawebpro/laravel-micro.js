@@ -10,7 +10,7 @@ export default class MessageServiceProvider extends ServiceProvider {
 
         //this.app.bind('Auth', Auth)
         this.app.bind('artisanMessage', (Router) => {
-            return `artisan make:${Router.history.pending.path.substring(1) || 'laravel-micro'}`
+            return `micro make:${Router.history.pending.path.substring(1) || 'laravel-micro'}`
         }, false)
     }
 

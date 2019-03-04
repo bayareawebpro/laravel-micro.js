@@ -20,7 +20,7 @@ export default class RandomLoadingText {
         const intervalTime = services.length * timePer
         const artisanTime = 200
         const makeInterval = () => {
-            interval = setInterval(() => events.$emit('app:loading', `artisan make:${pluckOne()}`), timePer)
+            interval = setInterval(() => events.$emit('app:loading', `micro make:${pluckOne()}`), timePer)
         }
 
         if(!this.app.isResolved('servicesLoaded')){

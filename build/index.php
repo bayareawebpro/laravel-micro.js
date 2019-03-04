@@ -1,8 +1,8 @@
 <?php
-if(file_exists(realpath(__DIR__.'/../build/hot'))){
+if(file_exists(realpath(__DIR__.'/hot'))){
 	$url = 'http://localhost:8080';
 }else{
-	$url = '../build';
+	$url = '../';
 }
 ?>
 <!DOCTYPE html>

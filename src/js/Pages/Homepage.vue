@@ -8,7 +8,7 @@
 						color: 'purple',
 						icon: 'fa fa-cubes',
 						title: 'Container',
-						desc: 'The IOC Container can read arguments and construct concrete instances from callbacks and class bindings.',
+						desc: 'The IOC Container can read arguments and construct concrete instances.',
 						examples: [
 							{name: 'Binding',   import: 'binding',   hash: 'binding'},
 							{name: 'Make',      import: 'make',      hash: 'make'},
@@ -66,7 +66,7 @@
 	<div class="container-fluid">
 
 		<div class="pt-4 pb-4 d-flex flex-column justify-content-center align-items-center">
-			<v-logo :size="160" type="big"></v-logo>
+			<v-logo :size="100" type="big"></v-logo>
 			<h1 class="text-dark m-0 animated zoomInLeft">
 				Laravel<span class="text-primary">Micro</span>.js
 			</h1>
