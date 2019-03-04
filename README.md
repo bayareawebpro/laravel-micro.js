@@ -11,8 +11,6 @@ An IOC Container written in Javascript so you can backend your frontend Laravel 
 * Error Handling.
 * LazyLoad Compatibile.
 * Object Oriented.
-
-## Fat Free
 * Zero Dependancies.
 
 [![Generic badge](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
