@@ -1,4 +1,4 @@
-This is a community project and not an official Laravel package.
+Disclaimer: This is a community project and not an official Laravel package.
 
 # laravel-micro.js
 
