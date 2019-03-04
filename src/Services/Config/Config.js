@@ -61,11 +61,28 @@ export default class Config {
 	 * @return {*}
 	 **/
 	toConfig(key) {
-		const config = this.get(key)
+		return new Config(this._app, this._validateType(this.get(key)))
+	}
+
+	/**
+	 * Set Instance of Options.
+	 * @param value
+	 */
+	setInstance(value){
+		this._options = this._validateType(value)
+	}
+
+	/**
+	 * Validate Object Type.
+	 * @param config
+	 * @return {Object}
+	 * @private
+	 */
+	_validateType(config){
 		if (!config || typeof (config) !== 'object') {
-			throw this._app.makeException('Config', `${key} is not an Object or undefined. Cannot cast to new Config.`)
+			throw this._app.makeException('Config', `Invalid Object or undefined. Cannot set Config.`)
 		}
-		return new Config(this._app, config)
+		return config;
 	}
 
 	/**

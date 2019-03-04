@@ -46,14 +46,35 @@ test('Can get all properties.', () => {
 test('Can make property new instance of self.', () => {
 	const config = container.make('Config')
 	config.set('my.nested.prop', true)
-	expect(config.toConfig('my')).toBeInstanceOf(Config)
+
+	const newConfig = config.toConfig('my')
+	expect(newConfig).toBeInstanceOf(Config)
+	expect(newConfig._app).toBeInstanceOf(Container)
+	expect(newConfig.get('nested.prop')).toBeTruthy()
+
 	try{
 		config.toConfig('fail')
 	}catch (e) {
-		expect(e.toString()).toContain('Cannot cast to new Config')
+		expect(e.toString()).toContain('Cannot set Config')
 	}
 })
 
+
+test('Can set new instance / root object.', () => {
+	const config = container.make('Config')
+	config.setInstance({
+		isOk: {
+			shouldBe: true
+		}
+	})
+	expect(config.get('isOk.shouldBe')).toBeTruthy()
+
+	try{
+		config.setInstance(undefined)
+	}catch (e) {
+		expect(e.toString()).toContain('Cannot set Config')
+	}
+})
 
 test('Can use env getters.', () => {
 	const config = container.make('Config')
