@@ -25,7 +25,7 @@ const DefaultCollection = () => {
         from: 1,
         to: 1,
         data: [],
-        per_page_options: [1,3,5,10,15,20,30,40,50,75,100],
+        per_page_options: [1, 3, 5, 10, 15, 20, 30, 40, 50, 75, 100],
         pagination_delta: 2
     }
 }
@@ -43,6 +43,7 @@ class Collection {
         this.state = Object.assign({}, DefaultCollection(), state)
         this.defaultState = state
     }
+
     /**
      * (Getter) pagination Links
      * @return {Array}
@@ -50,20 +51,23 @@ class Collection {
     get pagination() {
         return this._buildLinks(this.get('current_page'), this.get('last_page'), this.get('pagination_delta'))
     }
+
     /**
      * (Getter) urlParams
      * @return {String}
      */
-    get urlParams(){
+    get urlParams() {
         return `paginate=${this.perPage}&page=${this.currentPage}&orderBy=${this.orderBy}&sort=${this.sort}`
     }
+
     /**
      * (Getter) Get Items Count
      * @return {Number}
      */
-    get itemCount(){
+    get itemCount() {
         return this.state.data.length
     }
+
     /**
      * (Getter) items
      * @return {Array}
@@ -71,6 +75,7 @@ class Collection {
     get items() {
         return this.get('data')
     }
+
     /**
      * (Getter) hasItems
      * @return {Boolean}
@@ -78,6 +83,7 @@ class Collection {
     get hasItems() {
         return this.items.length > 0
     }
+
     /**
      * (Getter) currentPage
      * @return {Number}
@@ -85,6 +91,7 @@ class Collection {
     get currentPage() {
         return this.get('current_page')
     }
+
     /**
      * (Setter) currentPage
      * @param value @type {Number}
@@ -93,6 +100,7 @@ class Collection {
     set currentPage(value) {
         this.set('current_page', value)
     }
+
     /**
      * (Getter) orderBy
      * @return {String}
@@ -100,6 +108,7 @@ class Collection {
     get orderBy() {
         return this.get('order_by')
     }
+
     /**
      * (Setter) orderBy
      * @param value @type {String}
@@ -108,6 +117,7 @@ class Collection {
     set orderBy(value) {
         this.set('order_by', value)
     }
+
     /**
      * (Getter) sort
      * @return {String}
@@ -115,6 +125,7 @@ class Collection {
     get sort() {
         return this.get('sort')
     }
+
     /**
      * (Setter) sort
      * @param value @type {String}
@@ -123,6 +134,7 @@ class Collection {
     set sort(value) {
         this.set('sort', value)
     }
+
     /**
      * (Getter) total
      * @return {Number}
@@ -130,6 +142,7 @@ class Collection {
     get total() {
         return this.get('total')
     }
+
     /**
      * (Setter) total
      * @param value @type {Number}
@@ -138,6 +151,7 @@ class Collection {
     set total(value) {
         this.set('total', value)
     }
+
     /**
      * (Getter) perPage
      * @return {Number}
@@ -145,6 +159,7 @@ class Collection {
     get perPage() {
         return this.get('per_page')
     }
+
     /**
      * (Setter) sort
      * @param value @type {Number}
@@ -156,6 +171,7 @@ class Collection {
             current_page: 1
         })
     }
+
     /**
      * (Getter) itemCount
      * @return {Number}
@@ -171,6 +187,7 @@ class Collection {
     get hasPagination() {
         return this.get('last_page') > 1
     }
+
     /**
      * (Getter) shouldRenderLinks
      * @return {Boolean}
@@ -178,6 +195,7 @@ class Collection {
     get shouldRenderLinks() {
         return this.pagination.includes(this.get('current_page'))
     }
+
     /**
      * (Getter) hasNextPage
      * @return {Boolean}
@@ -185,6 +203,7 @@ class Collection {
     get hasNextPage() {
         return this.get('current_page') + 1 <= this.get('last_page')
     }
+
     /**
      * (Getter) hasPreviousPage
      * @return {Boolean}
@@ -192,6 +211,7 @@ class Collection {
     get hasPreviousPage() {
         return this.get('current_page') - 1 >= 1
     }
+
     /**
      * (Method) Get Field Value
      * @param field @type {String}
@@ -200,6 +220,7 @@ class Collection {
     get(field) {
         return this.state[field]
     }
+
     /**
      * (Method) Add Or Update
      * @param prop @type {String}
@@ -207,13 +228,14 @@ class Collection {
      * @return {this}
      */
     addOrUpdate(prop = 'id', value) {
-        if(this.firstWhere('id', value)){
+        if (this.firstWhere('id', value)) {
             this.update(value)
-        }else{
+        } else {
             this.prepend(value)
         }
         return this
     }
+
     /**
      * (Method) Set Field
      * @param field @type {String}
@@ -224,6 +246,7 @@ class Collection {
         this.state[field] = value
         return this
     }
+
     /**
      * (Method) State
      * @param state @type {{}}
@@ -232,6 +255,7 @@ class Collection {
     setState(state) {
         this.state = Object.assign({}, this.state, state)
     }
+
     /**
      * (Method) flush State
      * @return void
@@ -239,6 +263,7 @@ class Collection {
     flush() {
         this.state = Object.assign({}, DefaultCollection(), this.defaultState)
     }
+
     /**
      * (Method) Append Object
      * @param obj @type {{}}
@@ -246,12 +271,13 @@ class Collection {
      * @return {this}
      */
     append(obj, dupes = false) {
-        if(!this.has(obj) || dupes){
+        if (!this.has(obj) || dupes) {
             this._removeOverflow()
             this.state.data.push(obj)
         }
         return this
     }
+
     /**
      * (Method) Prepend Object
      * @param obj @type {{}}
@@ -259,94 +285,101 @@ class Collection {
      * @return {this}
      */
     prepend(obj, dupes = false) {
-        if(!this.has(obj) || dupes){
+        if (!this.has(obj) || dupes) {
             this._removeOverflow()
             this.state.data.unshift(obj)
         }
         return this
     }
+
     /**
      * (Internal) Remove Item Overflow
      * @return {this}
      */
-    _removeOverflow(){
-        if(this.hasItems && (this.itemCount + 1) > this.perPage){
+    _removeOverflow() {
+        if (this.hasItems && (this.itemCount + 1) > this.perPage) {
             this.remove(this.last())
         }
     }
+
     /**
      * (Method) Find Object by Property
      * @param obj @type {{*}}
      * @return {Boolean}
      */
-    has(obj){
+    has(obj) {
         return this.state.data.indexOf(obj) >= 0
     }
+
     /**
      * (Method) Get First Item
      * @return {*}
      */
-    first(){
+    first() {
         return this.hasItems ? this.items[0] : null
     }
+
     /**
      * (Method) Get First Item
      * @return {*}
      */
-    last(){
-        return this.hasItems ? this.items[this.itemCount-1] : null
+    last() {
+        return this.hasItems ? this.items[this.itemCount - 1] : null
     }
+
     /**
      * (Method) Find First Object Where Condition
-     * @param prop @type {Number|String}
      * @param value @type {*}
+     * @param prop @type {Number|String}
      * @return {*}
      */
-    firstWhere(prop = 'id', value){
-        return this.where(prop, value)[0] || null
+    firstWhere(value, prop = 'id') {
+        return this.state.data.find((entry) => entry[prop] === value[prop])
     }
-    /**
-     * (Method) Find Objects Where Condition
-     * @param prop @type {Number|String}
-     * @param value @type {*}
-     * @return {*}
-     */
-    where(prop = 'id', value = null){
-        return this.state.data.filter((entry)=>entry[prop] === value)
-    }
-    /**
-     * (Method) Find Objects WhereNot Condition
-     * @param prop @type {Number|String}
-     * @param value @type {*}
-     * @return {*}
-     */
-    whereNot(prop = 'id', value = null){
-        return this.state.data.filter((entry)=>entry[prop] !== value)
-    }
+
     /**
      * (Method) Find Object by Property
-     * @param prop @type {String}
      * @param value @type {*}
+     * @param prop @type {String}
      * @return {*}
      */
-    lastWhere(prop = 'id', value){
+    lastWhere(value, prop = 'id') {
         const items = this.where(prop, value)
-        const last = items[items.length-1]
+        const last = items[items.length - 1]
         return last || null
     }
+
+    /**
+     * (Method) Find Objects Where Condition
+     * @param value @type {*}
+     * @param prop @type {String}
+     * @return {*}
+     */
+    where(value, prop = 'id') {
+        return this.state.data.filter((entry) => entry[prop] === value[prop])
+    }
+
+    /**
+     * (Method) Find Objects WhereNot Condition
+     * @param value @type {*}
+     * @param prop @type {Number|String}
+     * @return {*}
+     */
+    whereNot(value, prop = 'id') {
+        return this.state.data.filter((entry) => entry[prop] !== value[prop])
+    }
+
     /**
      * (Method) Update Object
-     * @param prop @type {String}
      * @param value @type {*}
+     * @param prop @type {String}
      * @return {this}
      */
-    update(prop = 'id', value) {
-        const entries = this.where(prop, value)
-        if(entries){
-            entries.forEach((entry)=>this.replace(entry, Object.assign({}, entry, obj)))
-        }
+    update(value, prop = 'id') {
+        this.where(value, prop).forEach((entry) => Object.assign(entry, value))
         return this
     }
+
     /**
      * (Method) Append Object
      * @param prop @type {String}
@@ -355,11 +388,12 @@ class Collection {
      */
     remove(prop = 'id', value) {
         const entries = this.where(prop, value)
-        if(entries){
-            entries.forEach((entry)=>this.state.data.splice(this.state.data.indexOf(entry), 1))
+        if (entries) {
+            entries.forEach((entry) => this.state.data.splice(this.state.data.indexOf(entry), 1))
         }
         return this
     }
+
     /**
      * (Method) Append Object
      * @param entry @type {{*}}
@@ -370,22 +404,24 @@ class Collection {
         this.state.data.splice(this.state.data.indexOf(entry), 1, obj)
         return this
     }
+
     /**
      * (Action) toggleSortable
      * @return void
      */
-    toggleSortable(value){
-        if(this.isOrderedBy(value)){
-            if(this.isSorted('desc')){
+    toggleSortable(value) {
+        if (this.isOrderedBy(value)) {
+            if (this.isSorted('desc')) {
                 this.set('sort', 'asc')
-            }else{
+            } else {
                 this.set('sort', 'desc')
             }
-        }else{
+        } else {
             this.set('order_by', value)
             this.set('sort', 'desc')
         }
     }
+
     /**
      * (Action) toPreviousPage
      * @return void
@@ -393,6 +429,7 @@ class Collection {
     previousPage() {
         this.page(this.get('current_page') - 1)
     }
+
     /**
      * (Action) toNextPage
      * @return void
@@ -400,6 +437,7 @@ class Collection {
     nextPage() {
         this.page(this.get('current_page') + 1)
     }
+
     /**
      * (Action) page
      * @param value @type {Number}
@@ -408,6 +446,7 @@ class Collection {
     page(value) {
         this.set('current_page', value)
     }
+
     /**
      * (Conditional Method) isCurrentPage
      * @param value @type {Number}
@@ -416,6 +455,7 @@ class Collection {
     isCurrentPage(value) {
         return this.get('current_page') === value
     }
+
     /**
      * (Conditional Method) isOrderedBy
      * @param value @type {Number}
@@ -424,6 +464,7 @@ class Collection {
     isOrderedBy(value) {
         return this.get('order_by') === value
     }
+
     /**
      * (Conditional Method) isSorted
      * @param value @type {Number}
@@ -432,6 +473,7 @@ class Collection {
     isSorted(value) {
         return this.get('sort') === value
     }
+
     /**
      * (Internal) buildLinks
      * @param currentPage @type {Number}
@@ -455,4 +497,5 @@ class Collection {
         return range
     }
 }
+
 export default Collection
