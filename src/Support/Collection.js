@@ -14,21 +14,19 @@
  * per_page_options: number[]
  * }}
  */
-const DefaultCollection = () => {
-    return {
-        sort: 'desc',
-        order_by: 'id',
-        per_page: 15,
-        current_page: 0,
-        last_page: 1,
-        total: 0,
-        from: 1,
-        to: 1,
-        data: [],
-        per_page_options: [1, 3, 5, 10, 15, 20, 30, 40, 50, 75, 100],
-        pagination_delta: 2
-    }
-}
+const DefaultCollection = () => ({
+    sort: 'desc',
+    order_by: 'id',
+    per_page: 15,
+    current_page: 0,
+    last_page: 1,
+    total: 0,
+    from: 1,
+    to: 1,
+    data: [],
+    per_page_options: [1, 3, 5, 10, 15, 20, 30, 40, 50, 75, 100],
+    pagination_delta: 2
+})
 
 /**
  * Collection Class
