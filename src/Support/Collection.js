@@ -93,6 +93,14 @@ class Collection {
     }
 
     /**
+     * (Getter) lastPage
+     * @return {Number}
+     */
+    get lastPage() {
+        return this.get('last_page')
+    }
+
+    /**
      * (Setter) currentPage
      * @param value @type {Number}
      * @return void
