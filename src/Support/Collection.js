@@ -228,21 +228,6 @@ class Collection {
     }
 
     /**
-     * (Method) Add Or Update
-     * @param prop @type {String}
-     * @param value @type {*}
-     * @return {this}
-     */
-    addOrUpdate(prop = 'id', value) {
-        if (this.firstWhere('id', value)) {
-            this.update(value)
-        } else {
-            this.prepend(value)
-        }
-        return this
-    }
-
-    /**
      * (Method) Set Field
      * @param field @type {String}
      * @param value @type {*}
@@ -350,7 +335,7 @@ class Collection {
      * @return {*}
      */
     lastWhere(value, prop = 'id') {
-        const items = this.where(prop, value)
+        const items = this.where(value, prop)
         const last = items[items.length - 1]
         return last || null
     }
@@ -376,6 +361,21 @@ class Collection {
     }
 
     /**
+     * (Method) Add Or Update
+     * @param prop @type {String}
+     * @param value @type {*}
+     * @return {this}
+     */
+    addOrUpdate(value, prop = 'id') {
+        if (this.firstWhere(value, prop)) {
+            this.update(value)
+        } else {
+            this.prepend(value)
+        }
+        return this
+    }
+
+    /**
      * (Method) Update Object
      * @param value @type {*}
      * @param prop @type {String}
@@ -388,12 +388,12 @@ class Collection {
 
     /**
      * (Method) Append Object
-     * @param prop @type {String}
      * @param value @type {*}
+     * @param prop @type {String}
      * @return {this}
      */
-    remove(prop = 'id', value) {
-        const entries = this.where(prop, value)
+    remove(value, prop = 'id') {
+        const entries = this.where(value, prop)
         if (entries) {
             entries.forEach((entry) => this.state.data.splice(this.state.data.indexOf(entry), 1))
         }
