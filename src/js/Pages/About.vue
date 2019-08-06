@@ -7,7 +7,7 @@
 	<div class="container-fluid">
 		<div class="card">
 			<div class="card-body text-center">
-				<h3 class="text-primary">About this Site</h3>
+				<h3 class="text-primary">About this Demo</h3>
 				<p class="lead">
 					This site is an example of what you can build with this library.
 				</p>
@@ -20,9 +20,6 @@
 				</ul>
 			</div>
 			<div class="card-footer text-center">
-				<a target="_blank" class="btn btn-primary" href="https://github.com/bayareawebpro/laravel-micro.js/tree/master/docs-src/js">
-					<i class="fa fa-arrow-alt-circle-right"></i> View Components
-				</a>
 				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="d-inline-block mt-2 mb-sm-0" target="_blank">
 					<input type="hidden" name="business" value="dan@bayareawebpro.com">
 					<input type="hidden" name="cmd" value="_donations">

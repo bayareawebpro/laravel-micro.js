@@ -73,6 +73,12 @@
 			<div class="animated fadeInUp text-center">
 				<p class="lead text-muted">A Javascript based IOC Container for Web Artisans </p>
 				<p class="mt-2"><code class="bg-dark text-light rounded p-1">artisan make:micro</code></p>
+				<p>
+
+					<a target="_blank" class="btn btn-primary" href="https://github.com/bayareawebpro/laravel-micro-preset">
+						<i class="fa fa-arrow-alt-circle-right"></i> Laravel Preset Installer
+					</a>
+				</p>
 			</div>
 			<div class="mt-3">
 				<div
