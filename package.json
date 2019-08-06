@@ -14,10 +14,7 @@
   },
   "scripts": {
     "test": "jest --watch",
-    "testAll": "jest",
-    "version-major": "version major",
-    "version-minor": "version minor",
-    "version-patch": "version patch"
+    "testAll": "jest"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.4.5",
