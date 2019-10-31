@@ -1,10 +1,9 @@
 /* global beforeEach,afterEach,test,expect */
 
-import {PipeA, PipeB, PipeC} from "./Mocks"
+import {PipeA, PipeB, PipeC} from "./mocks"
 import Container from "../src/Container"
 import Kernel from "../src/Services/App/Kernel"
 import AppServiceProvider from "../src/Services/App/AppServiceProvider"
-
 
 test('can pipe state through classes', () => {
 

@@ -2,6 +2,7 @@
     "name": "laravel-micro.js",
     "verbose": true,
     "bail": true,
+    "collectCoverage": false,
     "collectCoverageFrom": [
         "src/**"
     ]
