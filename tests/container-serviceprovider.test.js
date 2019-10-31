@@ -16,7 +16,7 @@ test('Registers Classes which extend ServiceProvider class.', () => {
 	expect(providerInstance).toBeInstanceOf(AppServiceProvider)
 
 	expect(Array.isArray(providerInstance.provides)).toBe(true)
-	expect(providerInstance.provides.length).toBe(1)
+	expect(providerInstance.provides.length).toBe(2)
 })
 
 

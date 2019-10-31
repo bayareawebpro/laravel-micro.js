@@ -22,7 +22,12 @@ test('Container cannot "share" aliases unless specified during binding.', () => 
 	try{
 		container.share('isTrue').withOthers(thing1)
 	}catch (e) {
-
+		expect(e.toString()).toContain('not sharable')
+	}
+	try{
+		container.share('unBound').withOthers(thing1)
+	}catch (e) {
+		expect(e.toString()).toContain('No binding')
 	}
 	expect(typeof thing1.$isTrue === 'function').toBe(false)
 	expect(thing1.$isTrue).toBeUndefined()

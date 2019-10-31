@@ -1,18 +1,14 @@
 import Pipeline from "../../Support/Pipeline"
-
 export default class Kernel {
 	/**
 	 * App Kernel Constructor
+	 * @param App {Container}
 	 * @return void
 	 */
 	constructor(App) {
-		this.app = App
-		this._middleware = []
-		this._pipeline = new Pipeline(App)
-		this._method = 'handle'
+		this.middleware = []
+		this.pipeline = new Pipeline(App)
 	}
-
-
 
 	/**
 	 * Register Middleware Stack
@@ -20,36 +16,35 @@ export default class Kernel {
 	 * @return this
 	 */
 	setMiddleware(middleware) {
-		this._middleware = middleware
+		this.middleware = middleware
 		return this
 	}
 
 	/**
 	 * Register Middleware Stack
 	 * @param request {*}
-	 * @param then {function}
+	 * @param then {function|null}
 	 * @return {*}
 	 */
-	handle(request = null, then = (response) => response) {
-		try {
-			return this._pipeline
-				.send(request)
-				.through(this._middleware)
-				.via(this._method)
-				.then(then)
-		} catch (e) {
-			this.app.handleError(e)
-		}
+	handle(request, then = null) {
+		return this.pipeline
+			.send(request)
+			.through(this.middleware.slice())
+			.via('handle')
+			.then(then)
 	}
 
 	/**
 	 * Terminate Middleware Stack
 	 * @param request {*}
-	 * @param then {function}
+	 * @param then {function|null}
 	 * @return {*}
 	 */
-	terminate(request = null, then = (response) => response){
-		this._method = 'terminate'
-		return this.handle(request, then)
+	terminate(request, then = null){
+		return this.pipeline
+			.send(request)
+			.through(this.middleware.slice().reverse())
+			.via('terminate')
+			.then(then)
 	}
 }

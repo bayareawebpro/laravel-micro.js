@@ -35,6 +35,7 @@ test('Errors', () => {
 	container.bind('Error', () => {
 		throw new Error('This should not be handled.')
 	})
+	expect(container.isBound('Error')).toBeTruthy()
 	expect(container.make('Error')).toBeUndefined()
 })
 

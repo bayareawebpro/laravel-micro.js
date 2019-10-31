@@ -1,0 +1,16 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: NPM Install
+        run: npm install
+      - name: Unit Test
+        run: npm run test

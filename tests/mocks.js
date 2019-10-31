@@ -28,6 +28,9 @@ class PipeA{
         thing.state++
         return next(thing)
     }
+    terminate(thing, next){
+        return next(thing)
+    }
 }
 class PipeB{
     constructor(App){}
@@ -35,11 +38,17 @@ class PipeB{
         thing.state = (thing.state + 1)
         return next(thing)
     }
+    terminate(thing, next){
+        return next(thing)
+    }
 }
 class PipeC{
     constructor(App){}
     handle(thing, next){
         thing.state = (thing.state + 3)
+        return next(thing)
+    }
+    terminate(thing, next){
         return next(thing)
     }
 }

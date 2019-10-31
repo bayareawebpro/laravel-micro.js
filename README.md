@@ -9,10 +9,11 @@ LaravelMicro.js is an IOC Container, Service Locator Pattern and Middleware Pipe
 [Documentation](https://github.com/bayareawebpro/laravel-micro.js/wiki)
 | [Demo App](https://bayareawebpro.github.io/laravel-micro.js/#/)
 
-[![Generic badge](https://img.shields.io/badge/Version-1.0.2-blue.svg)]()
-[![Generic badge](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)]()
-[![Generic badge](https://img.shields.io/badge/CodeCoverage-75-brightgreen.svg)]()
-[![Generic badge](https://img.shields.io/badge/License-MIT-green.svg)]()
+![Version](https://img.shields.io/badge/Version-1.0.2-blue.svg)
+![Coverage](https://img.shields.io/badge/CodeCoverage-75-brightgreen.svg)
+![Coverage](https://github.com/bayareawebpro/laravel-micro.js/workflows/ci/badge.svg)
+![MIT](https://img.shields.io/badge/License-MIT-green.svg)
+
 
 > **Disclaimer:** This is a community project and not an official Laravel package.
 

@@ -1,5 +1,5 @@
-import ServiceProvider from "../../Support/ServiceProvider"
 import Kernel from "./Kernel"
+import ServiceProvider from "../../Support/ServiceProvider"
 export default class AppServiceProvider extends ServiceProvider {
 
 	constructor(app) {
@@ -13,8 +13,8 @@ export default class AppServiceProvider extends ServiceProvider {
 	 */
 	register() {
 		//Allow the App to Inject an instance of itself.
-		this.app.bind('App', this.app, true)
-		this.app.bind('Kernel', Kernel, false)
+		this.app.bind('App', ()=>this.app)
+		this.app.bind('Kernel',Kernel, false)
 	}
 
 	/**
@@ -29,7 +29,8 @@ export default class AppServiceProvider extends ServiceProvider {
 	 */
 	get provides() {
 		return [
-			'App'
+			'App',
+			'Kernel'
 		]
 	}
 }

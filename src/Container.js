@@ -272,12 +272,11 @@ export default class Container {
         this._shouldShare = []
         aliases.forEach((alias, index) => {
             if (!this.isBound(alias)) {
-                return this.handleError(new Exception(`No binding for ${alias} available to share.`))
+                return this.handleError(this.makeException(`No binding for ${alias} available to share.`))
             }
             if (!this.canShare(alias)) {
-                return this.handleError(new Exception(`${alias} is not sharable.`))
+                return this.handleError(this.makeException(`${alias} is not sharable.`))
             }
-
             if (!this._shouldShare.includes(alias)) {
                 this._shouldShare.push(alias)
             }
@@ -310,9 +309,7 @@ export default class Container {
                     }
                 })
             })
-            if (this._debug) {
-                this.log(`Shared "${this._shouldShare.join(', ')}" with ${objectArray.length} Objects.`)
-            }
+            this.log(`Shared "${this._shouldShare.join(', ')}" with ${objectArray.length} Objects.`)
         }
         this._shouldShare = []
     }

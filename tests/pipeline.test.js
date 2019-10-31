@@ -1,11 +1,12 @@
 /* global beforeEach,afterEach,test,expect */
 
-import Container from "../src/Container"
 import {PipeA, PipeB, PipeC} from "./Mocks"
+import Container from "../src/Container"
 import Kernel from "../src/Services/App/Kernel"
 import AppServiceProvider from "../src/Services/App/AppServiceProvider"
 
-test('Can Pipe object state through classes via a specified method.', () => {
+
+test('can pipe state through classes', () => {
 
 	const container = new Container
 	container.register(AppServiceProvider)
@@ -19,11 +20,11 @@ test('Can Pipe object state through classes via a specified method.', () => {
 		obj.state = (obj.state * 2)
 		return obj
 	})
-	const result2 = kernel.handle({ state: 0 }, (obj) => {
-		obj.state = (obj.state * 2)
+	expect(result1.state).toBe(10)
+
+	const result3 = kernel.terminate({ state: 10 }, (obj) => {
+		obj.state = (obj.state / 2)
 		return obj
 	})
-
-	expect(result1.state).toBe(10)
-	expect(result2.state).toBe(10)
+	expect(result3.state).toBe(5)
 })
