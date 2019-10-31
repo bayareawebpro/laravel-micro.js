@@ -9,21 +9,11 @@ LaravelMicro.js is an IOC Container, Service Locator Pattern and Middleware Pipe
 [Documentation](https://github.com/bayareawebpro/laravel-micro.js/wiki)
 | [Demo App](https://bayareawebpro.github.io/laravel-micro.js/#/)
 
-![Version](https://img.shields.io/badge/Version-1.0.2-blue.svg)
-![Coverage](https://img.shields.io/badge/CodeCoverage-75-brightgreen.svg)
 ![Coverage](https://github.com/bayareawebpro/laravel-micro.js/workflows/ci/badge.svg)
+![Version](https://img.shields.io/badge/Version-1.x-blue.svg)
 ![MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
-
-> **Disclaimer:** This is a community project and not an official Laravel package.
-
-## Quick Start Laravel Preset
-The easiest way to get started is by using the Preset Package on a fresh Laravel Project.  
-
-You can remove the package after running `artisan make:micro`.
-
-[laravel-micro-preset](https://github.com/bayareawebpro/laravel-micro-preset)
-
+> **Disclaimer:** This is a community project and not an official Laravel package. 
 
 ## Features
 Compatible with Reactive Frameworks like Vue.js and React.
