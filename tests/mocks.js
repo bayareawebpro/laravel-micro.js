@@ -22,7 +22,6 @@ class ClassD {
     }
 }
 
-const PipeState = { state: 0 }
 class PipeA{
     constructor(App){}
     handle(thing, next){
@@ -52,6 +51,5 @@ export {
     ClassD,
     PipeA,
     PipeB,
-    PipeC,
-    PipeState
+    PipeC
 }

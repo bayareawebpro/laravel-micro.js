@@ -1,6 +1,5 @@
 import ServiceProvider from "../../Support/ServiceProvider"
-import Kernel from './Kernel'
-
+import Kernel from "./Kernel"
 export default class AppServiceProvider extends ServiceProvider {
 
 	constructor(app) {
@@ -13,7 +12,7 @@ export default class AppServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	register() {
-		//Allow the App to share an instance of itself.
+		//Allow the App to Inject an instance of itself.
 		this.app.bind('App', this.app, true)
 		this.app.bind('Kernel', Kernel, false)
 	}
@@ -22,8 +21,7 @@ export default class AppServiceProvider extends ServiceProvider {
 	 * Boot any application services.
 	 * @return void
 	 */
-	boot() {
-	}
+	boot() {}
 
 	/**
 	 * Declare the aliases for the provided services.
@@ -31,8 +29,7 @@ export default class AppServiceProvider extends ServiceProvider {
 	 */
 	get provides() {
 		return [
-			'App',
-			'Kernel'
+			'App'
 		]
 	}
 }

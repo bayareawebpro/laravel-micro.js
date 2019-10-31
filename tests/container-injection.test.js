@@ -5,9 +5,11 @@ import ErrorHandler from "../src/Exceptions/ErrorHandler"
 import {ClassA, ClassB, ClassC, ClassD} from "./mocks"
 
 let container = new Container
+container.debug(false)
 beforeEach(() => {
 	container = new Container
 	container.errorHandler(ErrorHandler)
+	container.debug(false)
 });
 
 

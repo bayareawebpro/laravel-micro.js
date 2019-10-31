@@ -14,7 +14,7 @@ LaravelMicro.js is an IOC Container, Service Locator Pattern and Middleware Pipe
 [![Generic badge](https://img.shields.io/badge/CodeCoverage-75-brightgreen.svg)]()
 [![Generic badge](https://img.shields.io/badge/License-MIT-green.svg)]()
 
-**Disclaimer:** This is a community project and not an official Laravel package.
+> **Disclaimer:** This is a community project and not an official Laravel package.
 
 ## Quick Start Laravel Preset
 The easiest way to get started is by using the Preset Package on a fresh Laravel Project.  
@@ -28,17 +28,18 @@ You can remove the package after running `artisan make:micro`.
 Compatible with Reactive Frameworks like Vue.js and React.
 
 * Config
-* Container
 * Binding
-* Collections
+* Container
 * Dependency Injection
-* Error Handling
-* Kernel
-* Lazy Loading
-* Middleware
-* Pipelines
 * Router Integration
 * Service Providers
+* Error Handling
+* Lazy Loading
+* Collections
+* Repository
+* Middleware
+* Pipelines
+* Kernel
 * Sharing
 * Traits
 

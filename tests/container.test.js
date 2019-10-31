@@ -5,8 +5,12 @@ import ErrorHandler from '../src/Exceptions/ErrorHandler'
 import Exception from '../src/Exceptions/Exception'
 
 let container = new Container
-afterEach(() => {
+container.debug(false)
+container.errorHandler(ErrorHandler)
+
+beforeEach(() => {
 	container = new Container
+	container.debug(false)
 	container.errorHandler(ErrorHandler)
 })
 
@@ -43,36 +47,6 @@ test('Errors receive instance of container if their handle() method is called by
 	})
 	expect(container.make('Exception')).toBeInstanceOf(Container)
 })
-
-
-test('Container can set / get debugging (log recording) via assignment or method', () => {
-
-	container.debugging = true
-	expect(container.debugging).toBe(true)
-
-	container.debugging = false
-	expect(container.debugging).toBe(false)
-
-	container.debug(true)
-	expect(container.debugging).toBe(true)
-})
-
-
-
-test('Container can get / set & clear logs.', () => {
-
-	container.debugging = true
-
-	container.bind('test', true)
-	expect(container.logOutput.length).toBe(1)
-
-	container.flushLogs()
-	expect(container.logOutput.length).toBe(0)
-
-	container.logOutput = [1,2]
-	expect(container.logOutput.length).toBe(2)
-})
-
 
 test('Container will throw exception if concrete instance is undefined.', () => {
 	container.bind('test', () => undefined)

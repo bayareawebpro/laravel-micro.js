@@ -6,6 +6,7 @@ import ServiceProvider from "../src/Support/ServiceProvider"
 
 test('Registers Classes which extend ServiceProvider class.', () => {
 	const container = new Container
+	container.debug(false)
 	container.register(AppServiceProvider)
 
 	expect(container.isRegistered('AppServiceProvider')).toBe(true)
@@ -15,12 +16,13 @@ test('Registers Classes which extend ServiceProvider class.', () => {
 	expect(providerInstance).toBeInstanceOf(AppServiceProvider)
 
 	expect(Array.isArray(providerInstance.provides)).toBe(true)
-	expect(providerInstance.provides.length).toBe(2)
+	expect(providerInstance.provides.length).toBe(1)
 })
 
 
 test('Providers can have their boot method called when bootProviders() is called.', () => {
 	const container = new Container
+	container.debug(false)
 	container.register(AppServiceProvider)
 
 	const providerInstance = container.getProvider('AppServiceProvider')
@@ -37,6 +39,7 @@ test('Providers can have their boot method called when bootProviders() is called
 
 test('Deferred Providers will not have their boot method called when bootProviders() is called.', () => {
 	const container = new Container
+	container.debug(false)
 	container.register(AppServiceProvider)
 
 	const providerInstance = container.getProvider('AppServiceProvider')
@@ -54,6 +57,7 @@ test('Deferred Providers will not have their boot method called when bootProvide
 
 test('Deferred Providers will have their boot method called their provided service is resolved.', () => {
 	const container = new Container
+	container.debug(false)
 	container.register(AppServiceProvider)
 
 	const providerInstance = container.getProvider('AppServiceProvider')
@@ -74,25 +78,27 @@ test('Deferred Providers will have their boot method called their provided servi
 })
 
 
-// test('Container will throw exception if registered service is not bound.', () => {
-// 	const container = new Container
-// 	container.debug(true)
-//
-// 	class TestProvider extends ServiceProvider{
-// 		constructor(App) {
-// 			super(App)
-// 			this.deferred = false
-// 		}
-// 		register() {
-//
-// 		}
-// 		get provides() {
-// 			return ['NotFound']
-// 		}
-// 	}
-//
-// 	container.register(TestProvider)
-// 	container.bootProviders()
-//
-// 	expect(container.make('NotFound')).toBeInstanceOf(Error)
-// })
+ test('Container will throw exception if registered service is not bound.', () => {
+ 	const container = new Container
+	 container.debug(false)
+
+ 	class TestProvider extends ServiceProvider{
+ 		constructor(App) {
+ 			super(App)
+ 			this.deferred = false
+ 		}
+ 		register() {
+
+ 		}
+ 		get provides() {
+ 			return ['NotFound']
+ 		}
+ 	}
+ 	container.register(TestProvider)
+ 	container.bootProviders()
+ 	try{
+		container.make('NotFound')
+	}catch (e) {
+		expect(e.toString()).toContain(' No Binding found')
+	}
+ })

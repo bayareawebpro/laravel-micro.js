@@ -38,7 +38,7 @@ export default class Pipeline {
      * @return {this}
      */
     through(pipes){
-        this._pipes = pipes
+        this._pipes = pipes.slice()
         return this
     }
 

@@ -4,10 +4,12 @@ import Container from "../src/Container"
 import ErrorHandler from '../src/Exceptions/ErrorHandler'
 
 let container = new Container
+container.debug(false)
 
 afterEach(() => {
 	container = new Container
 	container.errorHandler(ErrorHandler)
+	container.debug(false)
 });
 
 
