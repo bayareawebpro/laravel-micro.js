@@ -15,7 +15,7 @@ Laravel Responses.
 ---
 
 ![CI](https://github.com/bayareawebpro/laravel-micro.js/workflows/ci/badge.svg)
-![MIT](https://img.shields.io/badge/Coverage-100-brightgreen.svg)
+![MIT](https://img.shields.io/badge/Coverage-94-brightgreen.svg)
 ![MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)
 ![MIT](https://img.shields.io/badge/Dependencies-none-brightgreen.svg)
 ![MIT](https://img.shields.io/badge/DevDependencies-latest-brightgreen.svg)
