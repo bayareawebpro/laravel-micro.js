@@ -26,15 +26,12 @@ Compatible with Reactive Frameworks like Vue.js and React.
 * Service Providers
 * Error Handling
 * Lazy Loading
-* Collections
 * Repository
 * Middleware
 * Pipelines
-* Kernel
-* Sharing
 * Traits
 
 ## Contribute
 If your interesting in contributing to this project, please do.
 
-Test suite provided by Jest.
+> Test suite provided by Jest.
