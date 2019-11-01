@@ -129,3 +129,10 @@ const altInstance = repo.make({...})
 ```javascript
 repo.computed
 ```
+---
+
+### Methods for Consideration
+```javascript
+repo.increment('post.views')
+repo.decrement('post.views')
+```
