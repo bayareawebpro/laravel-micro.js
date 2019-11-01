@@ -15,10 +15,10 @@ Laravel Responses.
 ---
 
 ![CI](https://github.com/bayareawebpro/laravel-micro.js/workflows/ci/badge.svg)
-![MIT](https://img.shields.io/badge/Coverage-94-brightgreen.svg)
-![MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)
-![MIT](https://img.shields.io/badge/Dependencies-none-brightgreen.svg)
-![MIT](https://img.shields.io/badge/DevDependencies-latest-brightgreen.svg)
+![Coverage](https://img.shields.io/badge/Coverage-94-brightgreen.svg)
+![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)
+![Dependencies](https://img.shields.io/badge/Dependencies-none-brightgreen.svg)
+![DevDependencies](https://img.shields.io/badge/DevDependencies-latest-brightgreen.svg)
 ![Version](https://img.shields.io/badge/Version-1.0.6-blue.svg)
 
 > This is a community project and not an official Laravel package. 
@@ -38,6 +38,7 @@ Compatible with Reactive Frameworks like Vue.js and React.
 * Validator
 * Mixins
 
+> More Packages: https://github.com/bayareawebpro/laravel-micro.js/wiki/Other-Packages
 --- 
 #### Contribute
 If your interesting in contributing to this project, please do.
