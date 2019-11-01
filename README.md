@@ -44,3 +44,13 @@ Compatible with Reactive Frameworks like Vue.js and React.
 If your interesting in contributing to this project, please do.
 
 > Test suite provided by Jest.
+
+--- 
+
+#### Dev Latest 
+For playing with latest pre-release version.
+```json
+"devDependencies": {
+    "laravel-micro.js": "git://github.com/bayareawebpro/laravel-micro.js.git"
+}
+```
