@@ -15,8 +15,11 @@ Laravel Responses.
 ---
 
 ![CI](https://github.com/bayareawebpro/laravel-micro.js/workflows/ci/badge.svg)
-![Version](https://img.shields.io/badge/Version-1.x-blue.svg)
-![MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![MIT](https://img.shields.io/badge/Coverage-100-brightgreen.svg)
+![MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)
+![MIT](https://img.shields.io/badge/Dependencies-none-brightgreen.svg)
+![MIT](https://img.shields.io/badge/DevDependencies-latest-brightgreen.svg)
+![Version](https://img.shields.io/badge/Version-1.0.6-blue.svg)
 
 > This is a community project and not an official Laravel package. 
 ---
