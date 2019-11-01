@@ -16,6 +16,14 @@ beforeEach(() => {
 
 test('Can instantiate instance of itself.', () => {
 	expect(container).toBeInstanceOf(Container)
+	expect(container).toHaveProperty('providers')
+	expect(container).toHaveProperty('bindings')
+	expect(container).toHaveProperty('resolved')
+	expect(container).toHaveProperty('sharable')
+	expect(container).toHaveProperty('sharedWith')
+	expect(container).toHaveProperty('debugging')
+	container.debugging=false
+	expect(container.debugging).toBeFalsy()
 })
 
 test('Can instantiate instance of error handler.', () => {

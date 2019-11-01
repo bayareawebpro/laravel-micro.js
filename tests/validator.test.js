@@ -1,6 +1,19 @@
 /* global beforeEach,afterEach,test,expect */
 import Validator from "../src/Support/Validator"
 
+test('can make instance of self', () => {
+	const validator = new Validator
+	expect(validator.make()).toBeInstanceOf(Validator)
+})
+
+test('can set and clear message', () => {
+	const validator = new Validator
+	validator.setMessage('Invalid')
+	expect(validator.message).toEqual("Invalid")
+	validator.clearMessage()
+	expect(validator.message).toBeNull()
+})
+
 test('can sync responses with self', () => {
 	const validator = new Validator
 
@@ -9,6 +22,9 @@ test('can sync responses with self', () => {
 		errors: { field: ["first error"] }
 	})
 	expect(validator.has('field')).toBeTruthy()
+	expect(validator.firstEntry).toBe("first error")
+	expect(validator.get('field')).toContain("first error")
+	expect(validator.all()).toMatchObject({ field: ["first error"] })
 	expect(validator.isInvalid).toBeTruthy()
 	expect(validator.message).toBe("error")
 	expect(validator.all()).toStrictEqual({
@@ -30,11 +46,6 @@ test('can clear state', () => {
 	expect(validator.has('field')).toBeFalsy()
 	expect(validator.message).toBeNull()
 	expect(validator.exception).toBeNull()
-})
-
-test('can fallback to defaults', () => {
-	const validator = new Validator
-	expect(validator.get('field', ['fallback'])).toStrictEqual(['fallback'])
 })
 
 test('can get first error of multiple', () => {
@@ -69,7 +80,16 @@ test('can set and forget errors', () => {
 	validator.setErrors({
 		fieldName: ["error"]
 	})
+
 	expect(validator.has('fieldName')).toBeTruthy()
+	validator.forget('fieldName')
+	expect(validator.first('fieldName')).toBeNull()
+
+
+	validator.put('fieldName', "New Error")
+	validator.put('fieldName', "New Error2")
+	expect(validator.has('fieldName')).toBeTruthy()
+
 	validator.forget('fieldName')
 	expect(validator.first('fieldName')).toBeNull()
 })
@@ -83,11 +103,7 @@ test('can cleanup / format nested fieldNames', () => {
 	expect(validator.first('nested.field')).toEqual("nested field error")
 })
 
-test('can set and clear message', () => {
+test('can fallback to defaults', () => {
 	const validator = new Validator
-
-	validator.setMessage('Invalid')
-	expect(validator.message).toEqual("Invalid")
-	validator.clearMessage()
-	expect(validator.message).toBeNull()
+	expect(validator.get('field', ['fallback'])).toStrictEqual(['fallback'])
 })

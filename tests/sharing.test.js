@@ -4,16 +4,23 @@ import Container from "../src/Container"
 
 test('Container can "share" aliases with other objects as callable functions.', () => {
 	const container = new Container
+
 	container.bind('isTrue', true, true)
+	expect(container.sharable.length).toBe(1)
 
 	let thing1 = {}, thing2 = {}
 	container.share('isTrue').withOthers(thing1, thing2)
+
 	expect(typeof thing1.$isTrue === 'function').toBe(true)
 	expect(typeof thing2.$isTrue === 'function').toBe(true)
+
 	expect(container.isShared('isTrue')).toBeTruthy()
+	expect(container.sharedWith.isTrue.length).toBe(2)
+
 	expect(thing1.$isTrue()).toBeTruthy()
 	expect(thing2.$isTrue()).toBeTruthy()
 })
+
 test('Container cannot "share" aliases unless specified during binding.', () => {
 	const container = new Container
 	container.bind('isTrue', true, false)

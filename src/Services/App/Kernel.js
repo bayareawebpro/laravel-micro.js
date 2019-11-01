@@ -1,13 +1,13 @@
 import Pipeline from "../../Support/Pipeline"
-export default class Kernel {
+export default class Kernel extends Pipeline{
 	/**
 	 * App Kernel Constructor
 	 * @param App {Container}
 	 * @return void
 	 */
 	constructor(App) {
-		this.middleware = []
-		this.pipeline = new Pipeline(App)
+		super(App)
+		this._middleware = []
 	}
 
 	/**
@@ -16,7 +16,7 @@ export default class Kernel {
 	 * @return this
 	 */
 	setMiddleware(middleware) {
-		this.middleware = middleware
+		this._middleware = middleware
 		return this
 	}
 
@@ -27,9 +27,9 @@ export default class Kernel {
 	 * @return {*}
 	 */
 	handle(request, then = null) {
-		return this.pipeline
+		return this
 			.send(request)
-			.through(this.middleware.slice())
+			.through(this._middleware.slice())
 			.via('handle')
 			.then(then)
 	}
@@ -41,9 +41,9 @@ export default class Kernel {
 	 * @return {*}
 	 */
 	terminate(request, then = null){
-		return this.pipeline
+		return this
 			.send(request)
-			.through(this.middleware.slice().reverse())
+			.through(this._middleware.slice().reverse())
 			.via('terminate')
 			.then(then)
 	}

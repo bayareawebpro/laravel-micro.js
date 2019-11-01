@@ -62,10 +62,7 @@ export default class Container {
      * @return {ServiceProvider}|null
      */
     getProvider(providerClassName) {
-        if (this.isRegistered(providerClassName)) {
-            return this._providers[providerClassName]
-        }
-        return null
+        return this._providers[providerClassName] || null
     }
 
     /**
@@ -181,17 +178,12 @@ export default class Container {
     /**
      * (method) Register Service Provider
      * @param ServiceProvider {ServiceProvider}
-     * @param name {null|String}
      * @return this
      */
-    register(ServiceProvider, name = null) {
-        try {
-            const providerName = name || this.getName(ServiceProvider)
-            this._providers[providerName] = new ServiceProvider(this)
-            this.log(`Registered "${providerName}"...`)
-        } catch (e) {
-            this.handleError(e)
-        }
+    register(ServiceProvider) {
+        const providerName = this.getName(ServiceProvider)
+        this._providers[providerName] = new ServiceProvider(this)
+        this.log(`Registered "${providerName}"...`)
 		return this
     }
 
@@ -251,11 +243,6 @@ export default class Container {
         if (this.isResolved(alias)) {
             this.unShare(alias)
             this.log(`Destroying shared instance of "${alias}"...`)
-
-            if (this.isCallable(this._resolved[alias].$destroy)) {
-                this.log(`Calling $destroy() method on "${alias}"...`)
-                this._resolved[alias].$destroy()
-            }
             this._destroyReference(alias, this._resolved)
             this.log(`"${alias}" was destroyed successfully.`)
             return true
@@ -295,13 +282,13 @@ export default class Container {
 
     /**
      * Attach Sharable Alias to Objects  (method chain end)
-     * @param objectArray[Object]
-     * @return void
+     * @param instances {*}
+     * @return this
      */
-    withOthers(...objectArray) {
+    withOthers(...instances) {
         if (Array.isArray(this._shouldShare) && this._shouldShare.length > 0) {
             this._shouldShare.forEach((alias) => {
-                objectArray.forEach((object) => {
+                instances.forEach((object) => {
                     const sharedList = (this._sharedWith[alias] ? this._sharedWith[alias] : this._sharedWith[alias] = [])
                     if (!sharedList.includes(object)) {
                         object[this.getSharedAliasName(alias)] = this._makeSharableAlias(alias)
@@ -309,9 +296,10 @@ export default class Container {
                     }
                 })
             })
-            this.log(`Shared "${this._shouldShare.join(', ')}" with ${objectArray.length} Objects.`)
+            this.log(`Shared "${this._shouldShare.join(', ')}" with ${instances.length} Objects.`)
         }
         this._shouldShare = []
+        return this
     }
 
 
@@ -345,7 +333,7 @@ export default class Container {
             this.log(`Destroying shared references of "${alias}"...`)
             this._destroyReference(this.getSharedAliasName(alias), object)
         })
-        this._destroyReference(alias, this._sharedWith)
+        delete this._sharedWith[alias]
     }
 
     /**
@@ -365,7 +353,7 @@ export default class Container {
         //Register all bindings.
         const providers = Object.keys(this._providers)
         providers.forEach((providerName, index) => {
-            this.log(`Loading "${providerName}"...`)
+            this.log(`Calling "${providerName}" Registration...`)
             this._providers[providerName].register()
         })
         //Boot all providers.
@@ -383,10 +371,8 @@ export default class Container {
      * @return void
      */
     _bootProvider(ProviderInstance) {
-        if (!ProviderInstance.isBooted && ProviderInstance.isBootable) {
-            this.log(`Booting "${this.getName(ProviderInstance)}"...`)
-            return ProviderInstance.load()
-        }
+        this.log(`Calling "${this.getName(ProviderInstance)}" Boot...`)
+        return ProviderInstance.load()
     }
 
 
@@ -441,17 +427,11 @@ export default class Container {
      */
     _resolveIfNotResolved(alias) {
         this.log(`Resolving Binding for "${alias}"...`)
-        if (!this.isBound(alias)) {
-            throw this.makeException(
-                'Binding Exception',
-                `Cannot resolve "${alias}", is no binding available or the Application has not been booted yet.`
-            )
-        }
         const binding = this._bindings[alias]
-        if (!this.isCallable(binding)) {
-            return binding
+        if (this.isCallable(binding)) {
+            return this._makeConcrete(binding, this._prepareForInjection(alias, binding))
         }
-        return this._makeConcrete(binding, this._prepareForInjection(alias, binding))
+        return binding
     }
 
     /**
@@ -522,21 +502,18 @@ export default class Container {
 
     /**
      * Read Arguments
+     * Matches everything inside the function argument parens.
+     * Split the arguments string into an array comma delimited.
+     * Inline comments are skipped and whitespace is trimmed.
+     * Undefined values are filtered.
      * @param callable
      * @return {*}
      * @private
      */
     _readArguments(callable) {
-        // First match everything inside the function argument parens.
         let args = callable.toString().match(/function.*?\(([^)]*)\)/)
         if (args && args[1]) {
-            // Split the arguments string into an array comma delimited.
-            // Ensure no inline comments are parsed and trim the whitespace.
-            // Ensure no undefined values are added.
-            return args[1]
-                .split(',')
-                .map((arg) => arg.trim())
-                .filter((arg) => arg)
+            return args[1].split(',').map((arg) => arg.trim()).filter((arg) => arg)
         }
         return []
     }

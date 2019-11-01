@@ -23,33 +23,48 @@ class ClassD {
 }
 
 class PipeA{
-    constructor(App){}
-    handle(thing, next){
-        thing.state++
-        return next(thing)
+    constructor(App){
+        this.app = App
     }
-    terminate(thing, next){
-        return next(thing)
+    handle(obj, next){
+        obj.state++
+        console.info("PipeA Handled")
+        return next(obj)
+    }
+    terminate(obj, next){
+        obj.state--
+        console.info("PipeA Terminated")
+        return next(obj)
     }
 }
 class PipeB{
-    constructor(App){}
-    handle(thing, next){
-        thing.state = (thing.state + 1)
-        return next(thing)
+    constructor(App){
+        this.app = App
     }
-    terminate(thing, next){
-        return next(thing)
+    handle(obj, next){
+        obj.state++
+        console.info("PipeB Handled")
+        return next(obj)
+    }
+    terminate(obj, next){
+        obj.state--
+        console.info("PipeB Terminated")
+        return next(obj)
     }
 }
 class PipeC{
-    constructor(App){}
-    handle(thing, next){
-        thing.state = (thing.state + 3)
-        return next(thing)
+    constructor(App){
+        this.app = App
     }
-    terminate(thing, next){
-        return next(thing)
+    handle(obj, next){
+        obj.state++
+        console.info("PipeC Handled")
+        return next(obj)
+    }
+    terminate(obj, next){
+        obj.state--
+        console.info("PipeC Terminated")
+        return next(obj)
     }
 }
 

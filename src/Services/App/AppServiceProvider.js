@@ -4,7 +4,6 @@ export default class AppServiceProvider extends ServiceProvider {
 
 	constructor(app) {
 		super(app)
-		this.deferred = false
 	}
 
 	/**
@@ -12,16 +11,19 @@ export default class AppServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	register() {
-		//Allow the App to Inject an instance of itself.
+		// Allow the App to Inject an instance of itself.
+		// We don't need to fire injection methods for the kernel, so well inject the app ourselves.
 		this.app.bind('App', ()=>this.app)
-		this.app.bind('Kernel',Kernel, false)
+		this.app.bind('Kernel',()=>new Kernel(this.app), false)
 	}
 
 	/**
 	 * Boot any application services.
 	 * @return void
 	 */
-	boot() {}
+	boot() {
+		//
+	}
 
 	/**
 	 * Declare the aliases for the provided services.

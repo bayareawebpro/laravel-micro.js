@@ -14,11 +14,11 @@
   },
   "scripts": {
     "test": "jest --ci --config=jest.config.json",
-    "test-watch": "jest --watch"
+    "test-watch": "jest --watch --config=jest.config.json"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.6.3",
-    "jest": "^24.9.0"
+    "jest": "^25.0.0"
   },
   "dependencies": {}
 }

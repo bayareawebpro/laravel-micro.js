@@ -13,41 +13,49 @@ afterEach(() => {
 });
 
 
-test('Container can directly bind objects and primitives and resolve their states.', () => {
+test('will throw Binding exception if not bound.', () => {
+	try{
+		container.make('test')
+	}catch (e) {
+		expect(e.toString()).toContain('Binding Exception')
+	}
+})
+
+test('can bind / resolve objects and primitives.', () => {
 
 	container.bind('object', {objectResult: true})
 	container.bind('array', ['test'])
 	container.bind('boolean', true)
 
 
-	expect(container.isBound('object')).toBe(true)
-	expect(container.isBound('array')).toBe(true)
-	expect(container.isBound('boolean')).toBe(true)
+	expect(container.isBound('object')).toBeTruthy()
+	expect(container.isBound('array')).toBeTruthy()
+	expect(container.isBound('boolean')).toBeTruthy()
 
 
 	const {objectResult} = container.make('object')
 	const arrayResult = container.make('array')
 	const booleanResult = container.make('boolean')
 
-	expect(objectResult).toBe(true)
-	expect(booleanResult).toBe(true)
-	expect(arrayResult.length === 1).toBe(true)
+	expect(objectResult).toBeTruthy()
+	expect(booleanResult).toBeTruthy()
+	expect(arrayResult.length === 1).toBeTruthy()
 
 	expect(container.isConcrete('object')).toBeTruthy()
 
-	expect(container.isResolved('object')).toBe(true)
-	expect(container.canShare('object')).toBe(true)
+	expect(container.isResolved('object')).toBeTruthy()
+	expect(container.canShare('object')).toBeTruthy()
 
 
-	expect(container.isResolved('array')).toBe(true)
-	expect(container.canShare('array')).toBe(true)
+	expect(container.isResolved('array')).toBeTruthy()
+	expect(container.canShare('array')).toBeTruthy()
 
-	expect(container.isResolved('boolean')).toBe(true)
-	expect(container.canShare('boolean')).toBe(true)
+	expect(container.isResolved('boolean')).toBeTruthy()
+	expect(container.canShare('boolean')).toBeTruthy()
 })
 
 
-test('Container can bind abstract instances of objects with callbacks which are resolved to concrete states.', () => {
+test('can bind abstract instances of objects with callbacks which are resolved to concrete states.', () => {
 	container.bind('commonArray', () => {
 		return [{
 			result: true
@@ -58,21 +66,22 @@ test('Container can bind abstract instances of objects with callbacks which are 
 			result: true
 		}
 	})
-	const commonArray = container.make('commonArray')
+	expect(container.isClass('commonObject')).toBeFalsy()
+	expect(container.isConcrete('commonObject')).toBeFalsy()
 
-	expect(Array.isArray(commonArray)).toBe(true)
-	expect(commonArray.length === 1).toBe(true)
-	expect(typeof commonArray[0] === 'object').toBe(true)
-	expect(typeof commonArray[0].result === 'boolean').toBe(true)
+	const commonArray = container.make('commonArray')
+	expect(Array.isArray(commonArray)).toBeTruthy()
+	expect(commonArray.length === 1).toBeTruthy()
+	expect(typeof commonArray[0] === 'object').toBeTruthy()
+	expect(typeof commonArray[0].result === 'boolean').toBeTruthy()
 
 
 	const commonObject = container.make('commonObject')
-	expect(typeof commonObject === 'object').toBe(true)
-	expect(typeof commonObject.result === 'boolean').toBe(true)
+	expect(typeof commonObject === 'object').toBeTruthy()
+	expect(typeof commonObject.result === 'boolean').toBeTruthy()
 })
 
-
-test('Container can rebound callbacks to their initial state.', () => {
+test('can rebound callbacks to their initial state.', () => {
 	container.bind('commonObject', () => {
 		return {
 			result: true
@@ -80,13 +89,27 @@ test('Container can rebound callbacks to their initial state.', () => {
 	})
 	let commonObject = container.make('commonObject')
 
-	expect(commonObject.result === true).toBe(true)
+	expect(commonObject.result === true).toBeTruthy()
 
 	commonObject.result = false
 
-	expect(commonObject.result === false).toBe(true)
+	expect(commonObject.result === false).toBeTruthy()
 
 
 	commonObject = container.rebound('commonObject')
-	expect(commonObject.result === true).toBe(true)
+	expect(commonObject.result === true).toBeTruthy()
 })
+
+test('can set shared instances.', () => {
+	container.setInstance('test', true, true)
+	expect(container.make('test')).toBeTruthy()
+})
+
+test('can destroy bindings.', () => {
+	container.bind('test', () => true)
+	expect(container.make('test')).toBeTruthy()
+	expect(container.destroy('test')).toBeTruthy()
+	expect(container.destroy('test')).toBeFalsy()
+	expect(container.unBind('test')).toBeInstanceOf(Container)
+})
+

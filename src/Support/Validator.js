@@ -8,7 +8,7 @@ export default class Validator{
     /**
      * Make New Instance
      * @param data
-     * @return {Validator}
+     * @return Validator
      */
     make(data = {}){
         return new Validator(data)
@@ -27,7 +27,7 @@ export default class Validator{
     /**
      * Sync State
      * @param data {Object}
-     * @return {Validator}
+     * @return Validator
      */
     sync(data = {}) {
         if(data.message){
@@ -68,15 +68,10 @@ export default class Validator{
         Object.keys(messageBag).map((field)=>{
             if(Array.isArray(messageBag[field])){
                 //Strip Dot Syntax from Field Names in Messages (for nested array fields)
-                messageBag[field] = messageBag[field].map((value)=> {
-                    if(typeof value === 'string'){
-                        return value.replace(
-                            field.replace(/_/g, ' '),
-                            field.replace(/[._]/g, ' ')
-                        )
-                    }
-                    return value
-                })
+                messageBag[field] = messageBag[field].map((value)=> value.replace(
+                    field.replace(/_/g, ' '),
+                    field.replace(/[._]/g, ' ')
+                ))
             }
         })
         this.messageBag = Object.assign({}, messageBag)
@@ -104,6 +99,7 @@ export default class Validator{
      * Put field Error message.
      * @param field {String}
      * @param error {String}
+     * return this
      */
     put(field, error){
         if(Array.isArray(this.messageBag[field])){
