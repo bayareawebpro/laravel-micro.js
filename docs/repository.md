@@ -4,6 +4,13 @@ import {Repository} from 'laravel-micro.js'
 const repo = new Repository
 ```
 
+### Make (new instance)
+Make a new instance of self with optional schema.
+```javascript
+const user = repo.get('form.user')
+const userRepo = repo.make(user)
+```
+
 ### All
 Get the root data object schema and all it's child properties.
 ```javascript
@@ -11,11 +18,10 @@ repo.all()
 ```
 
 ### Sync
-Set the root data object schema and all it's child properties.
+Set the root data object schema.
 ```javascript
 repo.sync({...})
 ```
-
 
 ### Update
 Loops over each root property and calls `set` for each one, allowing dotSyntax updates.
@@ -25,15 +31,6 @@ repo.update({
     'form.name': 'John',
     'form.email': 'john@doe.person',
     'form.message': null,
-})
-```
-
-### Merge
-Merge / object assign with a property.
-```javascript
-repo.merge('form.location', {
-    lat: 1285.0001,
-    lon: -1285.0001
 })
 ```
 
@@ -52,7 +49,7 @@ repo.mergeWhere('items', 'id', {id: 3, label: 'updated'})
 ```
 
 ### FirstWhere
-Find an item within an array.
+Accessor: Find an item within an array.
 ```javascript
 repo.firstWhere('items', 'id', 3)
 ```
@@ -78,18 +75,10 @@ repo.hasValue('invoice.items.0.status','paid')
 ```
 
 ### HasEntries
-Conditional: Repo attribute array/object has entries.
+Conditional: Repo attribute array/object has entries.  Supports any object with a `length` property.
 ```javascript
 repo.hasEntries('post.categories') // Array
 repo.hasEntries('form') // Object
-```
-
-### Get
-Accessor: get a nested value from an object or array entry.
-```javascript
-const name = repo.get('user.name', 'John Doe')
-const firstItem = repo.get('invoice.items.0.label')
-const firstItemTotal = repo.get('invoice.items.0.total')
 ```
 
 ### Put / Set
@@ -100,13 +89,20 @@ repo.set('user.email', 'john@doe.net')
 repo.set('invoice.items.0.status','paid')
 ```
 
-### Pull
-Mutator: get and remove a nested value on an object or array entry.
+### Get
+Accessor: get a nested value from an object or array entry.
 ```javascript
-let val
-val = repo.pull('status', 'fallback')
-val = repo.pull('nested.items.0', null)
-val = repo.pull('nested.items.0.label', 'unlabeled')
+const name = repo.get('user.name', 'John Doe')
+const firstItem = repo.get('invoice.items.0.label')
+const firstItemTotal = repo.get('invoice.items.0.total')
+```
+
+### Increment / Decrement
+
+Increment or Decrement a value specifying fallback starting value for a non-existent property.
+```javascript
+repo.increment('post.views', 0)
+repo.decrement('post.views', 0)
 ```
 
 ### Prepend
@@ -119,6 +115,15 @@ repo.prepend('books',{name: 'First Book'})
 Mutator: Append an entry to an array attribute.
 ```javascript
 repo.append('user.roles','admin')
+```
+
+### Pull
+Mutator: get and remove a nested value on an object or array entry.
+```javascript
+let val
+val = repo.pull('status', 'fallback')
+val = repo.pull('nested.items.0', null)
+val = repo.pull('nested.items.0.label', 'unlabeled')
 ```
 
 ### Reject (literal)
@@ -140,30 +145,11 @@ repo.forget('form') // Object
 repo.forget('nested.items.0') // Array
 ```
 
-### Make (new instance)
-Make a new instance of self with optional schema.
+### Merge
+Merge / object assign with a property.
 ```javascript
-const user = repo.get('form.user')
-const userRepo = repo.make(user)
-```
-
-### Computed (getters/setters)
-```javascript
-repo.computed
-```
-
-```
-{
-    myField: {
-        get: ...
-        set: ...
-    }
-}
-```
----
-
-### Methods for Consideration
-```javascript
-repo.increment('post.views')
-repo.decrement('post.views')
+repo.merge('form.location', {
+    lat: 1285.0001,
+    lon: -1285.0001
+})
 ```

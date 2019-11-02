@@ -1,4 +1,4 @@
 
-# LaravelMicro v1.x
+# LaravelMicro
 
 > New Documentation WIP...
