@@ -19,6 +19,32 @@ export default class Repository {
     }
 
     /**
+     * Increment Value
+     * @param dotSyntax {String}
+     * @param fallback {Number}
+     * @return {Repository}
+     */
+    increment(dotSyntax, fallback = 0){
+        let value = (this.get(dotSyntax, false) || fallback)
+        value++
+        this.set(dotSyntax, value)
+        return this
+    }
+
+    /**
+     * Decrement Value
+     * @param dotSyntax {String}
+     * @param fallback {Number}
+     * @return {Repository}
+     */
+    decrement(dotSyntax, fallback = 0){
+        let value = (this.get(dotSyntax, false) || fallback)
+        value--
+        this.set(dotSyntax, value)
+        return this
+    }
+
+    /**
      * Update Attributes (allows parsing dotSyntax)
      * @param data {Object}
      * @return {Repository}
@@ -36,9 +62,6 @@ export default class Repository {
      * @return {Repository}
      */
     sync(data = {}) {
-        if (Array.isArray(data)) {
-            throw new Error("Sync: Invalid Data Type, Must be of Type Object.")
-        }
         this._data = Object.assign({}, data)
         return this
     }
@@ -47,42 +70,39 @@ export default class Repository {
      * Merge Object Attributes
      * @param dotSyntax
      * @param objValue {Object}
-     * @param forceUpdate {Boolean}
      * @return {Repository}
      */
-    merge(dotSyntax, objValue, forceUpdate = true) {
+    merge(dotSyntax, objValue) {
         const value = this.get(dotSyntax, {})
-        const merged = Object.assign({}, value, objValue)
-        this.set(dotSyntax, merged, forceUpdate)
+        this.set(dotSyntax, Object.assign({}, value, objValue))
         return this
     }
 
     /**
      * Find Object within Array and Merge Attributes
      * @param dotSyntax
-     * @param objValue {Object}
      * @param prop {String}
-     * @param forceUpdate {Boolean}
+     * @param objValue {Object}
      * @return {Repository}
      */
-    mergeWhere(dotSyntax, objValue, prop = 'id', forceUpdate = true) {
+    mergeWhere(dotSyntax, prop, objValue) {
         const state = this.get(dotSyntax, [])
         const oldObj = state.find((entry) => entry[prop] === objValue[prop])
         state.splice(state.indexOf(oldObj), 1, Object.assign({}, oldObj, objValue))
-        this.set(dotSyntax, state, forceUpdate)
+        this.set(dotSyntax, state)
         return this
     }
 
     /**
      * Find Object within Array and Merge Attributes
      * @param dotSyntax
-     * @param objValue {Object}
      * @param prop {String}
+     * @param value {*}
      * @return {*}
      */
-    firstWhere(dotSyntax, objValue, prop = 'id') {
+    firstWhere(dotSyntax, prop, value) {
         const state = this.get(dotSyntax, [])
-        return state.find((entry) => entry[prop] === objValue[prop])
+        return state.find((entry) => entry[prop] === value)
     }
 
     /**
@@ -127,7 +147,9 @@ export default class Repository {
         dotSyntax.split('.').every((key) => {
             return target = target.hasOwnProperty(key) ? target[key] : undefined
         }, this._data)
-        return typeof target !== undefined ? target : fallback
+        return (typeof target === undefined)
+            ? fallback
+            : target
     }
 
     /**
@@ -261,11 +283,11 @@ export default class Repository {
     /**
      * Reject Entry from Array Attribute
      * @param dotSyntax {String}
-     * @param prop {String|null}
+     * @param prop {String}
      * @param value {*}
      * @return {Repository}
      */
-    rejectWhere(dotSyntax, prop = 'id', value) {
+    rejectWhere(dotSyntax, prop, value) {
         let entries = this.get(dotSyntax, [])
         entries.splice(entries.findIndex((entry) => entry[prop] === value), 1)
         this.set(dotSyntax, entries)
@@ -288,24 +310,5 @@ export default class Repository {
      */
     all() {
         return this._data
-    }
-
-    /**
-     * Computed Attributes
-     * @return {Object}
-     */
-    get computed() {
-        const computed = {}
-        const keys = Object.keys(this._data)
-        if (keys.length) {
-            keys.forEach((key) => {
-                computed[key] = {
-                    get: () => this._data[key],
-                    set: (val) => this._data[key] = val,
-                }
-            })
-            return computed
-        }
-        return null
     }
 }

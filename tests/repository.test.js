@@ -17,6 +17,9 @@ test('can sync self with object.', () => {
 	expect(repo.all()).toStrictEqual({
 		form:{ name: 'John', email: 'john@doe.person' }
 	})
+
+	expect(repo.hasEntries('form')).toBeTruthy()
+	expect(repo.hasEntries('missing')).toBeFalsy()
 })
 
 test('can get and set nested properties with dotSyntax.', () => {
@@ -77,8 +80,8 @@ test('can find and update objects within arrays based using a partial object.', 
 			{id: 4, label: 4},
 		],
 	})
-	repo.mergeWhere('items', {id: 3, label: 'updated'}, 'id');
-	expect(repo.firstWhere('items', {id: 3})).toStrictEqual({id: 3, label: 'updated'})
+	repo.mergeWhere('items', 'id', {id: 3, label: 'updated'});
+	expect(repo.firstWhere('items', 'id',3)).toStrictEqual({id: 3, label: 'updated'})
 })
 
 test('can pull, forget and reject values from objects nested in arrays.', () => {
@@ -93,6 +96,7 @@ test('can pull, forget and reject values from objects nested in arrays.', () => 
 			],
 		}
 	})
+
 
 	// Pull Label from Item1
 	expect(repo.pull('nested.items.0.label')).toStrictEqual('item0')
@@ -109,6 +113,11 @@ test('can pull, forget and reject values from objects nested in arrays.', () => 
 
 	// Get Index Zero Item 2
 	expect(repo.get('nested.items.0')).toStrictEqual({id: 2, label: 'item2'})
+
+	repo.rejectWhere('nested.items', 'id', 2)
+
+	expect(repo.get('nested.items.0')).toStrictEqual({id: 3, label: 'item3'})
+
 })
 
 
@@ -131,6 +140,9 @@ test('can append and prepend to arrays.', () => {
 
 	expect(repo.get('nested.items.0')).toStrictEqual({id: 0, label: 0})
 	expect(repo.get('nested.items.5')).toStrictEqual({id: 5, label: 5})
+
+	repo.append('nested.list', 'new')
+	expect(repo.hasEntries('nested.list')).toBeTruthy()
 })
 
 test('can update nested objects within arrays.', () => {
@@ -144,7 +156,27 @@ test('can update nested objects within arrays.', () => {
 			],
 		}
 	})
-
 	repo.set('nested.items.0.label','updated')
 	expect(repo.hasValue('nested.items.0.label','updated')).toBeTruthy()
+})
+
+test('can decrement and increment values.', () => {
+
+	let repo = new Repository({
+		form: {
+			value: 0,
+		}
+	})
+
+	repo.increment('form.value')
+	expect(repo.get('form.value')).toBe(1)
+
+	repo = new Repository()
+	repo.increment('form.value', 5)
+	repo.decrement('form.value')
+	expect(repo.get('form.value')).toBe(5)
+
+	repo = new Repository()
+	repo.decrement('form.value')
+	expect(repo.get('form.value')).toBe(-1)
 })
