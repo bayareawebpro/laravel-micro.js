@@ -4,6 +4,18 @@ import {Repository} from 'laravel-micro.js'
 const repo = new Repository
 ```
 
+```javascript
+import {Repository} from 'laravel-micro.js'
+class UserResource extends Repository{
+    findById(id){
+        return this.firstWhere('collection.items', 'id', id)
+    }
+    updateRole(id, role){
+        return this.mergeWhere('collection.items', 'id', {id, role})
+    }
+}
+```
+
 ### Make (new instance)
 Make a new instance of self with optional schema.
 ```javascript
