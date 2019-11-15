@@ -1,5 +1,4 @@
 /* global beforeEach,afterEach,test,expect */
-
 import Container from "../src/Container"
 import AppServiceProvider from '../src/Services/App/AppServiceProvider'
 import ServiceProvider from "../src/Support/ServiceProvider"

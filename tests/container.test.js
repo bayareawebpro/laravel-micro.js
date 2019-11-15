@@ -21,9 +21,14 @@ test('Can instantiate instance of itself.', () => {
 	expect(container).toHaveProperty('resolved')
 	expect(container).toHaveProperty('sharable')
 	expect(container).toHaveProperty('sharedWith')
-	expect(container).toHaveProperty('debugging')
-	container.debugging=false
-	expect(container.debugging).toBeFalsy()
+	expect(container).toHaveProperty('reservedWords')
+})
+
+test('Container will return a reserved words list for logging purposes.', () => {
+	container.bind('testA', () => undefined)
+	container.bind('testB', () => undefined)
+	expect(Array.isArray(container.reservedWords)).toBeTruthy()
+	expect(container.reservedWords.length).toBe(2)
 })
 
 test('Can instantiate instance of error handler.', () => {

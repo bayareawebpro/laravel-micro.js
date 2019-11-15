@@ -14,18 +14,12 @@ beforeEach(() => {
 })
 
 test('Container can set / get debugging (log recording) via assignment or method', () => {
-	container.debugging = true
-	expect(container.debugging).toBe(true)
-
-	container.debugging = false
-	expect(container.debugging).toBe(false)
-
 	container.debug(true)
-	expect(container.debugging).toBe(true)
+	expect(container._debug).toBe(true)
 })
 
 test('Container can get / set & clear logs.', () => {
-	container.debugging = true
+	container.debug(true)
 
 	container.bind('test', true)
 	expect(container.logOutput.length).toBe(1)
@@ -41,11 +35,4 @@ test('Container will throw exception if concrete instance is undefined.', () => 
 	container.bind('test', () => undefined)
 	expect(container.make('test')).toBeInstanceOf(Error)
 	expect(container.getInstance('test')).toBeInstanceOf(Error)
-})
-
-test('Container will return a reserved words list for logging purposes.', () => {
-	container.bind('testA', () => undefined)
-	container.bind('testB', () => undefined)
-	expect(Array.isArray(container.reservedWords)).toBeTruthy()
-	expect(container.reservedWords.length).toBe(2)
 })

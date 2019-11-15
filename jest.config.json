@@ -4,6 +4,11 @@
     "bail": true,
     "collectCoverage": true,
     "collectCoverageFrom": [
-        "src/**"
+        "src/Exceptions/*.js",
+        "src/Services/App/*.js",
+        "src/Support/Pipeline.js",
+        "src/Support/Repository.js",
+        "src/Support/Validator.js",
+        "src/Container.js"
     ]
 }

@@ -7,7 +7,7 @@ import Validator from './Support/Validator'
 import Kernel from './Services/App/Kernel'
 import Pipeline from './Support/Pipeline'
 import Container from './Container'
-import _Mixin from "./Traits/_Mixin"
+import _Mixin from "./Support/Mixin"
 
 export {
     _Mixin,

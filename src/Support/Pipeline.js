@@ -17,7 +17,7 @@ export default class Pipeline {
      * @param obj {*}
      * @return {this}
      */
-    send(obj){
+    send(obj) {
         this._obj = obj
         return this
     }
@@ -27,7 +27,7 @@ export default class Pipeline {
      * @param methodName {*}
      * @return {this}
      */
-    via(methodName){
+    via(methodName) {
         this._via = methodName
         return this
     }
@@ -37,7 +37,7 @@ export default class Pipeline {
      * @param pipes {Array}
      * @return {this}
      */
-    through(pipes){
+    through(pipes) {
         this._pipes = pipes
         return this
     }
@@ -47,35 +47,26 @@ export default class Pipeline {
      * @param callback {function}
      * @return {*}
      */
-    then(callback){
+    then(callback) {
         this._callback = callback
 
         const next = (state) => {
-            if(!this.hasMorePipes()){
-                return this._app.isCallable(this._callback) ? this._callback(state) : state
+            if (!this.hasMorePipes) {
+                return this._callback(state)
             }
-            let response
-
             const pipe = this._pipes.shift()
-            const name = this._app.getName(pipe)
-
-            if(this._app.isBound(name)){
-                response = (this._app.make(name))[this._via](state, next)
-            }else{
-                const pipeInstance = new pipe(this._app)
-                response = pipeInstance[this._via](state, next)
-            }
-            return response
+            const resolved = this._app.build(pipe)
+            return resolved[this._via](state, next)
         }
 
-        return  next(this._obj)
+        return next(this._obj)
     }
 
     /**
      * (conditional )Pipeline Has Pipes?
      * @return {Boolean}
      */
-    hasMorePipes(){
+    get hasMorePipes() {
         return this._pipes.length > 0
     }
 }

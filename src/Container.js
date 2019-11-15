@@ -1,31 +1,21 @@
-import PreventsReactivity from './Traits/PreventsReactivity'
 import Exception from "./Exceptions/Exception"
+import PreventsReactivity from './Traits/PreventsReactivity'
 
 export default class Container {
 
-    /**
-     * Container Constructor
-     *
-     * Optimization Tip:
-     * When using Vue within services,
-     * Prevent Object watcher pollution by using the NonReactive utility.
-     * Log objects to the console to see if there's watchers set on the objects.
-     */
     constructor() {
         this._providers = {}
         this._bindings = {}
         this._resolved = {}
         this._injections = []
-
         this._shouldShare = []
         this._sharedWith = {}
         this._sharable = []
-
         this._debug = false
         this._errorHandler = null
-        this._logOutput = []
+        this.logOutput = []
 
-        //Disable Reactive Watchers from Polluting these scopes.
+        //Disable Reactive Watchers from Polluting Scopes.
         this._nonReactive(this, '_providers')
         this._nonReactive(this, '_bindings')
         this._nonReactive(this, '_injections')
@@ -56,57 +46,41 @@ export default class Container {
         return this._sharedWith
     }
 
-    get reservedWords(){
+    /**
+     * Get Reserved Words List
+     * @return {string[]}
+     */
+    get reservedWords() {
         const reservedWords = Object.keys(this.bindings)
-        Object.values(this.providers).forEach((provider)=>{
-            provider.provides.forEach((service)=>{
-                if(!reservedWords.includes(service)){
-                    reservedWords.push(service)
-                }
-            })
+        Object.values(this.providers).forEach((provider) => {
+            provider.provides
+                .filter((service) => !reservedWords.includes(service))
+                .forEach((service) => reservedWords.push(service))
         })
         return reservedWords
     }
 
     /**
-     * Get Service Provider Instance
-     * @param providerClassName {String}
-     * @return {ServiceProvider}|null
+     * Get Provider
+     * @param className {String}
+     * @return {*|null}
      */
-    getProvider(providerClassName) {
-        return this._providers[providerClassName] || null
+    getProvider(className) {
+        return this._providers[className] || null
     }
 
     /**
-     * Toggle Debugging Mode
-     * @param state {Boolean}
-     * @return void
+     * Toggle Debugging
+     * @param state {String}
      */
     debug(state) {
         this._debug = state
     }
 
     /**
-     * Toggle Debugging Mode
-     * @return {Boolean}
-     */
-    get debugging() {
-        return (this._debug === true)
-    }
-
-    /**
-     * Set Debugging Mode
-     * @param state {Boolean}
-     * @return void
-     */
-    set debugging(state) {
-        this._debug = state
-    }
-
-    /**
-     * (method) Get an Objects Name
-     * @param obj {*}
-     * @return {String}
+     * Get Name
+     * @param obj
+     * @return {String|null}
      */
     getName(obj) {
         const possible = {
@@ -119,19 +93,19 @@ export default class Container {
     }
 
     /**
-     * Set Global Error Handler
+     * Set Error Handler
      * @param Handler {*}
      * @return this
      */
     errorHandler(Handler) {
         this._errorHandler = new Handler(this)
-		return this
+        return this
     }
 
     /**
-     * (method) Handle an Error with the Registered Handler
+     * Handle Error with Registered Handler
      * @param error {Error|Exception}
-     * @return mixed
+     * @throws {Error|Exception}
      */
     handleError(error) {
         if (this._errorHandler && this.isCallable(this._errorHandler.handle)) {
@@ -141,54 +115,112 @@ export default class Container {
     }
 
     /**
-     * (conditional) Is the Service Provider Registered?
-     * @param providerName {String}
+     * Is the Service Provider Registered?
+     * @param name {String}
      * @return {Boolean}
      */
-    isRegistered(providerName) {
-        return this._isset(this._providers[providerName])
+    isRegistered(name) {
+        return this.isset(this._providers[name])
     }
 
     /**
-     * (conditional) Is the Binding Registered?
+     * Is the Binding Registered?
      * @param alias {String}
      * @return {Boolean}
      */
     isBound(alias) {
-        return this._isset(this._bindings[alias])
+        return this.isset(this._bindings[alias])
     }
 
     /**
-     * (conditional) Is the Binding Resolved?
+     * Is the Binding Resolved?
      * @param alias {String}
      * @return {Boolean}
      */
     isResolved(alias) {
-        return this._isset(this._resolved[alias])
+        return this.isset(this.resolved[alias])
     }
 
     /**
-     * (method) Make Instance
+     * Is Value Callable
+     * @param value {*}
+     * @return {Boolean}
+     */
+    isCallable(value) {
+        return (typeof value === 'function')
+    }
+
+    /**
+     * Is Binding a Concrete Object / Primitive
+     * @param alias {String}
+     * @return {Boolean}
+     */
+    isConcrete(alias) {
+        return !this.isCallable(this._bindings[alias])
+    }
+
+    /**
+     * Is Binding a Class Constructor Type
+     * @param abstract {String}
+     * @return {Boolean}
+     */
+    isClass(abstract) {
+        if (typeof abstract === 'string') {
+            abstract = this._bindings[abstract]
+        }
+        return !this.isCallable(abstract) || this.isCallable(abstract) && this.getName(abstract) !== 'Function'
+    }
+
+    /**
+     * Is the value set?
+     * @param value {*}
+     * @return {Boolean}
+     */
+    isset(value) {
+        return ![null, undefined].includes(value)
+    }
+
+    /**
+     * Make Instance
      * @param alias {String}
      * @return {*}
      */
     make(alias) {
         this.log(`Making "${alias}"...`)
-        return this._resolve(alias)
+        return this.resolve(alias)
     }
 
     /**
-     * (method) Bind New Instance
+     * Build an Abstract
+     * @param abstract
+     * @return {*}
+     */
+    build(abstract) {
+        return this.makeConcrete(abstract, this.prepareInjections(abstract))
+    }
+
+    /**
+     * ReBuild Instance
      * @param alias {String}
      * @return {*}
      */
     rebound(alias) {
         this.log(`Rebound: "${alias}"...`)
-        return this._resolve(alias, true)
+        return this.resolve(alias, true)
     }
 
     /**
-     * (method) Register Service Provider
+     * Get Instance
+     * @param alias {String}
+     * @return {*}
+     */
+    getInstance(alias) {
+        this.log(`Resolved Shared Instance of "${alias}".`)
+        return this.resolved[alias]
+    }
+
+    /**
+     * Register Service Provider
      * @param ServiceProvider {ServiceProvider}
      * @return this
      */
@@ -196,11 +228,11 @@ export default class Container {
         const providerName = this.getName(ServiceProvider)
         this._providers[providerName] = new ServiceProvider(this)
         this.log(`Registered "${providerName}"...`)
-		return this
+        return this
     }
 
     /**
-     * (method) Bind Callable Concrete Instance.
+     * Bind Callable Concrete Instance.
      * @param alias {String}
      * @param binding {*}
      * @param shared {Boolean}
@@ -212,26 +244,26 @@ export default class Container {
         if (shared && !this._sharable.includes(alias)) {
             this._sharable.push(alias)
         }
-		return this
+        return this
     }
 
     /**
-     * (method) UnBind & DestroyConcrete Instances.
+     * UnBind & DestroyConcrete Instances.
      * @param alias {String}
      * @return this
      */
     unBind(alias) {
         this.log(`UnBinding: "${alias}"...`)
         this.destroy(alias)
-        this._destroyReference(alias, this._bindings)
+        this.destroyReference(alias, this._bindings)
         if (this._sharable.includes(alias)) {
             this._sharable.splice(this._sharable.indexOf(alias), 1)
         }
-		return this
+        return this
     }
 
     /**
-     * (method) Set Concrete Instance
+     * Set Concrete Instance
      * @param alias {String}
      * @param concrete {*}
      * @param shared {Boolean}
@@ -239,7 +271,7 @@ export default class Container {
      */
     setInstance(alias, concrete, shared = true) {
         this.log(`Set Instance of "${alias}".`, concrete)
-        this._resolved[alias] = concrete
+        this.resolved[alias] = concrete
         if (shared && !this._sharable.includes(alias)) {
             this._sharable.push(alias)
         }
@@ -247,7 +279,7 @@ export default class Container {
     }
 
     /**
-     * (method) Destroy Resolved Instance
+     * Destroy Resolved Instance
      * @param alias {String}
      * @return {Boolean}
      */
@@ -255,11 +287,182 @@ export default class Container {
         if (this.isResolved(alias)) {
             this.unShare(alias)
             this.log(`Destroying shared instance of "${alias}"...`)
-            this._destroyReference(alias, this._resolved)
+            this.destroyReference(alias, this.resolved)
             this.log(`"${alias}" was destroyed successfully.`)
             return true
         }
         return false
+    }
+
+    /**
+     * Boot Providers
+     * @return void
+     */
+    bootProviders() {
+        //Register all bindings.
+        const providers = Object.keys(this._providers)
+        providers.forEach((providerName) => {
+            this.log(`Calling "${providerName}" Registration...`)
+            this._providers[providerName].register()
+        })
+        providers.forEach((providerName) => {
+            const providerInstance = this._providers[providerName]
+            if (!providerInstance.isDeferred) {
+                this.bootProvider(providerInstance)
+            }
+        })
+    }
+
+    /**
+     * Boot Service Provider
+     * @param ProviderInstance {ServiceProvider}
+     * @return void
+     */
+    bootProvider(ProviderInstance) {
+        this.log(`Calling "${this.getName(ProviderInstance)}" Boot...`)
+        return ProviderInstance.load()
+    }
+
+
+    /**
+     * Find Service Provider
+     * @param alias {String}
+     * @return {*|null}
+     */
+    findProvider(alias) {
+        this.log(`Checking Provider for ${alias}...`)
+        const providers = Object.values(this._providers)
+        const result = providers.find((providerInstance) => providerInstance.provides.includes(alias))
+        if (result) {
+            this.log(`Located Provider for ${alias}...`)
+        }
+        return result
+    }
+
+    /**
+     * Resolve Binding
+     * @param alias {String}
+     * @param rebound {Boolean}
+     * @return {*}
+     */
+    resolve(alias, rebound = false) {
+        if (this.isResolved(alias) && this.canShare(alias) && !rebound) {
+            return this.getInstance(alias)
+        }
+        if (rebound) {
+            this.destroy(alias)
+        }
+        if (!this.isBound(alias)) {
+            return this.handleError(this.makeException('Binding Exception', `No Binding found for "${alias}".`))
+        }
+        const providerInstance = this.findProvider(alias)
+        if (providerInstance && providerInstance.isDeferred) {
+            this.log(`Booting Deferred ServiceProvider "${alias}"...`)
+            this.bootProvider(providerInstance)
+        }
+        const instance = this.resolveIfNotResolved(alias)
+        if (this.canShare(alias)) {
+            this.log(`"${alias}" is Sharable.`)
+            this.setInstance(alias, instance)
+        }
+        return instance
+    }
+
+    /**
+     * (pass-through) Resolve if not resolved.
+     * @param alias {*}
+     * @return {*}
+     */
+    resolveIfNotResolved(alias) {
+        this.log(`Resolving Binding for "${alias}"...`)
+        const binding = this._bindings[alias]
+        if (this.isCallable(binding)) {
+            return this.build(binding)
+        }
+        return binding
+    }
+
+    /**
+     * (pass-through) Make Concrete Instance
+     * @param binding {*}
+     * @param injections {Array}
+     * @return {*}
+     */
+    makeConcrete(binding, injections) {
+        try {
+            const construct = Object.create(binding.constructor).bind.apply(binding, [null].concat(injections))
+            let concrete
+            if (!this.isClass(binding)) {
+                concrete = construct()
+            } else {
+                concrete = new construct
+            }
+            if (typeof concrete === 'undefined') {
+                return this.makeException('Binding Exception', `Binding ${binding} failed, return value is undefined.`)
+            }
+            this.log(`Instantiated Concrete Instance of "${this.getName(concrete)}" successfully.`)
+            return concrete
+        } catch (e) {
+            return this.handleError(e)
+        }
+    }
+
+    /**
+     * Prepare Dependencies
+     * @param instance {*}
+     * @return {Array}
+     */
+    prepareInjections(instance) {
+        const injections = []
+        if (this.isCallable(instance)) {
+            const dependencies = this.readArguments(instance)
+            const alias = this.getName(instance)
+            if (dependencies && dependencies.length) {
+                dependencies.forEach((dependency) => {
+                    if (this._injections.includes(dependency)) {
+                        throw this.makeException('Circular Dependency Exception',
+                            `${alias} requires ${this._injections.join(', ')}`
+                        )
+                    }
+                    this.log(`${alias} requires dependency "${dependency}"`)
+                    this._injections.push(dependency)
+                    injections.push(this.resolve(dependency))
+                    this._injections.splice(this._injections.indexOf(dependency), 1)
+                })
+            }
+        }
+        return injections
+    }
+
+    /**
+     * Destroy a Shared Reference
+     * @param alias {String}
+     * @param obj {Object}
+     * @return void
+     */
+    destroyReference(alias, obj) {
+        if (obj[alias]) {
+            this.log(`Cleaning up resolved reference of "${alias}"...`)
+            obj[alias] = null
+            delete obj[alias]
+        }
+    }
+
+    /**
+     * Read Arguments
+     * Matches everything inside the function argument parens.
+     * Split the arguments string into an array comma delimited.
+     * Inline comments are skipped and whitespace is trimmed.
+     * Undefined values are filtered.
+     * @param callable {Function}
+     * @return {*}
+     */
+    readArguments(callable) {
+        const args = callable.toString().match(/function.*?\(([^)]*)\)/)
+        if (args && args[1]) {
+            return args[1].split(',').map((arg) => arg.trim()).filter((arg) => arg)
+        }
+        return []
     }
 
     /**
@@ -284,15 +487,6 @@ export default class Container {
     }
 
     /**
-     * Make Sharable Alias (method chain end)
-     * @param alias {String}
-     * @return function
-     */
-    _makeSharableAlias(alias) {
-        return (() => this.make(alias))
-    }
-
-    /**
      * Attach Sharable Alias to Objects  (method chain end)
      * @param instances {*}
      * @return this
@@ -303,7 +497,7 @@ export default class Container {
                 instances.forEach((object) => {
                     const sharedList = (this._sharedWith[alias] ? this._sharedWith[alias] : this._sharedWith[alias] = [])
                     if (!sharedList.includes(object)) {
-                        object[this.getSharedAliasName(alias)] = this._makeSharableAlias(alias)
+                        object[this.getSharedAliasName(alias)] = (() => this.make(alias))
                         sharedList.push(object)
                     }
                 })
@@ -313,7 +507,6 @@ export default class Container {
         this._shouldShare = []
         return this
     }
-
 
     /**
      * Get Shared Alias Name from Normal Name
@@ -325,7 +518,7 @@ export default class Container {
     }
 
     /**
-     * (method) Is the Service Shared?.
+     * Is the Service Shared?.
      * @param alias {String}
      * @return {Boolean}
      */
@@ -334,22 +527,23 @@ export default class Container {
     }
 
     /**
-     * (method) UnShare a Shared Service.
+     * UnShare a Shared Service.
      * @param alias {String}
-     * @return void
+     * @return this
      */
     unShare(alias) {
         this.log(`UnSharing "${alias}"...`)
         if (!this._sharedWith[alias]) return
         this._sharedWith[alias].forEach((object) => {
             this.log(`Destroying shared references of "${alias}"...`)
-            this._destroyReference(this.getSharedAliasName(alias), object)
+            this.destroyReference(this.getSharedAliasName(alias), object)
         })
         delete this._sharedWith[alias]
+        return this
     }
 
     /**
-     * (conditional) Can Share Instance
+     * Can Share Instance
      * @param alias {String}
      * @return {Boolean}
      */
@@ -358,266 +552,30 @@ export default class Container {
     }
 
     /**
-     * (method) Boot Providers
-     * @return void
-     */
-    bootProviders() {
-        //Register all bindings.
-        const providers = Object.keys(this._providers)
-        providers.forEach((providerName, index) => {
-            this.log(`Calling "${providerName}" Registration...`)
-            this._providers[providerName].register()
-        })
-        //Boot all providers.
-        providers.forEach((providerName, index) => {
-            const providerInstance = this._providers[providerName]
-            if (!providerInstance.isDeferred) {
-                this._bootProvider(providerInstance)
-            }
-        })
-    }
-
-    /**
-     * (method) Boot Service Provider
-     * @param ProviderInstance {ServiceProvider}
-     * @return void
-     */
-    _bootProvider(ProviderInstance) {
-        this.log(`Calling "${this.getName(ProviderInstance)}" Boot...`)
-        return ProviderInstance.load()
-    }
-
-
-    /**
-     * (method) Find Service Provider
-     * @param alias {String}
-     * @return {*|null}
-     */
-    _findProvider(alias) {
-        this.log(`Checking Provider for ${alias}...`)
-        const providers = Object.values(this._providers)
-        const result = providers.find((providerInstance) => providerInstance.provides.includes(alias))
-        if (result) {
-            this.log(`Located Provider for ${alias}...`)
-        }
-        return result
-    }
-
-    /**
-     * (method) Resolve Binding
-     * @param alias {String}
-     * @param rebound {Boolean}
-     * @return {*}
-     */
-    _resolve(alias, rebound = false) {
-        if (this.isResolved(alias) && this.canShare(alias) && !rebound) {
-            return this.getInstance(alias)
-        }
-        if (rebound) {
-            this.destroy(alias)
-        }
-        if (!this.isBound(alias)) {
-            return this.handleError(this.makeException('Binding Exception', `No Binding found for "${alias}".`))
-        }
-        const providerInstance = this._findProvider(alias)
-        if (providerInstance && providerInstance.isDeferred) {
-            this.log(`Booting Deferred ServiceProvider "${alias}"...`)
-            this._bootProvider(providerInstance)
-        }
-        const instance = this._resolveIfNotResolved(alias)
-        if (this.canShare(alias)) {
-            this.log(`"${alias}" is Sharable.`)
-            this.setInstance(alias, instance)
-        }
-        return instance
-    }
-
-    /**
-     * (pass-through) Resolve if not resolved.
-     * @param alias {*}
-     * @return {*}
-     */
-    _resolveIfNotResolved(alias) {
-        this.log(`Resolving Binding for "${alias}"...`)
-        const binding = this._bindings[alias]
-        if (this.isCallable(binding)) {
-            return this._makeConcrete(binding, this._prepareForInjection(alias, binding))
-        }
-        return binding
-    }
-
-    /**
-     * (pass-through) Make Concrete Instance
-     * @param binding {*}
-     * @param injections {Array}
-     * @return {*}
-     */
-    _makeConcrete(binding, injections) {
-        try {
-            const construct = Object.create(binding.constructor).bind.apply(binding, [null].concat(injections))
-            let concrete
-            if (!this.isClass(binding)) {
-                concrete = construct()
-            } else {
-                concrete = new construct
-            }
-            if (typeof concrete === 'undefined') {
-                return this.makeException('Binding Exception', `Binding ${binding} failed, return value is undefined.`)
-            }
-            this.log(`Instantiated Concrete Instance of "${this.getName(concrete)}" successfully.`)
-            return concrete
-        } catch (e) {
-            return this.handleError(e)
-        }
-    }
-
-    /**
-     * (pass-through) Resolve Dependencies
-     * @param alias {*}
-     * @param instance {*}
-     * @return {Array}
-     */
-    _prepareForInjection(alias, instance) {
-        const injections = []
-        if (this.isCallable(instance)) {
-            const dependencies = this._readArguments(instance)
-            if (dependencies && dependencies.length) {
-                dependencies.forEach((dependency) => {
-                    //Block Recursive Function
-                    if (this._injections.includes(dependency)) {
-                        throw this.makeException('Circular Dependency Exception', `${alias} requires ${this._injections.join(', ')}`)
-                    }
-                    this.log(`${alias} requires dependency "${dependency}"`)
-                    this._injections.push(dependency)
-                    //Recursive Function
-                    injections.push(this._resolve(dependency))
-                    this._injections.splice(this._injections.indexOf(dependency), 1)
-                })
-            }
-        }
-        return injections
-    }
-
-    /**
-     * (method) Destroy a Shared Reference
-     * @param alias {String}
-     * @param obj {Object}
-     * @return void
-     */
-    _destroyReference(alias, obj) {
-        if (obj[alias]) {
-            this.log(`Cleaning up resolved reference of "${alias}"...`)
-            obj[alias] = null
-            delete obj[alias]
-        }
-    }
-
-    /**
-     * Read Arguments
-     * Matches everything inside the function argument parens.
-     * Split the arguments string into an array comma delimited.
-     * Inline comments are skipped and whitespace is trimmed.
-     * Undefined values are filtered.
-     * @param callable
-     * @return {*}
-     * @private
-     */
-    _readArguments(callable) {
-        let args = callable.toString().match(/function.*?\(([^)]*)\)/)
-        if (args && args[1]) {
-            return args[1].split(',').map((arg) => arg.trim()).filter((arg) => arg)
-        }
-        return []
-    }
-
-    /**
-     * (conditional) Is Value Callable
-     * @param value {*}
-     * @return {Boolean}
-     */
-    isCallable(value) {
-        return (typeof value === 'function')
-    }
-
-    /**
-     * (conditional) Is Binding a Class Constructor Type
-     * @param abstract {String}
-     * @return {Boolean}
-     */
-    isClass(abstract) {
-        if (typeof abstract === 'string') {
-            abstract = this._bindings[abstract]
-        }
-        return !this.isCallable(abstract) || this.isCallable(abstract) && this.getName(abstract) !== 'Function'
-    }
-
-    /**
-     * (conditional) Is Binding a Concrete Object / Primitive
-     * @param alias {String}
-     * @return {Boolean}
-     */
-    isConcrete(alias) {
-        return !this.isCallable(this._bindings[alias])
-    }
-
-    /**
-     * (method) Get Instance
-     * @param alias {String}
-     * @return {*}
-     */
-    getInstance(alias) {
-        this.log(`Resolved Shared Instance of "${alias}".`)
-        return this._resolved[alias]
-    }
-
-    /**
-     * (conditional) Is the value set?
-     * @param value {*}
-     * @return {Boolean}
-     */
-    _isset(value) {
-        return ![null, undefined].includes(value)
-    }
-
-    /**
-     * (method) Log to Console (Debug Mode)
-	 * @return this
+     * Record Log
+     * @return this
      */
     log() {
         if (this._debug) {
             console.debug.apply(console, arguments)
-            this._logOutput.push(arguments[0])
+            this.logOutput.push(arguments[0])
         }
         return this
     }
 
     /**
-     * (method) Get Log Output (Debug Mode)
-     * @return {Array}
-     */
-    get logOutput() {
-        return this._logOutput
-    }
-
-    /**
-     * (method) Get Log Output (Debug Mode)
-     * @return void
-     */
-    set logOutput(state) {
-        this._logOutput = state
-    }
-
-    /**
-     * (method) Get Log Output (Debug Mode)
+     * Flush Logs
      * @return this
      */
     flushLogs() {
         this.logOutput = []
-		return this
+        return this
     }
 
     /**
-     * (method) Make New Exception
+     * Make New Exception
+     * @param name {String}
+     * @param args {String}
      * @return {Exception}
      */
     makeException(name, ...args) {

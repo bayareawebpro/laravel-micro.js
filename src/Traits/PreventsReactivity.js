@@ -1,4 +1,4 @@
-import Mixin from "./_Mixin"
+import Mixin from "../Support/Mixin"
 export default (instance) => Mixin(instance, {
     _nonReactive(obj, prop){
         Object.defineProperty(obj, prop, {
