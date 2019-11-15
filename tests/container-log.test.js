@@ -42,3 +42,10 @@ test('Container will throw exception if concrete instance is undefined.', () => 
 	expect(container.make('test')).toBeInstanceOf(Error)
 	expect(container.getInstance('test')).toBeInstanceOf(Error)
 })
+
+test('Container will return a reserved words list for logging purposes.', () => {
+	container.bind('testA', () => undefined)
+	container.bind('testB', () => undefined)
+	expect(Array.isArray(container.reservedWords)).toBeTruthy()
+	expect(container.reservedWords.length).toBe(2)
+})

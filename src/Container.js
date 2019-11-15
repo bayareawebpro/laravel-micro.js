@@ -56,6 +56,18 @@ export default class Container {
         return this._sharedWith
     }
 
+    get reservedWords(){
+        const reservedWords = Object.keys(this.bindings)
+        Object.values(this.providers).forEach((provider)=>{
+            provider.provides.forEach((service)=>{
+                if(!reservedWords.includes(service)){
+                    reservedWords.push(service)
+                }
+            })
+        })
+        return reservedWords
+    }
+
     /**
      * Get Service Provider Instance
      * @param providerClassName {String}
