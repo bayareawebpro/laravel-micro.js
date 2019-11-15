@@ -6,7 +6,8 @@
   "license": "MIT",
   "module": "src/index.js",
   "files": [
-    "src"
+    "src",
+    "lib"
   ],
   "repository": {
     "type": "git",
@@ -14,10 +15,12 @@
   },
   "scripts": {
     "test": "jest --ci --config=jest.config.json",
-    "test-watch": "jest --watch --config=jest.config.json"
+    "test-watch": "jest --watch --config=jest.config.json",
+    "build": "babel ./src -d ./lib"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/cli": "^7.7.0",
     "jest": "^25.0.0"
   },
   "dependencies": {}
