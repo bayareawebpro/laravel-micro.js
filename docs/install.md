@@ -43,5 +43,5 @@ mix.micro([
     'Kernel',
     'MyService',
     // Reserved Words / Constructor Argument Names...
-])
+], true) //debug
 ```
