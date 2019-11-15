@@ -3,9 +3,6 @@ class MicroMix {
     register(val) {
         console.info('LaravelMicro Mixing...')
     }
-    dependencies() {
-        //
-    }
     webpackRules() {
         return {
             test: /\.js?$/,
@@ -13,6 +10,5 @@ class MicroMix {
             use: [{ loader: 'babel-loader', options: mix.config.babel() }]
         }
     }
-    webpackPlugins() {}
 }
 mix.extend('micro', new MicroMix);
