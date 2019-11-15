@@ -4,26 +4,34 @@ npm i laravel-micro.js
 ```
 ```javascript
 import LaravelMicro  from 'laravel-micro.js'
+import {AppServiceProvider} from "laravel-micro.js"
+import VueServiceProvider from "./Services/Vue/VueServiceProvider"
+
 const app = new LaravelMicro;
+app.register(AppServiceProvider)
+app.register(VueServiceProvider)
+app.bootProviders()
+app.debug(false)
+
+app.make('VueRoot').$mount("#app")
 ```
+
 ---
-## Webpack
+### Laravel Mix
+Enable LaravelMicro.js for Laravel Mix.  The micro mix plugin will detect 
+if your using Terser (Mix 4.x) or Uglify (Mix 2.x) and merge it's configuration without 
+overwriting any prior configuration.
+
 Class Constructor names are parsed and read by the container for the dependency injection & 
 service provider functionality. You'll need to configure Webpack / Laravel Mix to avoid 
 mangling function names and add the aliases of the injections to the reserved words 
 list. You can develop without specifying these options but once you compile for 
 production you'll need to add them.
 
-> An easy way to deal with this is by logging the registered bindings using the `app.reservedWords` computed property
-
 ```javascript
 console.log(app.reservedWords)
 ```
 
-### ES6 Babel Compile
-Enable LaravelMicro.js with Laravel Mix.
-
-#### webpack.mix.js
 ```javascript
 const mix = require('laravel-mix');
 require('laravel-micro.js/src/mix');
@@ -34,6 +42,6 @@ mix.micro([
     'App',
     'Kernel',
     'MyService',
+    // Reserved Words / Constructor Argument Names...
 ])
 ```
-
