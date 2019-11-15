@@ -1,7 +1,11 @@
 const mix = require('laravel-mix');
 class MicroMix {
-    register(val) {}
-    dependencies() {}
+    register(val) {
+        console.info('LaravelMicro Mixing...')
+    }
+    dependencies() {
+        //
+    }
     webpackRules() {
         return {
             test: /\.js?$/,
