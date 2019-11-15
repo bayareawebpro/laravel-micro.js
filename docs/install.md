@@ -14,52 +14,26 @@ mangling function names and add the aliases of the injections to the reserved wo
 list. You can develop without specifying these options but once you compile for 
 production you'll need to add them.
 
-> An easy way to deal with this is by logging the registered bindings using the `app.bindings`
-computed property
+> An easy way to deal with this is by logging the registered bindings using the `app.reservedWords` computed property
+
+```javascript
+console.log(app.reservedWords)
+```
 
 ### ES6 Babel Compile
-Enable ES6 Babel Compile for LaravelMicro.js Sourcecode.
+Enable LaravelMicro.js with Laravel Mix.
 
-```
-mix.micro();
-```
-
-
-## Uglify & Terser
-If you use uglify or terser you'll also need to prevent mangling function names and arguments.
-
-#### Laravel Mix 2.x / Uglify
+#### webpack.mix.js
 ```javascript
-mix.options({
-    uglify: {
-        uglifyOptions: {
-            mangle: {
-                keep_fnames: true,
-                reserved: [
-                    'App',
-                    'Kernel',
-                    'MyService',
-                ]
-            },
-        }
-    },
-})
+const mix = require('laravel-mix');
+require('laravel-micro.js/src/mix');
+
+mix.js('resources/js/app.js', 'public/js')
+mix.extract()
+mix.micro([
+    'App',
+    'Kernel',
+    'MyService',
+])
 ```
 
-#### Laravel Mix 4.x / Terser
-```javascript
-mix.options({
-    terser: {
-        terserOptions: {
-            mangle: {
-                keep_fnames: true,
-                reserved: [
-                    'App',
-                    'Kernel',
-                    'MyService',
-                ]
-            },
-        }
-    },
-})
-```
