@@ -19,16 +19,9 @@ computed property
 
 ### ES6 Babel Compile
 Enable ES6 Babel Compile for LaravelMicro.js Sourcecode.
-```javascript
-mix.webpackConfig({
-    module: {
-        rules: [{
-            test: /\.js?$/,
-            include: [ path.resolve(__dirname, "node_modules/laravel-micro.js") ],
-            use: [{ loader: 'babel-loader', options: mix.config.babel() }]
-        }]
-    }
-})
+
+```
+mix.micro();
 ```
 
 
