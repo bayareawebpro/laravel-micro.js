@@ -7,7 +7,9 @@ class MicroMix {
     webpackRules() {
         return {
             test: /\.js?$/,
-            include: [ path.resolve(__dirname, "node_modules/laravel-micro.js") ],
+            include: [
+                /node_modules\/laravel-micro.js/
+            ],
             use: [{ loader: 'babel-loader', options: mix.config.babel() }]
         }
     }
