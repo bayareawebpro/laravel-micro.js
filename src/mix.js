@@ -1,3 +1,4 @@
+const mix = require('laravel-mix');
 class MicroMix {
     register(val) {
         console.log('mix.micro!');
