@@ -63,7 +63,7 @@ export default class Pipeline {
     }
 
     /**
-     * (conditional )Pipeline Has Pipes?
+     * Pipeline Has Pipes?
      * @return {Boolean}
      */
     get hasMorePipes() {
