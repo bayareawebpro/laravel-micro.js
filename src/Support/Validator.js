@@ -128,7 +128,7 @@ export default class Validator{
      * @return {boolean}
      */
     has(field = null) {
-        return field ? this.messageBag[field] : false
+        return field ? typeof this.first(field, null) === 'string' : false
     }
 
     /**
