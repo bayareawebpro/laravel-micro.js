@@ -256,11 +256,27 @@ export default class AccountStore {
         return this.$state.exists('user.created_at')
     }
 
-    async authorize() {
-        return await this.$http.get('/authorized').then(({data}) => {
-            this.$state.set('user', data.entity)
-            return data.entity
+    async edit(){
+        await this.$http.get('/api/account').then(({data}) => {
+            this.$state.set('entity', data.entity)
         })
+    }
+
+    async update(form) {
+        this.$errors.clear()
+        this.$state.set('loading', true)
+        return await this.$http
+            .put('/api/account', form)
+            .then(({data}) => {
+                this.$state.set('user', data.entity)
+                return data
+            })
+            .catch(({response}) => {
+                this.$errors.sync(response.data)
+            })
+            .finally(() => {
+                this.$state.set('loading', false)
+            })
     }
 }
 ```
