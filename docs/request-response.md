@@ -73,15 +73,13 @@ export default class Request{
 
     /**
      * Constructor
-     * @param App
-     * @param Store
+     * @param Account
      * @return void
      */
-    constructor(App, Store) {
-        this.app = App
-        this.store = Store
-        this.route      = {to: null,from: null, next: null}
-        this.attributes = {to: null,from: null, next: null}
+    constructor(AccountStore) {
+        this.$store = AccountStore
+        this.attributes = {}
+        this.callback = null
     }
 
     /**
@@ -89,17 +87,17 @@ export default class Request{
      * @returns {*}
      */
     user(){
-        return this.store.getters['account/user'] || false
+        return this.$store.$state.get('user', false)
     }
 
     /**
      * Capture Router Object
-     * @param routerObj
+     * @param attributes {to, from, next}
      * @return Request
      */
     capture({to, from, next}){
-        this.attributes = {to,from,next}
-        this.route      = {to,from,next}
+        this.attributes = {to, from, next}
+        this.callback  = next
         return this
     }
 
@@ -108,8 +106,8 @@ export default class Request{
      * @returns {*|Array}
      */
     get guard(){
-        const {guard} = this.attributes.to.meta
-        return guard || []
+        const {middleware} = this.attributes.to.meta
+        return middleware || []
     }
 
     /**
@@ -127,6 +125,14 @@ export default class Request{
      */
     get to(){
         return this.attributes.to || false
+    }
+
+    /**
+     * Get Next Route
+     * @returns {*|Array}
+     */
+    get hasMatchedRoute(){
+        return this.to.matched && this.to.matched.length
     }
 
     /**
@@ -148,10 +154,11 @@ export default class Request{
     /**
      * Redirect
      * @param path
-     * @returns {function(): *}
+     * @returns {this}
      */
     redirect(path){
-        return this.attributes.next = () => this.route.next(path)
+        this.callback(path)
+        return this
     }
 
     /**
@@ -207,7 +214,10 @@ export default class Response{
 }
 ```
 
-### Middleware Pipe
+### Example Middleware
+
+
+### AuthenticateSession
 ```javascript
 export default class AuthenticateSession {
 
@@ -215,30 +225,64 @@ export default class AuthenticateSession {
 	    this.app = App
 	}
 
-	/**
-	 * Handle Next.
-         * @param request {Object}
-         * @param nextPipe function
-	 * @return {*}
-	 */
-	handle(request, nextPipe) {
-
+     /**
+     * Handle Next.
+     * @param request {Object}
+     * @param next function
+     * @return {*}
+     */
+    async handle(request, next) {
         if(request.hasGuard('auth') && !request.user()){
-            this.app.log('[Middleware] AuthenticateSession')
-            request.redirect(`/auth/authorize?redirect=${request.to.path}`)
+            try{
+                await this.app.make('Account').authorize()
+            }catch(e){
+                return request.redirect({name: 'auth.login'})
+            }
         }
+        return next(request)
+    }
 
-        return nextPipe(request)
+    /**
+     * Terminate Next.
+     * @param response {Object}
+     * @param nextPipe function
+     * @return {*}
+     */
+    terminate(response, nextPipe) {
+        return nextPipe(response)
+    }
+}
+```
+
+### RedirectIfAuthenticated
+```javascript
+export default class RedirectIfAuthenticated {
+
+	constructor(App) {
+	    this.app = App
 	}
 
-	/**
-	 * Terminate Next.
-	 * @param response {Object}
-	 * @param nextPipe function
-	 * @return {*}
-	 */
-	terminate(response, nextPipe) {
-		return nextPipe(response)
-	}
+     /**
+     * Handle Next.
+     * @param request {Object}
+     * @param next function
+     * @return {*}
+     */
+    async handle(request, next) {
+        if(request.hasGuard('guest') && request.user()){
+            return request.redirect({name: 'dashboard'})
+        }
+        return next(request)
+    }
+
+    /**
+     * Terminate Next.
+     * @param response {Object}
+     * @param nextPipe function
+     * @return {*}
+     */
+    terminate(response, nextPipe) {
+        return nextPipe(response)
+    }
 }
 ```

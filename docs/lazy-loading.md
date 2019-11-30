@@ -6,10 +6,10 @@ Using Dynamic Imports
 this.app.bind('lazyService', () => {
 
   //First we import the script.
-  return import('./LazyService.js').then(({default}) => {
+  return import('./LazyService.js').then((exported) => {
 
     //Then we re-bind the service as default export.
-    this.app.bind('lazyService', default)
+    this.app.bind('lazyService', exported.default)
 
     //Then we call rebound to destroy this binding and construct the new binding.
     //Subsequent calls will use the new binding.
@@ -22,7 +22,7 @@ We can set this.deferred = true in the constructor and use a promise:
 
 ```javascript
 this.app.make('lazyService').then((service)=>{
-  console.log('LAZZZZZYYYYYYYY', service.run())
+  service.run()
 })
 ```
 
@@ -46,7 +46,7 @@ import {ServiceProvider} from "laravel-micro.js"
 export default class LazyServiceProvider extends ServiceProvider {
     /**
      * Provider Constructor.
-     * @param app {Container}
+     * @param app
      * @return void
      */
     constructor(app) {
@@ -79,9 +79,7 @@ export default class LazyServiceProvider extends ServiceProvider {
      * @return void
      */
     boot() {
-        this.app.make('lazyService').then((service)=>{
-            console.log('LAZZZZZYYYYYYYY', service.run())
-        })
+        this.app.make('lazyService').then((service)=>service.run())
     }
         
         
@@ -91,7 +89,7 @@ export default class LazyServiceProvider extends ServiceProvider {
      */
     async boot() {
         const service = await this.app.make('lazyService')
-        console.log('LAZZZZZYYYYYYYY', service.run())
+        service.run()
     }
     
         

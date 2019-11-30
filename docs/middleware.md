@@ -24,7 +24,7 @@ stack.setMiddleware([
 ])
 
 // Pass through stack via handle method.
-const handled = stack.handle(currentUser) 
+const handled = stack.handle(container.make('currentUser')) 
 
 // Pass through stack via terminate method in reverse order.
 const terminated = stack.terminate(handled) 

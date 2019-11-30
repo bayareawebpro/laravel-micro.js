@@ -33,6 +33,13 @@ Build or Resolve an instance from the container.
 app.make('MyService')
 ```
 
+### Build 
+Build an unbound class resolving it's dependencies.
+```javascript
+import MyService from './MyService'
+const instance = app.build(MyService)
+```
+
 ### Destroy 
 ```javascript
 app.destroy('MyService')
@@ -81,6 +88,7 @@ app.bindings
 app.resolved
 app.sharable
 app.sharedWith
+app.reservedWords
 ```
 
 

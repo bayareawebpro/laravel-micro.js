@@ -17,18 +17,13 @@ app.bootProviders()
 
 ## Implementation
 ```javascript
-/**
-* All Providers are deferred by default. The "boot" method will not 
-* be called until the service is resolved the first time.
-* To force the provider to boot when the bootProviders method is 
-* called, change "deferred" to "false" in the constructor.
-*/
+import MyImplementation from "./MyImplementation"
 import {ServiceProvider} from "laravel-micro.js"
 export default class AppServiceProvider extends ServiceProvider {
 
 	/**
 	* Provider Constructor.
-	* @param app {Application}
+	* @param app {Container}
 	* @return void
 	*/
 	constructor(app) {
@@ -41,8 +36,6 @@ export default class AppServiceProvider extends ServiceProvider {
 	* @return void
 	*/
 	register() {
-	
-		//shared instance once resolved by default
 		this.app.bind('MyService', MyImplementation) 
 	}
 
