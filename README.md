@@ -19,7 +19,7 @@ Laravel Responses.
 ![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)
 ![Dependencies](https://img.shields.io/badge/Dependencies-none-brightgreen.svg)
 ![DevDependencies](https://img.shields.io/badge/DevDependencies-latest-brightgreen.svg)
-![Version](https://img.shields.io/badge/Version-1.0.6-blue.svg)
+![Version](https://img.shields.io/badge/Version-1.x-blue.svg)
 
 > This is a community project and not an official Laravel package. 
 ---
