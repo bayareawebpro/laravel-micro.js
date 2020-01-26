@@ -156,10 +156,9 @@ export default class Repository {
      * Set Attribute Value
      * @param dotSyntax {String}
      * @param value {*}
-     * @param fallback {Object|Array}
      * @return {Repository}
      */
-    set(dotSyntax, value, fallback = {}) {
+    set(dotSyntax, value) {
         if (!dotSyntax.includes('.')) {
             this._data[dotSyntax] = value
         } else {
@@ -168,21 +167,18 @@ export default class Repository {
             const depth = (keys.length - 1)
             let parentKey = keys[0]
             let parent = target
-            keys.every((key, idx, arr) => {
-                // Assign the target as a found key or new object.
+            keys.every((key, idx) => {
                 if (idx < depth) {
                     parent = target;
                     parentKey = key;
                     return target = target[key] || (target[key] = {})
                 }
-                //Delete the target key & cleanup the parent if it's an array.
                 else if (typeof value === 'undefined') {
                     target[key] = null;
                     delete target[key];
                     if (Array.isArray(target)) {
                         parent[parentKey] = target.filter((item) => item)
                     }
-                // Update the property.
                 } else {
                     target[key] = value
                 }
