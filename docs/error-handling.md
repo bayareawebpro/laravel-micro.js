@@ -2,11 +2,7 @@
 
 ```javascript
 const App = new Application
-
 app.errorHandler(MyErrorHandlerClass)
-app.errorHandler((e) => {
-    console.error(e)
-})
 ```
 
 You can set the container error handler to a class or callback, (disabled by default).
