@@ -5,7 +5,7 @@ const App = new Application
 app.errorHandler(MyErrorHandlerClass)
 ```
 
-You can set the container error handler to a class or callback, (disabled by default).
+You can set the container error handler to a class instance, (disabled by default).
 
 ## Error Handler
 
