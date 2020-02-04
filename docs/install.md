@@ -106,6 +106,8 @@ mix.micro([
 
 ### Manual Configuration
 
+#### Terser / Uglify
+
 If you need to manually configure Uglify / Terser use the configuration below:
 
 ```json
@@ -136,3 +138,20 @@ uglify: {
 },
 ```
 
+#### Webpack / Babel Compiler
+
+Enable the babel compiler by specifying the following rules:
+
+```javascript
+mix.webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.js?$/,
+                include: [/node_modules\/laravel-micro.js/],
+                use: [{ loader: 'babel-loader', options: mix.config.babel() }]
+            }
+        ]
+    }
+});
+```
