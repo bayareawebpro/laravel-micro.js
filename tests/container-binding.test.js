@@ -21,6 +21,12 @@ test('will throw Binding exception if not bound.', () => {
 	}
 })
 
+test('will resolve null value from binding.', () => {
+	container.bind('null', ()=>null)
+	expect(container.isBound('null')).toBeTruthy()
+	expect(container.make('null')).toBeNull()
+})
+
 test('can bind / resolve objects and primitives.', () => {
 
 	container.bind('object', {objectResult: true})

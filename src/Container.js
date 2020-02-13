@@ -83,13 +83,15 @@ export default class Container {
      * @return {String|null}
      */
     getName(obj) {
-        const possible = {
-            name: obj.name ? obj.name : null,
-            proto: obj.prototype ? obj.prototype.name : null,
-            construct: obj.constructor ? obj.constructor.name : null,
-            type: typeof (obj) || null,
+        if(obj){
+            const possible = {
+                name: obj.name ? obj.name : null,
+                proto: obj.prototype ? obj.prototype.name : null,
+                construct: obj.constructor ? obj.constructor.name : null,
+                type: typeof (obj) || null,
+            }
+            return possible.name || possible.proto || possible.construct || possible.type
         }
-        return possible.name || possible.proto || possible.construct || possible.type
     }
 
     /**
