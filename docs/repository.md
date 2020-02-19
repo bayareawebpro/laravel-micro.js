@@ -41,6 +41,9 @@ repo.sync({...})
 ### Update
 Loops over each root property and calls `set` for each one, allowing dotSyntax updates.
 
+> Use the Laravel Helper to transform an array into this syntax:
+> https://laravel.com/docs/6.x/helpers#method-array-dot
+
 ```javascript
 repo.update({
     'form.name': 'John',
