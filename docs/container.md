@@ -8,14 +8,14 @@ const app = new LaravelMicro;
 The container has useful methods for interacting with services and bindings.
 
 ### Bind 
-Build or Resolve an instance from the container.
+Bind instances to the container.
 
 ```javascript
 app.bind('MyService', MyService) // Singleton (shared) instance.
 ```
 
 ```javascript
-app.bind('MyService', MyService, false) // Unique instances.
+app.bind('MyService', MyService, false) // Factory (unique) instances.
 ```
 
 ```javascript
