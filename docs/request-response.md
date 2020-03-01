@@ -10,7 +10,7 @@ this.app.bind('Response',Response, false)
 this.app.bind('Router', () => {
     const router = new VueRouter(Routes)
     router.beforeEach((to, from, next)  => this.app.dispatch({to, from, next}))
-    router.afterEach((to, from)          => this.app.terminate({to, from}))
+    router.afterEach((to, from)         => this.app.terminate({to, from}))
     return router
 })
 
@@ -268,7 +268,7 @@ export default class RedirectIfAuthenticated {
      * @param next function
      * @return {*}
      */
-    async handle(request, next) {
+    handle(request, next) {
         if(request.hasGuard('guest') && request.user()){
             return request.redirect({name: 'dashboard'})
         }

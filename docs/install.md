@@ -142,16 +142,14 @@ uglify: {
 
 Enable the babel compiler by specifying the following rules:
 
-```javascript
-mix.webpackConfig({
-    module: {
-        rules: [
-            {
-                test: /\.js?$/,
-                include: [/node_modules\/laravel-micro.js/],
-                use: [{ loader: 'babel-loader', options: mix.config.babel() }]
-            }
-        ]
-    }
-});
+```json
+{
+    rules: [
+        {
+            test: /\.js?$/,
+            include: [/node_modules\/laravel-micro.js/],
+            use: [{ loader: 'babel-loader' }]
+        }
+    ]
+}
 ```
