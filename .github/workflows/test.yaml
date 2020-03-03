@@ -1,5 +1,12 @@
 name: ci
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - dev
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
 jobs:
   build:
     runs-on: ubuntu-latest
