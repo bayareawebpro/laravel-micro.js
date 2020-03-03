@@ -29,7 +29,9 @@ export default class ServiceProvider {
      * @return {Array}
      */
     get provides() {
-        return ['MyService']
+        return [
+            //'MyService'
+        ]
     }
 
     /**
@@ -55,6 +57,7 @@ export default class ServiceProvider {
     get isBooted() {
         return (this.booted === true)
     }
+
     /**
      * (conditional) Is Provider Loaded
      * @return void

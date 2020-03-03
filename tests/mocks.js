@@ -1,3 +1,5 @@
+import ServiceProvider from "../src/Support/ServiceProvider"
+
 class ClassA {
     constructor(classB, classC) {
         this.classB = classB
@@ -28,12 +30,10 @@ class PipeA{
     }
     handle(obj, next){
         obj.state++
-        console.info("PipeA Handled")
         return next(obj)
     }
     terminate(obj, next){
         obj.state--
-        console.info("PipeA Terminated")
         return next(obj)
     }
 }
@@ -43,12 +43,10 @@ class PipeB{
     }
     handle(obj, next){
         obj.state++
-        console.info("PipeB Handled")
         return next(obj)
     }
     terminate(obj, next){
         obj.state--
-        console.info("PipeB Terminated")
         return next(obj)
     }
 }
@@ -58,12 +56,10 @@ class PipeC{
     }
     handle(obj, next){
         obj.state++
-        console.info("PipeC Handled")
         return next(obj)
     }
     terminate(obj, next){
         obj.state--
-        console.info("PipeC Terminated")
         return next(obj)
     }
 }

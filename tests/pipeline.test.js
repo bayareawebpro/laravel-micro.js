@@ -8,7 +8,6 @@ import AppServiceProvider from "../src/Services/App/AppServiceProvider"
 test('can pipe state through classes', () => {
 
 	const container = new Container
-	container.debug(true)
 	container.register(AppServiceProvider)
 	container.bootProviders()
 
@@ -16,17 +15,23 @@ test('can pipe state through classes', () => {
 		.make('Kernel')
 		.setMiddleware([PipeA, PipeB, PipeC])
 
+	kernel
+		.send({ state: 1 })
+		.through([PipeA, PipeB, PipeC])
+		.via('handle')
+		.then((obj) => {
+			expect(obj.state).toBe(4)
+		})
 
 	const result1 = kernel.handle({ state: 1 }, (obj) => {
 		obj.state++
 		return obj
 	})
+	expect(result1.state).toBe(5)
 
 	const result3 = kernel.terminate({ state: 5 }, (obj) => {
 		obj.state--
 		return obj
 	})
-
-	expect(result1.state).toBe(5)
 	expect(result3.state).toBe(1)
 })
