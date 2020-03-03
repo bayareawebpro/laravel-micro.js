@@ -71,9 +71,9 @@ export default class Container {
 
     /**
      * Toggle Debugging
-     * @param state {String}
+     * @param state {Boolean}
      */
-    debug(state) {
+    debug(state = true) {
         this._debug = state
     }
 

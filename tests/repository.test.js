@@ -180,3 +180,15 @@ test('can decrement and increment values.', () => {
 	repo.decrement('form.value')
 	expect(repo.get('form.value')).toBe(-1)
 })
+
+
+test('will fallback to value using get.', () => {
+	let repo = new Repository({
+		some: {
+			nested: {
+
+			},
+		}
+	})
+	expect(repo.get('some.nested.value', 0)).toBe(0)
+})

@@ -147,7 +147,7 @@ export default class Repository {
         dotSyntax.split('.').every((key) => {
             return target = target.hasOwnProperty(key) ? target[key] : undefined
         }, this._data)
-        return (typeof target === undefined)
+        return (typeof target === 'undefined')
             ? fallback
             : target
     }
@@ -162,9 +162,9 @@ export default class Repository {
         if (!dotSyntax.includes('.')) {
             this._data[dotSyntax] = value
         } else {
-            let target = this._data
             const keys = dotSyntax.split('.')
             const depth = (keys.length - 1)
+            let target = this._data
             let parentKey = keys[0]
             let parent = target
             keys.every((key, idx) => {
@@ -172,8 +172,7 @@ export default class Repository {
                     parent = target;
                     parentKey = key;
                     return target = target[key] || (target[key] = {})
-                }
-                else if (typeof value === 'undefined') {
+                } else if (typeof value === 'undefined') {
                     target[key] = null;
                     delete target[key];
                     if (Array.isArray(target)) {
@@ -185,7 +184,7 @@ export default class Repository {
                 return false
             }, this._data)
         }
-        this._data = Object.assign({}, this._data)
+        this.sync(this._data)
         return this
     }
 

@@ -56,7 +56,7 @@ test('Errors receive instance of container if their handle() method is called by
 
 	container.bind('Exception', () => {
 		const error = new Exception('This should be handled.')
-		error.handle = (app) => app
+		error.handle = (App) => App
 		throw error
 	})
 	expect(container.make('Exception')).toBeInstanceOf(Container)
