@@ -24,21 +24,19 @@ test('can get all properties.', () => {
 
 test('can get length of object or array.', () => {
 	const mock = {
-		nested:{
-			testObj:{test: 1, test2: 2},
-			testArr:[1],
-			str:'test',
-			len:{length: 1},
-			none:null,
-		}
+		testObj:{test: 1, test2: 2},
+		testArr:[1],
+		str:'test',
+		len:{length: 1},
+		none:null,
 	}
 	const repo = new Repository(mock)
-	expect(repo.hasEntries('nested.testObj')).toEqual(true)
-	expect(repo.hasEntries('nested.testArr')).toEqual(true)
-	expect(repo.hasEntries('nested.missing')).toEqual(false)
-	expect(repo.hasEntries('nested.str')).toEqual(true)
-	expect(repo.hasEntries('nested.len')).toEqual(true)
-	expect(repo.hasEntries('nested.none')).toEqual(false)
+	expect(repo.hasEntries('testObj')).toEqual(true)
+	expect(repo.hasEntries('testArr')).toEqual(true)
+	expect(repo.hasEntries('missing')).toEqual(false)
+	expect(repo.hasEntries('str')).toEqual(true)
+	expect(repo.hasEntries('len')).toEqual(true)
+	expect(repo.hasEntries('none')).toEqual(false)
 })
 
 test('can sync self with object.', () => {
