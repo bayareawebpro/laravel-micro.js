@@ -170,6 +170,8 @@ export default class Repository {
         if (!dotSyntax.includes('.')) {
             if (typeof value === 'undefined') {
                 removeNode(this._data, dotSyntax)
+            }else{
+                this._data[dotSyntax] = value
             }
         } else {
             let target = this._data
