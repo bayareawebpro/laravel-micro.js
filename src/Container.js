@@ -1,3 +1,5 @@
+"use strict";
+
 import Exception from "./Exceptions/Exception"
 import PreventsReactivity from './Traits/PreventsReactivity'
 

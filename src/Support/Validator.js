@@ -1,3 +1,4 @@
+"use strict";
 export default class Validator{
     constructor(){
         this.message = null
@@ -29,16 +30,10 @@ export default class Validator{
      * @param data {Object}
      * @return Validator
      */
-    sync(data = {}) {
-        if(data.message){
-            this.setMessage(data.message)
-        }
-        if(data.errors){
-            this.setErrors(data.errors)
-        }
-        if(data.exception){
-            this.exception = data.exception
-        }
+    sync(data) {
+        this.exception = data.exception || null
+        this.setMessage(data.message)
+        this.setErrors(data.errors)
         return this
     }
 
@@ -46,7 +41,7 @@ export default class Validator{
      * Set Response Message
      * @param message {String}
      */
-    setMessage(message = null){
+    setMessage(message){
         this.message = message
         return this
     }
@@ -63,16 +58,13 @@ export default class Validator{
      * Set Errors
      * @param messageBag
      */
-    setErrors(messageBag = {}){
+    setErrors(messageBag){
         let messages = {}
-        Object.keys(messageBag).map((field)=>{
-            if(Array.isArray(messageBag[field])){
-                //Strip Dot Syntax from Field Names in Messages (for nested array fields)
-                messageBag[field] = messageBag[field].map((value)=> value.replace(
-                    field.replace(/_/g, ' '),
-                    field.replace(/[._]/g, ' ')
-                ))
-            }
+        Object.keys(messageBag).forEach((field)=>{
+            messageBag[field] = messageBag[field].map((value)=> value.replace(
+                field.replace(/_/g, ' '),
+                field.replace(/[._]/g, ' ')
+            ))
         })
         this.messageBag = Object.assign({}, messageBag)
         return this
@@ -84,7 +76,7 @@ export default class Validator{
      */
     get firstEntry() {
         const errors = Object.values(this.messageBag).flat(2);
-        return errors.length > 0 ? errors[0] : null
+        return errors[0] || null
     }
 
     /**
@@ -127,8 +119,8 @@ export default class Validator{
      * @param field {String}
      * @return {boolean}
      */
-    has(field = null) {
-        return field ? typeof this.first(field, null) === 'string' : false
+    has(field) {
+        return this.messageBag.hasOwnProperty(field)
     }
 
     /**
@@ -138,7 +130,10 @@ export default class Validator{
      * @return {*}
      */
     get(field, fallback = []) {
-        return this.messageBag[field] ? this.messageBag[field] : (fallback ? fallback : null)
+        if(this.messageBag[field]){
+            return this.messageBag[field]
+        }
+        return fallback
     }
 
     /**
@@ -147,8 +142,11 @@ export default class Validator{
      * @param fallback {*}
      * @return {String|null}
      */
-    first(field = null, fallback = false) {
-        return this.messageBag[field] ? this.messageBag[field][0] : fallback ? fallback : null
+    first(field, fallback = false) {
+        if(this.messageBag[field] && this.messageBag[field][0]){
+            return this.messageBag[field][0]
+        }
+        return fallback || null
     }
 
     /**

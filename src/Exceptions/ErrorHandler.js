@@ -1,7 +1,7 @@
 export default class ErrorHandler {
 	/**
 	 * Exception Handler Class
-	 * @param App {App}
+	 * @param App {Container}
 	 */
 	constructor(App) {
 		this.app = App

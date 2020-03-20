@@ -49,9 +49,9 @@ export default class Repository {
      * @param data {Object}
      * @return {Repository}
      */
-    update(data = {}) {
-        const state = this.make(Object.assign({}, this._data))
-        Object.keys(data || {}).forEach((key) => state.set(key, data[key], false))
+    update(data) {
+        const state = this.make(Object.assign({}, this.all()))
+        Object.keys(data).forEach((key) => state.set(key, data[key], false))
         this.sync(state.all())
         return this
     }
@@ -61,7 +61,7 @@ export default class Repository {
      * @param data {Object}
      * @return {Repository}
      */
-    sync(data = {}) {
+    sync(data) {
         this._data = Object.assign({}, data)
         return this
     }
@@ -121,13 +121,13 @@ export default class Repository {
      * @return {boolean}
      */
     hasEntries(dotSyntax) {
-        const value = this.get(dotSyntax)
+        const value = this.get(dotSyntax, false)
         if (value) {
-            if (Array.isArray(value)) {
-                return value.length > 0
-            }
-            if (typeof value === 'object') {
+            if (value instanceof Object) {
                 return Object.keys(value).length > 0
+            }
+            if (value.length) {
+                return value.length > 0
             }
         }
         return false
@@ -144,9 +144,9 @@ export default class Repository {
             return this._data.hasOwnProperty(dotSyntax) ? this._data[dotSyntax] : fallback
         }
         let target = this._data
-        dotSyntax.split('.').every((key) => {
-            return target = target.hasOwnProperty(key) ? target[key] : undefined
-        }, this._data)
+        dotSyntax
+            .split('.')
+            .every((key) => target = target.hasOwnProperty(key) ? target[key] : undefined, this._data)
         return (typeof target === 'undefined')
             ? fallback
             : target
@@ -159,29 +159,31 @@ export default class Repository {
      * @return {Repository}
      */
     set(dotSyntax, value) {
+        const removeNode = (target, key)=>{
+            if (Array.isArray(target)) {
+                target.splice(target.indexOf(target[key]), 1)
+            }else{
+                target[key] = undefined;
+                delete target[key];
+            }
+        }
         if (!dotSyntax.includes('.')) {
-            this._data[dotSyntax] = value
+            if (typeof value === 'undefined') {
+                removeNode(this._data, dotSyntax)
+            }
         } else {
+            let target = this._data
             const keys = dotSyntax.split('.')
             const depth = (keys.length - 1)
-            let target = this._data
-            let parentKey = keys[0]
-            let parent = target
             keys.every((key, idx) => {
                 if (idx < depth) {
-                    parent = target;
-                    parentKey = key;
                     return target = target[key] || (target[key] = {})
-                } else if (typeof value === 'undefined') {
-                    target[key] = null;
-                    delete target[key];
-                    if (Array.isArray(target)) {
-                        parent[parentKey] = target.filter((item) => item)
-                    }
+                }
+                if (typeof value === 'undefined') {
+                    removeNode(target, key)
                 } else {
                     target[key] = value
                 }
-                return false
             }, this._data)
         }
         this.sync(this._data)

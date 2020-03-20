@@ -4,9 +4,41 @@ import Repository from "../src/Support/Repository"
 
 
 test('can make instance of self.', () => {
+	const repo = (new Repository).make()
+	expect(repo).toBeInstanceOf(Repository)
+})
+
+test('can remove root properties.', () => {
+	const repo = (new Repository).make({
+		items: []
+	})
+	repo.forget('items')
+	expect(repo.get('v')).toBeNull()
+})
+
+test('can get all properties.', () => {
 	const mock = {test:123}
 	const repo = new Repository()
 	expect(repo.make(mock).all()).toMatchObject(mock)
+})
+
+test('can get length of object or array.', () => {
+	const mock = {
+		nested:{
+			testObj:{test: 1, test2: 2},
+			testArr:[1],
+			str:'test',
+			len:{length: 1},
+			none:null,
+		}
+	}
+	const repo = new Repository(mock)
+	expect(repo.hasEntries('nested.testObj')).toEqual(true)
+	expect(repo.hasEntries('nested.testArr')).toEqual(true)
+	expect(repo.hasEntries('nested.missing')).toEqual(false)
+	expect(repo.hasEntries('nested.str')).toEqual(true)
+	expect(repo.hasEntries('nested.len')).toEqual(true)
+	expect(repo.hasEntries('nested.none')).toEqual(false)
 })
 
 test('can sync self with object.', () => {
@@ -132,6 +164,7 @@ test('can append and prepend to arrays.', () => {
 			],
 		}
 	})
+
 	repo.prepend('nested.items', {id: 0, label: 0})
 	repo.append('nested.items', {id: 5, label: 5})
 
@@ -179,16 +212,4 @@ test('can decrement and increment values.', () => {
 	repo = new Repository()
 	repo.decrement('form.value')
 	expect(repo.get('form.value')).toBe(-1)
-})
-
-
-test('will fallback to value using get.', () => {
-	let repo = new Repository({
-		some: {
-			nested: {
-
-			},
-		}
-	})
-	expect(repo.get('some.nested.value', 0)).toBe(0)
 })

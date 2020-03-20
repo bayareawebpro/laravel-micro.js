@@ -1,3 +1,4 @@
+"use strict";
 export default class ServiceProvider {
 
     constructor(App) {

@@ -4,11 +4,6 @@ export default class Exception extends Error {
 	 */
 	constructor() {
 		super(...arguments)
-		/**
-		 * Arguments passed to the exception.
-		 * @property args {Array}
-		 */
-		this.args = arguments
 
 		/**
 		 * The name of the Custom Exception.

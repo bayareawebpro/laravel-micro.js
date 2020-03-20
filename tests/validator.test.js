@@ -43,9 +43,10 @@ test('can clear state', () => {
 	})
 	expect(validator.has('field')).toBeTruthy()
 	validator.clear()
-	expect(validator.has('field')).toBeFalsy()
 	expect(validator.message).toBeNull()
 	expect(validator.exception).toBeNull()
+	expect(validator.firstEntry).toBeNull()
+	expect(validator.has('field')).toBeFalsy()
 })
 
 test('can get first error of multiple', () => {
@@ -66,6 +67,7 @@ test('can check multiple fields', () => {
 
 	validator.sync({
 		message: "error",
+		exception: {},
 		errors: {
 			fieldName: [
 				"first error",
@@ -84,6 +86,7 @@ test('can set and forget errors', () => {
 	expect(validator.has('fieldName')).toBeTruthy()
 	validator.forget('fieldName')
 	expect(validator.first('fieldName')).toBeNull()
+	expect(validator.first('fieldName', true)).toBeTruthy()
 
 
 	validator.put('fieldName', "New Error")

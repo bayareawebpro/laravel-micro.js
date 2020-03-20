@@ -3,6 +3,7 @@
 import Container from "../src/Container"
 import ErrorHandler from '../src/Exceptions/ErrorHandler'
 import Exception from '../src/Exceptions/Exception'
+import AppServiceProvider from "../src/Services/App/AppServiceProvider"
 
 let container = new Container
 container.debug(false)
@@ -25,10 +26,12 @@ test('Can instantiate instance of itself.', () => {
 })
 
 test('Container will return a reserved words list for logging purposes.', () => {
+	container.register(AppServiceProvider)
 	container.bind('testA', () => undefined)
 	container.bind('testB', () => undefined)
+	container.bootProviders()
 	expect(Array.isArray(container.reservedWords)).toBeTruthy()
-	expect(container.reservedWords.length).toBe(2)
+	expect(container.reservedWords.length).toBe(4)
 })
 
 test('Can instantiate instance of error handler.', () => {
