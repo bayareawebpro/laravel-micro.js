@@ -1,6 +1,9 @@
  <p align="center">
+ 
 ![LaravelMicro.js](https://bayareawebpro.github.io/laravel-micro.js/logo.svg)
+
 # `npm i laravel-micro.js`
+
 </p>
 
 - [Documentation](https://bayareawebpro.github.io/laravel-micro.js/)
