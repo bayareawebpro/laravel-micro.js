@@ -98,12 +98,26 @@ test('can rebound callbacks to their initial state.', () => {
 	expect(commonObject.result === true).toBeTruthy()
 
 	commonObject.result = false
-
 	expect(commonObject.result === false).toBeTruthy()
-
 
 	commonObject = container.rebound('commonObject')
 	expect(commonObject.result === true).toBeTruthy()
+})
+
+test('can bind singleton as alias method of bind.', () => {
+	container.singleton('singleton', ()=>true)
+	expect(container.isBound('singleton')).toBeTruthy()
+	expect(container.isResolved('singleton')).toBeFalsy()
+	expect(container.make('singleton')).toBeTruthy()
+	expect(container.canShare('singleton')).toBeTruthy()
+})
+
+test('can bind factory as alias method of bind.', () => {
+	container.factory('factory', ()=>true)
+	expect(container.isBound('factory')).toBeTruthy()
+	expect(container.isResolved('factory')).toBeFalsy()
+	expect(container.make('factory')).toBeTruthy()
+	expect(container.canShare('factory')).toBeFalsy()
 })
 
 test('can set shared instances.', () => {

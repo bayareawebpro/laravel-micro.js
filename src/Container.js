@@ -252,6 +252,27 @@ export default class Container {
     }
 
     /**
+     * Bind Alias of Abstract as Singleton (alias of bind)
+     * Suggested By: https://github.com/Garanaw
+     * @param alias {String}
+     * @param abstract {*}
+     * @return {Container}
+     */
+    singleton(alias, abstract){
+        return this.bind(alias, abstract, true)
+    }
+
+    /**
+     * Bind Alias of Abstract as Factory (alias of bind)
+     * @param alias {String}
+     * @param abstract {*}
+     * @return {Container}
+     */
+    factory(alias, abstract){
+        return this.bind(alias, abstract, false)
+    }
+
+    /**
      * UnBind & DestroyConcrete Instances.
      * @param alias {String}
      * @return this
@@ -334,11 +355,11 @@ export default class Container {
      * @return {*|null}
      */
     findProvider(alias) {
-        this.log(`Checking Provider for ${alias}...`)
+        this.log(`Checking Provider for "${alias}"...`)
         const providers = Object.values(this._providers)
         const result = providers.find((providerInstance) => providerInstance.provides.includes(alias))
         if (result) {
-            this.log(`Located Provider for ${alias}...`)
+            this.log(`Located Provider for "${alias}"...`)
         }
         return result
     }
@@ -425,10 +446,10 @@ export default class Container {
                 dependencies.forEach((dependency) => {
                     if (this._injections.includes(dependency)) {
                         throw this.makeException('Circular Dependency Exception',
-                            `${alias} requires ${this._injections.join(', ')}`
+                            `"${alias}" requires ${this._injections.join(', ')}`
                         )
                     }
-                    this.log(`${alias} requires dependency "${dependency}"`)
+                    this.log(`"${alias}" requires dependency "${dependency}"`)
                     this._injections.push(dependency)
                     injections.push(this.resolve(dependency))
                     this._injections.splice(this._injections.indexOf(dependency), 1)
@@ -537,7 +558,7 @@ export default class Container {
      */
     unShare(alias) {
         this.log(`UnSharing "${alias}"...`)
-        if (!this._sharedWith[alias]) return
+        if (!this._sharedWith[alias]) return this
         this._sharedWith[alias].forEach((object) => {
             this.log(`Destroying shared references of "${alias}"...`)
             this.destroyReference(this.getSharedAliasName(alias), object)

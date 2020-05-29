@@ -7,17 +7,34 @@ on:
     paths-ignore:
       - 'README.md'
       - 'LICENSE'
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - uses: actions/checkout@v1
+      - name: Cache NPM
+        uses: actions/checkout@v1
         with:
           fetch-depth: 1
+      - name: Cache NPM
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
       - name: NPM Install
         run: npm install
       - name: Unit Test
         run: npm run test
+      - name: Codecov
+        uses: codecov/codecov-action@v1.0.5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
