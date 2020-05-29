@@ -4,7 +4,7 @@
 You can create middleware pipelines that can pass an instance of "something" 
 (whatever type of object you want it to be) to each subsequent class until it's 
 final state can be acted upon. An example of using this functionality with 
-VueRouter is provided in the Laravel Preset Package. he Kernel class provided by the 
+VueRouter is provided in the Laravel Preset Package. The Kernel class provided by the 
 "AppServiceProvider".
 
 ```javascript

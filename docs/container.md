@@ -1,21 +1,27 @@
 # Container
 
+The container has useful methods for interacting with services and bindings.
+
 ```javascript
 import LaravelMicro  from 'laravel-micro.js'
 const app = new LaravelMicro;
 ```
 
-The container has useful methods for interacting with services and bindings.
+## Bind
+Bind instances to the container as singletons (shared) or factories (unique).
 
-### Bind 
-Bind instances to the container.
+### Singleton
 
 ```javascript
-app.bind('MyService', MyService) // Singleton (shared) instance.
+app.bind('MyService', MyService, true)
+app.singleton('MyService', MyService)
 ```
 
+### Factory
+
 ```javascript
-app.bind('MyService', MyService, false) // Factory (unique) instances.
+app.bind('UserFactory', UserFactory, false)
+app.factory('UserFactory', UserFactory)
 ```
 
 ```javascript
@@ -24,7 +30,11 @@ app.bind('object', {prop: true})
 app.bind('array', ['test'])
 app.bind('boolean', true)
 app.bind('number', 100)
+```
 
+### UnBind 
+```javascript
+app.unBind('MyClass')
 ```
 
 ### Make 
@@ -41,12 +51,15 @@ const instance = app.build(MyService)
 ```
 
 ### Destroy 
+Destroy a resolved instance.
+
 ```javascript
 app.destroy('MyService')
 ```
 
 ### isResolved 
 Determines if a service abstract has an shared concrete instance that's already resolved.
+
 ```javascript
 if(app.isResolved('DatabaseService')){
     app.destroy('DatabaseService')
@@ -79,7 +92,33 @@ Returns a string of the Object "name" property or "constructor name" (class name
 const name = app.getName(Thing)
 ```
 
+### isCallable
+Is the object callable?
+```javascript
+if(app.isCallable(callback)){
+    callback()
+}
+```
+
+### isClass
+
+Is the object a class?
+```javascript
+if(app.isClass(instance)){
+    new instance()
+}
+```
+
+### getSharedAliasName
+
+Get the shared alias name.
+
+```javascript
+app.getSharedAliasName('App') // $app
+```
+
 ### Public Properties 
+
 These properties allow you to list the current state of the application.
 
 ```javascript

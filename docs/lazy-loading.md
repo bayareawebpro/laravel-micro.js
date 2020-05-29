@@ -18,7 +18,7 @@ this.app.bind('lazyService', () => {
 })
 ```
 
-We can set this.deferred = true in the constructor and use a promise:
+We can set `this.deferred = true` in the constructor and use a promise:
 
 ```javascript
 this.app.make('lazyService').then((service)=>{

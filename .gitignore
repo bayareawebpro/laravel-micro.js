@@ -3,5 +3,6 @@
 .idea/*.xml
 node_modules
 mix-manifest.json
+package-lock.json
 hot
 coverage

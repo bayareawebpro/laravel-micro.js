@@ -8,6 +8,19 @@ to all instances of specific references at any time. This can useful for
 debugging by sharing with the window object or implementing temporary 
 access to services as shown in the examples below.
 
+### Methods
+
+```javascript
+if(app.canShare('App')){
+    app.share('App').withOthers(window)  // window.$app()
+}
+if(app.isShared('App')){
+    app.unShare('App')  // window.$app() = undefined
+}
+```
+
+### Example
+
 ```javascript
 app.bind('TempService', () => {
     console.log('ok')
@@ -61,11 +74,11 @@ MortalB.playMusic()
 MortalA.toMereMortal()
 MortalB.toMereMortal()
 
-MortalA.doMagic() undefined
-MortalA.playMusic() undefined
-MortalA.toMereMortal() undefined
+MortalA.doMagic() //undefined
+MortalA.playMusic() //undefined
+MortalA.toMereMortal() //undefined
 
-MortalB.doMagic() undefined
-MortalB.playMusic() undefined
-MortalB.toMereMortal() undefined
+MortalB.doMagic() //undefined
+MortalB.playMusic() //undefined
+MortalB.toMereMortal() //undefined
 ```
