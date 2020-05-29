@@ -63,6 +63,19 @@ class PipeC{
         return next(obj)
     }
 }
+class PipeD{
+    constructor(App){
+        this.app = App
+    }
+    handle(obj, next){
+        obj.state++
+        return next(obj)
+    }
+    terminate(obj, next){
+        obj.state--
+        return next(obj)
+    }
+}
 
 export {
     ClassA,
@@ -71,5 +84,6 @@ export {
     ClassD,
     PipeA,
     PipeB,
-    PipeC
+    PipeC,
+    PipeD,
 }

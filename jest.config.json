@@ -4,7 +4,7 @@
     "bail": true,
     "collectCoverage": true,
     "collectCoverageFrom": [
-        "src/Exceptions/*.js",
+        "src/Exceptions/ErrorHandler.js",
         "src/Services/App/*.js",
         "src/Support/Pipeline.js",
         "src/Support/Repository.js",
