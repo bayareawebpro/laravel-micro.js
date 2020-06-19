@@ -1,30 +1,37 @@
 <p align="center">
-    <img src="https://bayareawebpro.github.io/laravel-micro.js/logo.svg"><br/>
+    <img src="https://bayareawebpro.github.io/laravel-micro.js/logo.svg" alt="LaravelMicro.js">
+</p>
+<h3 align="center">
     <strong><code>npm install laravel-micro.js --save-dev</code></strong>
+</h3>
+<p align="center">
+    <img src="https://github.com/bayareawebpro/laravel-micro.js/workflows/ci/badge.svg">
+    <img src="https://codecov.io/gh/bayareawebpro/laravel-micro.js/branch/master/graph/badge.svg">
+    <img src="https://img.shields.io/badge/License-MIT-brightgreen.svg">
+    <img src="https://img.shields.io/badge/Dependencies-none-brightgreen.svg">
+    <img src="https://img.shields.io/badge/DevDependencies-latest-brightgreen.svg">
+    <img src="https://img.shields.io/badge/Version-1.x-blue.svg">
 </p>
 
-- [Documentation](https://bayareawebpro.github.io/laravel-micro.js/)
-- [Project Starter](https://github.com/bayareawebpro/laravel-micro-spa-boilerplate)
-- [Slack Channel](https://discord.gg/ScYhenF)
+<p align="center">
+    <strong>A Laravel style frontend framework that works with your UI framework of choice.</strong>
+</p>
 
-**A Laravel style frontend framework that works with your UI framework of choice.**
 
+<p align="center">
 LaravelMicro.js is an IOC Container, Service Locator Pattern and Middleware Pipeline for your 
 Laravel Frontend. It provides true dependency injection, and a familiar design that encourages 
 you to use object oriented principles in your client-side application.  It includes a DotSyntax 
 Object Repository and Validator Service making it easy to work with data provided by 
 Laravel Responses.
+</p>
 
----
+<p align="center">
+<a href="https://bayareawebpro.github.io/laravel-micro.js/">Documentation</a>
+| <a href="https://github.com/bayareawebpro/laravel-micro-spa-boilerplate">Project Starter</a>
+| <a href="https://discord.gg/ScYhenF">Slack Channel</a>
+</p>
 
-![CI](https://github.com/bayareawebpro/laravel-micro.js/workflows/ci/badge.svg)
-![Coverage](https://codecov.io/gh/bayareawebpro/laravel-micro.js/branch/master/graph/badge.svg)
-![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)
-![Dependencies](https://img.shields.io/badge/Dependencies-none-brightgreen.svg)
-![DevDependencies](https://img.shields.io/badge/DevDependencies-latest-brightgreen.svg)
-![Version](https://img.shields.io/badge/Version-1.x-blue.svg)
-
-> This is a community project and not an official Laravel package. 
 ---
 
 ### Features
@@ -58,3 +65,5 @@ For playing with latest pre-release version.
     "laravel-micro.js": "git://github.com/bayareawebpro/laravel-micro.js.git"
 }
 ```
+
+> This is a community project and not an official Laravel package. Laravel is a trademark of Taylor Otwell.
