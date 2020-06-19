@@ -14,11 +14,10 @@ you to use object oriented principles in your client-side application.  It inclu
 Object Repository and Validator Service making it easy to work with data provided by 
 Laravel Responses.
 
-
 ---
 
 ![CI](https://github.com/bayareawebpro/laravel-micro.js/workflows/ci/badge.svg)
-![Coverage](https://codecov.io/gh/bayareawebpro/laravel-dom-pipeline/branch/master/graph/badge.svg)
+![Coverage](https://codecov.io/gh/bayareawebpro/laravel-micro.js/branch/master/graph/badge.svg)
 ![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)
 ![Dependencies](https://img.shields.io/badge/Dependencies-none-brightgreen.svg)
 ![DevDependencies](https://img.shields.io/badge/DevDependencies-latest-brightgreen.svg)
