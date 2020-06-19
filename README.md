@@ -4,6 +4,7 @@
 
 - [Documentation](https://bayareawebpro.github.io/laravel-micro.js/)
 - [Project Starter](https://github.com/bayareawebpro/laravel-micro-spa-boilerplate)
+- [Slack Channel](https://discord.gg/ScYhenF)
 
 **A Laravel style frontend framework that works with your UI framework of choice.**
 
