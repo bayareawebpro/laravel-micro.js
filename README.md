@@ -1,6 +1,7 @@
-![LaravelMicro.js](https://bayareawebpro.github.io/laravel-micro.js/logo.svg)
-
-# `npm i laravel-micro.js`
+<p align="center">
+    <img src="https://bayareawebpro.github.io/laravel-micro.js/logo.svg"><br/>
+    <strong><code>npm install laravel-micro.js --save-dev</code></strong>
+</p>
 
 - [Documentation](https://bayareawebpro.github.io/laravel-micro.js/)
 - [Project Starter](https://github.com/bayareawebpro/laravel-micro-spa-boilerplate)
