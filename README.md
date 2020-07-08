@@ -52,7 +52,9 @@ Compatible with Reactive Frameworks like Vue.js and React.
 > More Packages: https://github.com/bayareawebpro/laravel-micro.js/wiki/Other-Packages
 
 --- 
-#### Contribute
+
+#### Contributions
+
 If your interesting in contributing to this project CI 
 will run the Test Suite and Coverage Report for pull requests on 
 the master branch.  Feel free to submit features that add 
@@ -60,12 +62,12 @@ parity with Laravel's conventions.
 
 --- 
 
-#### Dev Latest 
-For playing with latest pre-release version.
-```json
-"devDependencies": {
-    "laravel-micro.js": "git://github.com/bayareawebpro/laravel-micro.js.git"
-}
-```
+#### Contributors
 
-> This is a community project and not an official Laravel package. Laravel is a trademark of Taylor Otwell.
+A big thank you to contributors who have helped evolve this project:
+
+* Pablo Hernández (Stringable, Container Alias Methods)
+
+> Disclaimer: 
+> This is a community project and not an official Laravel package. 
+> Laravel is a trademark of Taylor Otwell.
