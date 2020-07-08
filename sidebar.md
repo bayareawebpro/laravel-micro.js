@@ -14,6 +14,7 @@
 * Services
     * [Repository](docs/repository.md)
     * [Validator](docs/validator.md)
+    * [Stringable](docs/stringable.md)
 
 * Utilities
     * [Mixins](docs/mixins.md)
