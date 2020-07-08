@@ -3,6 +3,7 @@ import ServiceProvider from './Support/ServiceProvider'
 import ErrorHandler from './Exceptions/ErrorHandler'
 import Exception from './Exceptions/Exception'
 import Repository from './Support/Repository'
+import Stringable from './Support/Stringable'
 import Validator from './Support/Validator'
 import Kernel from './Services/App/Kernel'
 import Pipeline from './Support/Pipeline'
@@ -17,6 +18,7 @@ export {
     Container,
     Validator,
     Repository,
+    Stringable,
     ErrorHandler,
     ServiceProvider,
     AppServiceProvider,
