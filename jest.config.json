@@ -9,6 +9,8 @@
         "src/Support/Pipeline.js",
         "src/Support/Repository.js",
         "src/Support/Validator.js",
+        "src/Support/ServiceProvider.js",
+        "src/Support/Stringable.js",
         "src/Container.js"
     ]
 }

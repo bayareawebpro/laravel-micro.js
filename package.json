@@ -18,8 +18,8 @@
     "test-watch": "jest --watch --config=jest.config.json"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.10.1",
-    "jest": "^25.5.4"
+    "@babel/preset-env": "^7.10.4",
+    "jest": "^26.1.0"
   },
   "dependencies": {}
 }
