@@ -5,6 +5,12 @@ test('make instance of self', () => {
     expect(Stringable.of('Test')).toBeInstanceOf(Stringable)
 })
 
+test('undefined', () => {
+    expect(Stringable.of(undefined).toString()).toStrictEqual('')
+    expect(Stringable.of(null).toString()).toStrictEqual('')
+    expect(Stringable.of('').toString()).toStrictEqual('')
+})
+
 test('cast to string', () => {
     expect(('' + Stringable.of('Test'))).toEqual('Test')
 })
