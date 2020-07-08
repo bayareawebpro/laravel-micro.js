@@ -29,7 +29,7 @@ Laravel Responses.
 <p align="center">
 <a href="https://bayareawebpro.github.io/laravel-micro.js/">Documentation</a>
 | <a href="https://github.com/bayareawebpro/laravel-micro-spa-boilerplate">Project Starter</a>
-| <a href="https://discord.gg/ScYhenF">Slack Channel</a>
+| <a href="https://discord.gg/ScYhenF">Discord Channel</a>
 </p>
 
 ---
@@ -45,6 +45,7 @@ Compatible with Reactive Frameworks like Vue.js and React.
 * Lazy Loading
 * Middleware
 * Repository
+* Stringable
 * Validator
 * Mixins
 
@@ -52,9 +53,10 @@ Compatible with Reactive Frameworks like Vue.js and React.
 
 --- 
 #### Contribute
-If your interesting in contributing to this project, please do.
-
-> Test suite provided by Jest.
+If your interesting in contributing to this project CI 
+will run the Test Suite and Coverage Report for pull requests on 
+the master branch.  Feel free to submit features that add 
+parity with Laravel's conventions.
 
 --- 
 

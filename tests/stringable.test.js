@@ -5,7 +5,7 @@ test('make instance of self', () => {
     expect(Stringable.of('Test')).toBeInstanceOf(Stringable)
 })
 
-test('undefined', () => {
+test('empty values are rejected from the initial state', () => {
     expect(Stringable.of(undefined).toString()).toStrictEqual('')
     expect(Stringable.of(null).toString()).toStrictEqual('')
     expect(Stringable.of('').toString()).toStrictEqual('')
