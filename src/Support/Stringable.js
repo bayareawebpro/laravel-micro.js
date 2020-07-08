@@ -14,7 +14,7 @@ export default class Stringable {
     constructor(value) {
         this.value = '';
         if(!this.emptyValues.includes(value)){
-            this.value = String(this.value)
+            this.value = String(value)
         }
     }
 
