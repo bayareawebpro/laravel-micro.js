@@ -4,7 +4,7 @@ Stringable is an object-oriented string manipulation service similar to Laravel'
 
 ## Usage
 ```javascript
-import Stringable from 'laravel-micro.js/src/support/Stringable'
+import {Stringable} from 'laravel-micro.js'
 
 const str = Stringable.of('this is a string')
 ```
