@@ -12,7 +12,10 @@ export default class Stringable {
      * @param value
      */
     constructor(value) {
-        this.value = String(value + '');
+        this.value = '';
+        if(!this.emptyValues.includes(value)){
+            this.value = String(value)
+        }
     }
 
     /**
@@ -290,7 +293,15 @@ export default class Stringable {
      * @return {Boolean}
      */
     isEmpty() {
-        return ['', null, undefined].includes(this.value);
+        return this.emptyValues.includes(this.value);
+    }
+
+    /**
+     * Get Empty Values
+     * @return {string[]}
+     */
+    get emptyValues(){
+        return ['', null, undefined];
     }
 
     /**
