@@ -88,6 +88,15 @@ test('kebabcase value', () => {
     ).toEqual('test-test')
 })
 
+test('titlecase value', () => {
+    expect(
+        Stringable
+            .of('test test')
+            .title()
+            .toString()
+    ).toEqual('Test Test')
+})
+
 test('append and prepend strings to value', () => {
     expect(
         Stringable
@@ -170,7 +179,7 @@ test('value is any string', () => {
 test('value is empty string', () => {
     const str = Stringable.of('')
     expect(str.isEmpty()).toBeTruthy()
-    
+
     const str2 = Stringable.of('Test')
     expect(str2.isEmpty()).toBeFalsy()
 })

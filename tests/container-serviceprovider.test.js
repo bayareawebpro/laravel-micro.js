@@ -61,6 +61,7 @@ test('Deferred Providers will have their boot method called their provided servi
     }
 
     expect(providerInstance.isDeferred).toBeTruthy()
+    expect(providerInstance.provides).toBeInstanceOf(Array)
 
     container.bootProviders()
     expect(providerInstance.isBooted).toBeFalsy()

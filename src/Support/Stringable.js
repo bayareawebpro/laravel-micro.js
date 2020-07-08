@@ -1,8 +1,9 @@
+"use strict";
+
 /**
  * Stringable Support
  * Contributor: Pablo Villalba
  * Refactoring: Daniel Alvidrez
- * @class Stringable
  */
 export default class Stringable {
 
@@ -47,9 +48,7 @@ export default class Stringable {
      */
     after(search) {
         return new Stringable(
-            search === ''
-                ? this.value
-                : this.value.split(search).pop()
+            search === '' ? this.value : this.value.split(search).pop()
         );
     }
 
@@ -242,15 +241,6 @@ export default class Stringable {
             }
         }
         return true;
-    }
-
-    /**
-     * Not Contains
-     * @param values ...{String}
-     * @return {Boolean}
-     */
-    notContains(...values) {
-        return this.contains(values) === false;
     }
 
     /**
