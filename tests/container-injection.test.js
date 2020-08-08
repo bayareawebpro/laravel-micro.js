@@ -152,3 +152,49 @@ test('Container will throw the usual exception if alias cannot be resolved', () 
         expect(e).toBeInstanceOf(Error)
     }
 })
+
+
+test('Arguments can be mixed with bound classes', () => {
+    
+    class BoundClass {}
+    container.bind('BoundClass', BoundClass)
+    
+    const randomArgument = 'Random argument'
+    
+    class TestClass {
+        constructor(BoundClass, random) {
+            this.bound = BoundClass;
+            this.random = random;
+        }
+    }
+    
+    let instance = container.makeWith(TestClass, 'BoundClass', randomArgument)
+    
+    expect(instance).toBeInstanceOf(TestClass)
+    expect(instance.bound).toBeInstanceOf(BoundClass)
+    expect(instance.random).toBe(randomArgument)
+})
+
+
+test('Arguments can be mixed in any order', () => {
+    
+    container.bind('ClassA', ClassA, true)
+    container.bind('ClassB', ClassB, true)
+    
+    const randomArgument = 'Random argument'
+    
+    class TestClass {
+        constructor(ClassA, random, ClassB) {
+            this.classA = ClassA;
+            this.random = random;
+            this.classB = ClassB;
+        }
+    }
+    
+    let instance = container.makeWith(TestClass, 'ClassA', randomArgument, 'ClassB')
+    
+    expect(instance).toBeInstanceOf(TestClass)
+    expect(instance.classA).toBeInstanceOf(ClassA)
+    expect(instance.random).toBe(randomArgument)
+    expect(instance.classB).toBeInstanceOf(ClassB)
+})

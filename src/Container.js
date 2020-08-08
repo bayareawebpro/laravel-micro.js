@@ -472,24 +472,8 @@ export default class Container {
             return this.handleError(this.makeException('Binding Exception', `Cannot resolve a concrete instance for "${alias}"`))
         }
         
-        try {
-            let injections = [null].concat(firstParam).concat(otherParams);
-            const construct = Object.create(binding.constructor).bind.apply(binding, injections);
-
-            let concrete;
-            if (!this.isClass(binding)) {
-                concrete = construct();
-            } else {
-                concrete = new construct;
-            }
-            if (typeof concrete === 'undefined') {
-                return this.makeException('Binding Exception', `Binding ${binding} failed, return value is undefined.`)
-            }
-            this.log(`Instantiated Concrete Instance of "${this.getName(concrete)}" successfully.`)
-            return concrete
-        } catch (e) {
-            return this.handleError(e);
-        }
+        let injections = [].concat(firstParam).concat(otherParams);
+        return this.makeConcrete(binding, this.mapArgumentsToInstances(injections));
     }
 
     /**
@@ -517,6 +501,15 @@ export default class Container {
             }
         }
         return injections
+    }
+    
+    mapArgumentsToInstances(dependencies) {
+        return [].concat(dependencies).map(dependency => {
+            if (this.isBound(dependency)) {
+                dependency = this.resolve(dependency);
+            }
+            return dependency;
+        });
     }
 
     /**
