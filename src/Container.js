@@ -337,6 +337,19 @@ export default class Container {
             }
         })
     }
+    
+    /**
+     * Boot Deferred Provider
+     * @param ProviderInstance {ServiceProvider}
+     * @return void
+     */
+    bootIfNotBooted(ProviderInstance) {
+        if (ProviderInstance && (ProviderInstance.isDeferred || !ProviderInstance.isBooted)) {
+            const alias = ProviderInstance.constructor.name;
+            this.log(`Booting Deferred ServiceProvider "${alias}"...`);
+            this.bootProvider(ProviderInstance);
+        }
+    }
 
     /**
      * Boot Service Provider
@@ -429,6 +442,53 @@ export default class Container {
             return concrete
         } catch (e) {
             return this.handleError(e)
+        }
+    }
+    
+    /**
+     * Make Concrete Instance With Specified Params
+     * @param alias string|object
+     * @param firstParam {*}
+     * @param otherParams array<*>
+     * @return {*}
+     */
+    makeWith(alias, firstParam, ...otherParams) {
+        let binding;
+        
+        if (this.isClass(alias)) {
+            binding = alias;
+        }
+        
+        if (typeof alias === 'string') {
+            if (!this.isBound(alias)) {
+                return this.handleError(this.makeException('Binding Exception', `No Binding found for "${alias}".`))
+            }
+            binding = this._bindings[alias];
+            const providerInstance = this.findProvider(alias)
+            this.bootIfNotBooted(providerInstance)
+        }
+        
+        if (binding === 'undefined') {
+            return this.handleError(this.makeException('Binding Exception', `Cannot resolve a concrete instance for "${alias}"`))
+        }
+        
+        try {
+            let injections = [null].concat(firstParam).concat(otherParams);
+            const construct = Object.create(binding.constructor).bind.apply(binding, injections);
+
+            let concrete;
+            if (!this.isClass(binding)) {
+                concrete = construct();
+            } else {
+                concrete = new construct;
+            }
+            if (typeof concrete === 'undefined') {
+                return this.makeException('Binding Exception', `Binding ${binding} failed, return value is undefined.`)
+            }
+            this.log(`Instantiated Concrete Instance of "${this.getName(concrete)}" successfully.`)
+            return concrete
+        } catch (e) {
+            return this.handleError(e);
         }
     }
 

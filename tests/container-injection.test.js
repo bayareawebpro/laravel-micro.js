@@ -102,3 +102,53 @@ test('Container will not resolve shared instances of unsharable bindings.', () =
 
 	expect(container.make('TestClass').state).toBe(0)
 })
+
+
+test('Container will resolve instance with parameters.', () => {
+    
+    const firstArgument = 'First argument';
+    const secondArgument = 'Second argument';
+    class TestClass {
+        constructor(first, second) {
+            this.first = first;
+            this.second = second;
+        }
+    }
+    container.bind('TestClass', TestClass)
+    
+    let testInstance = container.makeWith('TestClass', firstArgument, secondArgument)
+    
+    expect(testInstance).toBeInstanceOf(TestClass)
+    expect(testInstance.first).toBe(firstArgument)
+    expect(testInstance.second).toBe(secondArgument)
+})
+
+
+test('Container can resolve a non bound class if params are passed', () => {
+    
+    const firstArgument = 'First argument';
+    const secondArgument = 'Second argument';
+    class TestClass {
+        constructor(first, second) {
+            this.first = first;
+            this.second = second;
+        }
+    }
+    
+    let testInstance = container.makeWith(TestClass, firstArgument, secondArgument)
+    
+    expect(testInstance).toBeInstanceOf(TestClass)
+    expect(testInstance.first).toBe(firstArgument)
+    expect(testInstance.second).toBe(secondArgument)
+})
+
+
+test('Container will throw the usual exception if alias cannot be resolved', () => {
+    
+    try {
+        container.makeWith('UnBoundClass')
+    } catch (e) {
+        expect(e.toString()).toContain('Cannot resolve a concrete instance for')
+        expect(e).toBeInstanceOf(Error)
+    }
+})
