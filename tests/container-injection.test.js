@@ -135,7 +135,7 @@ test('Container can resolve a non bound class if params are passed', () => {
         }
     }
     
-    let testInstance = container.makeWith(TestClass, firstArgument, secondArgument)
+    let testInstance = container.buildWith(TestClass, firstArgument, secondArgument)
     
     expect(testInstance).toBeInstanceOf(TestClass)
     expect(testInstance.first).toBe(firstArgument)
@@ -168,18 +168,17 @@ test('Arguments can be mixed with bound classes', () => {
         }
     }
     
-    let instance = container.makeWith(TestClass, 'BoundClass', randomArgument)
-    
+    let instance = container.buildWith(TestClass, 'BoundClass', randomArgument)
     expect(instance).toBeInstanceOf(TestClass)
     expect(instance.bound).toBeInstanceOf(BoundClass)
     expect(instance.random).toBe(randomArgument)
 })
 
 
-test('Arguments can be mixed in any order', () => {
+test('Arguments can be mixed', () => {
     
-    container.bind('ClassA', ClassA, true)
-    container.bind('ClassB', ClassB, true)
+    container.bind('ClassA', ClassA, false)
+    container.bind('ClassB', ClassB, false)
     
     const randomArgument = 'Random argument'
     
@@ -191,8 +190,8 @@ test('Arguments can be mixed in any order', () => {
         }
     }
     
-    let instance = container.makeWith(TestClass, 'ClassA', randomArgument, 'ClassB')
-    
+    let instance = container.buildWith(TestClass, 'ClassA', randomArgument, 'ClassB')
+
     expect(instance).toBeInstanceOf(TestClass)
     expect(instance.classA).toBeInstanceOf(ClassA)
     expect(instance.random).toBe(randomArgument)

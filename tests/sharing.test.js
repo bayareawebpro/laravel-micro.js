@@ -40,7 +40,6 @@ test('Container cannot "share" aliases unless specified during binding.', () => 
 	expect(thing1.$isTrue).toBeUndefined()
 })
 
-
 test('Container can track and remove shared references when services are unshared.', () => {
 	const container = new Container
 	container.bind('sharable', {test: 'test'}, true)

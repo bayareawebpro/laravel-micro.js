@@ -85,15 +85,14 @@ export default class Container {
      * @return {String|null}
      */
     getName(obj) {
-        if(obj){
-            const possible = {
-                name: obj.name ? obj.name : null,
-                proto: obj.prototype ? obj.prototype.name : null,
-                construct: obj.constructor ? obj.constructor.name : null,
-                type: typeof (obj) || null,
-            }
-            return possible.name || possible.proto || possible.construct || possible.type
+        if (!obj) return null;
+        const possible = {
+            name: obj.name ? obj.name : null,
+            proto: obj.prototype ? obj.prototype.name : null,
+            construct: obj.constructor ? obj.constructor.name : null,
+            type: typeof(obj) || null,
         }
+        return possible.name || possible.proto || possible.construct || possible.type
     }
 
     /**
@@ -169,10 +168,8 @@ export default class Container {
      * @return {Boolean}
      */
     isClass(abstract) {
-        if (typeof abstract === 'string') {
-            abstract = this._bindings[abstract]
-        }
-        return !this.isCallable(abstract) || this.isCallable(abstract) && this.getName(abstract) !== 'Function'
+        abstract = typeof abstract === 'string' ? this._bindings[abstract] : abstract
+        return this.isCallable(abstract) && this.getName(abstract) !== 'Function'
     }
 
     /**
@@ -225,12 +222,12 @@ export default class Container {
 
     /**
      * Register Service Provider
-     * @param ServiceProvider {ServiceProvider}
+     * @param serviceProvider ServiceProvider
      * @return this
      */
-    register(ServiceProvider) {
-        const providerName = this.getName(ServiceProvider)
-        this._providers[providerName] = new ServiceProvider(this)
+    register(serviceProvider) {
+        const providerName = this.getName(serviceProvider)
+        this._providers[providerName] = new serviceProvider(this)
         this.log(`Registered "${providerName}"...`)
         return this
     }
@@ -258,7 +255,7 @@ export default class Container {
      * @param abstract {*}
      * @return {Container}
      */
-    singleton(alias, abstract){
+    singleton(alias, abstract) {
         return this.bind(alias, abstract, true)
     }
 
@@ -268,7 +265,7 @@ export default class Container {
      * @param abstract {*}
      * @return {Container}
      */
-    factory(alias, abstract){
+    factory(alias, abstract) {
         return this.bind(alias, abstract, false)
     }
 
@@ -324,30 +321,28 @@ export default class Container {
      * @return void
      */
     bootProviders() {
-        //Register all bindings.
         const providers = Object.keys(this._providers)
         providers.forEach((providerName) => {
             this.log(`Calling "${providerName}" Registration...`)
             this._providers[providerName].register()
         })
         providers.forEach((providerName) => {
-            const providerInstance = this._providers[providerName]
+            const providerInstance = this.getProvider(providerName)
             if (!providerInstance.isDeferred) {
                 this.bootProvider(providerInstance)
             }
         })
     }
-    
+
     /**
      * Boot Deferred Provider
-     * @param ProviderInstance {ServiceProvider}
+     * @param providerInstance ServiceProvider
      * @return void
      */
-    bootIfNotBooted(ProviderInstance) {
-        if (ProviderInstance && (ProviderInstance.isDeferred || !ProviderInstance.isBooted)) {
-            const alias = ProviderInstance.constructor.name;
-            this.log(`Booting Deferred ServiceProvider "${alias}"...`);
-            this.bootProvider(ProviderInstance);
+    bootIfNotBooted(providerInstance) {
+        if (providerInstance && (providerInstance.isDeferred && !providerInstance.isBooted)) {
+            this.log(`Booting Deferred ServiceProvider "${this.getName(providerInstance)}"...`)
+            this.bootProvider(providerInstance)
         }
     }
 
@@ -360,7 +355,6 @@ export default class Container {
         this.log(`Calling "${this.getName(ProviderInstance)}" Boot...`)
         return ProviderInstance.load()
     }
-
 
     /**
      * Find Service Provider
@@ -390,18 +384,14 @@ export default class Container {
         if (rebound) {
             this.destroy(alias)
         }
-        if (!this.isBound(alias)) {
-            return this.handleError(this.makeException('Binding Exception', `No Binding found for "${alias}".`))
-        }
-        const providerInstance = this.findProvider(alias)
-        if (providerInstance && providerInstance.isDeferred) {
-            this.log(`Booting Deferred ServiceProvider "${alias}"...`)
-            this.bootProvider(providerInstance)
-        }
+
+        this.bootIfNotBooted(this.findProvider(alias))
+
         const instance = this.resolveIfNotResolved(alias)
+
         if (this.canShare(alias)) {
-            this.log(`"${alias}" is Sharable.`)
             this.setInstance(alias, instance)
+            this.log(`"${alias}" is Sharable.`)
         }
         return instance
     }
@@ -413,15 +403,12 @@ export default class Container {
      */
     resolveIfNotResolved(alias) {
         this.log(`Resolving Binding for "${alias}"...`)
-        const binding = this._bindings[alias]
-        if (this.isCallable(binding)) {
-            return this.build(binding)
-        }
-        return binding
+        const binding = this.getBinding(alias)
+        return this.isCallable(binding) ? this.build(binding) : binding
     }
 
     /**
-     * (pass-through) Make Concrete Instance
+     * Make Concrete Instance
      * @param binding {*}
      * @param injections {Array}
      * @return {*}
@@ -429,12 +416,7 @@ export default class Container {
     makeConcrete(binding, injections) {
         try {
             const construct = Object.create(binding.constructor).bind.apply(binding, [null].concat(injections))
-            let concrete
-            if (!this.isClass(binding)) {
-                concrete = construct()
-            } else {
-                concrete = new construct
-            }
+            let concrete = this.isClass(binding) ? new construct : construct()
             if (typeof concrete === 'undefined') {
                 return this.makeException('Binding Exception', `Binding ${binding} failed, return value is undefined.`)
             }
@@ -444,36 +426,34 @@ export default class Container {
             return this.handleError(e)
         }
     }
-    
+
     /**
      * Make Concrete Instance With Specified Params
      * @param alias string|object
-     * @param firstParam {*}
-     * @param otherParams array<*>
+     * @param params array<*>
      * @return {*}
      */
-    makeWith(alias, firstParam, ...otherParams) {
-        let binding;
-        
-        if (this.isClass(alias)) {
-            binding = alias;
-        }
-        
-        if (typeof alias === 'string') {
-            if (!this.isBound(alias)) {
-                return this.handleError(this.makeException('Binding Exception', `No Binding found for "${alias}".`))
-            }
-            binding = this._bindings[alias];
-            const providerInstance = this.findProvider(alias)
-            this.bootIfNotBooted(providerInstance)
-        }
-        
-        if (binding === 'undefined') {
-            return this.handleError(this.makeException('Binding Exception', `Cannot resolve a concrete instance for "${alias}"`))
-        }
-        
-        let injections = [].concat(firstParam).concat(otherParams);
-        return this.makeConcrete(binding, this.mapArgumentsToInstances(injections));
+    makeWith(alias, ...params) {
+        return this.makeConcrete(this.getBinding(alias), this.mapArgumentsToInstances(params));
+    }
+
+    /**
+     * Build an Abstract
+     * @param abstract object
+     * @param params array<*>
+     * @return {*}
+     */
+    buildWith(abstract, ...params) {
+        return this.makeConcrete(abstract, this.mapArgumentsToInstances(params))
+    }
+
+    /**
+     * Get Binding
+     * @param alias
+     * @return {undefined|*}
+     */
+    getBinding(alias){
+        return this._bindings[alias] || this.handleError(this.makeException('Binding Exception', `No binding found for "${alias}".`))
     }
 
     /**
@@ -484,8 +464,8 @@ export default class Container {
     prepareInjections(instance) {
         const injections = []
         if (this.isCallable(instance)) {
-            const dependencies = this.readArguments(instance)
             const alias = this.getName(instance)
+            const dependencies = this.readArguments(instance)
             if (dependencies && dependencies.length) {
                 dependencies.forEach((dependency) => {
                     if (this._injections.includes(dependency)) {
@@ -502,14 +482,18 @@ export default class Container {
         }
         return injections
     }
-    
+
+    /**
+     * Map Arguments to Dependencies
+     * @param dependencies <*>
+     * @return {*}
+     */
     mapArgumentsToInstances(dependencies) {
         return [].concat(dependencies).map(dependency => {
-            if (this.isBound(dependency)) {
-                dependency = this.resolve(dependency);
-            }
-            return dependency;
-        });
+            return (typeof dependency === "string" && this.isBound(dependency))
+                ? this.resolve(dependency)
+                : dependency
+        })
     }
 
     /**
@@ -520,9 +504,9 @@ export default class Container {
      */
     destroyReference(alias, obj) {
         if (obj[alias]) {
-            this.log(`Cleaning up resolved reference of "${alias}"...`)
             obj[alias] = null
             delete obj[alias]
+            this.log(`Destroyed reference of shared accessor "${alias}"...`)
         }
     }
 
@@ -550,7 +534,7 @@ export default class Container {
      */
     share(...aliases) {
         this._shouldShare = []
-        aliases.forEach((alias, index) => {
+        aliases.forEach((alias) => {
             if (!this.isBound(alias)) {
                 return this.handleError(this.makeException(`No binding for ${alias} available to share.`))
             }
