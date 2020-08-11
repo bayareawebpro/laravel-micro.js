@@ -67,6 +67,10 @@ export default class ServiceProvider {
         this.booted = value
     }
 
+    /**
+     * Load / Boot the provider.
+     * @return void
+     */
     load(){
         this.isBooted = true
         this.boot()
