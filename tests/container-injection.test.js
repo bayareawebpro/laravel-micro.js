@@ -102,3 +102,98 @@ test('Container will not resolve shared instances of unsharable bindings.', () =
 
 	expect(container.make('TestClass').state).toBe(0)
 })
+
+
+test('Container will resolve instance with parameters.', () => {
+    
+    const firstArgument = 'First argument';
+    const secondArgument = 'Second argument';
+    class TestClass {
+        constructor(first, second) {
+            this.first = first;
+            this.second = second;
+        }
+    }
+    container.bind('TestClass', TestClass)
+    
+    let testInstance = container.makeWith('TestClass', firstArgument, secondArgument)
+    
+    expect(testInstance).toBeInstanceOf(TestClass)
+    expect(testInstance.first).toBe(firstArgument)
+    expect(testInstance.second).toBe(secondArgument)
+})
+
+
+test('Container can resolve a non bound class if params are passed', () => {
+    
+    const firstArgument = 'First argument';
+    const secondArgument = 'Second argument';
+    class TestClass {
+        constructor(first, second) {
+            this.first = first;
+            this.second = second;
+        }
+    }
+    
+    let testInstance = container.buildWith(TestClass, firstArgument, secondArgument)
+    
+    expect(testInstance).toBeInstanceOf(TestClass)
+    expect(testInstance.first).toBe(firstArgument)
+    expect(testInstance.second).toBe(secondArgument)
+})
+
+
+test('Container will throw the usual exception if alias cannot be resolved', () => {
+    
+    try {
+        container.makeWith('UnBoundClass')
+    } catch (e) {
+        expect(e.toString()).toContain('Cannot resolve a concrete instance for')
+        expect(e).toBeInstanceOf(Error)
+    }
+})
+
+
+test('Arguments can be mixed with bound classes', () => {
+    
+    class BoundClass {}
+    container.bind('BoundClass', BoundClass)
+    
+    const randomArgument = 'Random argument'
+    
+    class TestClass {
+        constructor(BoundClass, random) {
+            this.bound = BoundClass;
+            this.random = random;
+        }
+    }
+    
+    let instance = container.buildWith(TestClass, 'BoundClass', randomArgument)
+    expect(instance).toBeInstanceOf(TestClass)
+    expect(instance.bound).toBeInstanceOf(BoundClass)
+    expect(instance.random).toBe(randomArgument)
+})
+
+
+test('Arguments can be mixed', () => {
+    
+    container.bind('ClassA', ClassA, false)
+    container.bind('ClassB', ClassB, false)
+    
+    const randomArgument = 'Random argument'
+    
+    class TestClass {
+        constructor(ClassA, random, ClassB) {
+            this.classA = ClassA;
+            this.random = random;
+            this.classB = ClassB;
+        }
+    }
+    
+    let instance = container.buildWith(TestClass, 'ClassA', randomArgument, 'ClassB')
+
+    expect(instance).toBeInstanceOf(TestClass)
+    expect(instance.classA).toBeInstanceOf(ClassA)
+    expect(instance.random).toBe(randomArgument)
+    expect(instance.classB).toBeInstanceOf(ClassB)
+})
