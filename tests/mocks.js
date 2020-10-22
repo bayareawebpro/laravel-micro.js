@@ -1,4 +1,5 @@
 import ServiceProvider from "../src/Support/ServiceProvider"
+import Manager from "../src/Support/Manager";
 
 class ClassA {
     constructor(classB, classC) {
@@ -77,6 +78,26 @@ class PipeD{
     }
 }
 
+class CompleteManager extends Manager{
+    getDefaultDriver() {
+        return 'default';
+    }
+
+    createDefaultDriver() {
+        return {
+            type: 'default'
+        };
+    }
+}
+
+class IncompleteManager extends Manager {}
+
+class AlmostCompleteManager extends Manager {
+    getDefaultDriver() {
+        return null;
+    }
+}
+
 export {
     ClassA,
     ClassB,
@@ -86,4 +107,7 @@ export {
     PipeB,
     PipeC,
     PipeD,
+    CompleteManager,
+    IncompleteManager,
+    AlmostCompleteManager,
 }
