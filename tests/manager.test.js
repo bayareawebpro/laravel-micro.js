@@ -1,19 +1,24 @@
 /* global beforeEach,afterEach,test,expect */
-import {CompleteManager, IncompleteManager, AlmostCompleteManager} from './mocks';
-import Container from "../src";
+import {CompleteManager, IncompleteManager, AlmostCompleteManager} from './mocks'
+import Container from "../src"
 
-var app = new Container();
+const app = new Container
 
 test('returns the default driver', () => {
     expect(
         new CompleteManager(app).getDefaultDriver()
-    ).toEqual('default');
+    ).toEqual('default')
+})
+test('returns an array of drivers', () => {
+    expect(
+        new CompleteManager(app).getDrivers()
+    ).toBeInstanceOf(Object)
 })
 
 test('returns an object', () => {
     expect(
         new CompleteManager(app).driver().type
-    ).toEqual('default');
+    ).toEqual('default')
 })
 
 test('requires defaultDriver method to be implemented', () => {
@@ -41,8 +46,8 @@ test('default driver must return a valid driver', () => {
 })
 
 test('custom drivers can be added', () => {
-    let manager = new CompleteManager(app);
-    manager.extend('custom', (app) => {
+    let manager = new CompleteManager(app)
+    manager.extend('custom', (App) => {
         return {
             type: 'a custom driver'
         }
