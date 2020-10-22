@@ -47,7 +47,6 @@ test('Deferred Providers will not have their boot method called when bootProvide
     expect(providerInstance.isBooted).toBeFalsy()
 })
 
-
 test('Deferred Providers will have their boot method called their provided service is resolved.', () => {
     const container = new Container
     container.debug(false)
@@ -70,7 +69,6 @@ test('Deferred Providers will have their boot method called their provided servi
     expect(app.isBound('boundIfBooted')).toBeTruthy()
     expect(providerInstance.isBooted).toBeTruthy()
 })
-
 
 test('Container will throw exception if registered service is not bound.', () => {
     const container = new Container
@@ -96,6 +94,6 @@ test('Container will throw exception if registered service is not bound.', () =>
     try {
         container.make('NotFound')
     } catch (e) {
-        expect(e.toString()).toContain(' No Binding found')
+        expect(e.toString()).toContain(' No binding found')
     }
 })
