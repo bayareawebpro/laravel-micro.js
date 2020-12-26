@@ -39,6 +39,15 @@ test('string before value', () => {
     ).toEqual('John Joe')
 })
 
+test('ucwords value', () => {
+    expect(
+        Stringable
+            .of('test thing')
+            .ucwords()
+            .toString()
+    ).toEqual('Test Thing')
+})
+
 test('uppercase first value', () => {
     expect(
         Stringable
@@ -131,6 +140,15 @@ test('replace strings in value', () => {
             .prepend('Ms. ')
             .toString()
     ).toEqual('Ms. Jane Doe')
+})
+
+test('studly value', () => {
+    expect(
+        Stringable
+            .of('test-value')
+            .studly()
+            .toString()
+    ).toEqual('TestValue')
 })
 
 test('substr string from value', () => {

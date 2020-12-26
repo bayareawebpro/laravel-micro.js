@@ -1,11 +1,7 @@
 const mix = require('laravel-mix');
 class MicroMix {
-    register(deps, debug = false) {
-        if(debug){
-            console.info('LaravelMicro Mix Plugin');
-            console.table(deps);
-        }
-        const config = mix.config
+    register(deps) {
+        const config = Config || mix.config
         const options = config.terser ? config.terser.terserOptions : config.uglify.uglifyOptions
         options.mangle = (options.mangle || {})
         options.mangle.reserved = (options.mangle.reserved || []).concat(deps)
@@ -15,7 +11,10 @@ class MicroMix {
         return {
             test: /\.js?$/,
             include: [/node_modules\/laravel-micro.js/],
-            use: [{ loader: 'babel-loader', options: mix.config.babel() }]
+            use: [{
+                loader: 'babel-loader',
+                options: (Config || mix.config).babel()
+            }]
         }
     }
 }
