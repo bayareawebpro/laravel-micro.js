@@ -127,7 +127,7 @@ export default class Stringable {
      */
     substr(start, end = null) {
         return new Stringable(
-            this.value.substr(start, end ?? this.length() - start)
+            this.value.substr(start, end || this.length() - start)
         );
     }
 

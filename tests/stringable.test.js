@@ -207,3 +207,8 @@ test('value is empty string', () => {
     const str2 = Stringable.of('Test')
     expect(str2.isEmpty()).toBeFalsy()
 })
+
+test('substr returns the right string', () => {
+    const str = Stringable.of('John Joe Doe');
+    expect(str.substr(0, 4).toString()).toBe('John')
+})
