@@ -53,7 +53,7 @@ export default class Manager {
             return this.callCustomCreator(driver)
         }
 
-        let method = 'create' + new Stringable(driver).studly().toString() + 'Driver'
+        let method = 'create' + new Stringable(driver).studly().append('Driver').toString()
 
         let prototype = Object.getPrototypeOf(this)
 
