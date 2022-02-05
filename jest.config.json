@@ -11,6 +11,7 @@
         "src/Support/Validator.js",
         "src/Support/ServiceProvider.js",
         "src/Support/Stringable.js",
+        "src/Support/Manager.js",
         "src/Container.js"
     ]
 }

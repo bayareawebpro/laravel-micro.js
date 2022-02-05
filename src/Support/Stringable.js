@@ -108,6 +108,18 @@ export default class Stringable {
     }
 
     /**
+     * Converts value to CamelCase notation
+     * @returns {Stringable}
+     */
+    studly() {
+        return this
+            .replace('-', ' ')
+            .replace('_', ' ')
+            .ucwords()
+            .replace(' ', '');
+    }
+
+    /**
      * String from sub-string in value.
      * @param start {Number}
      * @param end {Number|null}
@@ -115,7 +127,7 @@ export default class Stringable {
      */
     substr(start, end = null) {
         return new Stringable(
-            this.value.substr(start, end ?? this.length() - start)
+            this.value.substr(start, end || this.length() - start)
         );
     }
 
@@ -137,6 +149,20 @@ export default class Stringable {
         return new Stringable(
             this.value + values.join('')
         );
+    }
+
+    /**
+     * Uppercase all words from value
+     * @returns {Stringable}
+     */
+    ucwords() {
+        let values = this.value
+            .split(' ')
+            .map(word => {
+                return new this.constructor(word).ucfirst().toString()
+            });
+
+        return new this.constructor(values.join(' '));
     }
 
     /**

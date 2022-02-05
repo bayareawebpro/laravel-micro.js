@@ -416,7 +416,6 @@ export default class Container {
     makeConcrete(binding, injections) {
         try {
             const concrete = this.isClass(binding) ? Reflect.construct(binding, injections) : binding(injections)
-
             if (typeof concrete === 'undefined') {
                 return this.makeException('Binding Exception', `Binding ${binding} failed, return value is undefined.`)
             }
